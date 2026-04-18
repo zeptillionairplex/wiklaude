@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>한국 정유사 원유 블렌딩 심층 리포트 — 미국산+베네수엘라산 섞어 쓰면 될까?</title>
+<meta name="description" content="2026년 중동 전쟁 국면에서 자주 나오는 '미국산 경질유와 베네수엘라 초중질유를 섞어 쓰면 된다'는 주장, 정말 가능할까요? 한국 정유사 설비 구조와 원유 특성 관점에서 풀어본 심층 보고서.">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: linear-gradient(135deg, #fef3c7 0%, #fed7aa 50%, #fecaca 100%); color: #1f2937; line-height: 1.7; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 24px; }
+  
+  /* 히어로 */
+  .hero { background: linear-gradient(135deg, #f97316, #ef4444, #ec4899); color: white; padding: 70px 24px; position: relative; overflow: hidden; }
+  .hero-emoji { position: absolute; opacity: 0.1; font-size: 150px; }
+  .hero-emoji.top-left { top: 30px; left: 30px; }
+  .hero-emoji.bottom-right { bottom: 30px; right: 30px; }
+  .hero-badge { display: inline-block; background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 6px 16px; border-radius: 20px; font-size: 14px; margin-bottom: 16px; }
+  .hero h1 { font-size: 44px; font-weight: 900; line-height: 1.2; margin-bottom: 16px; }
+  .hero p.subtitle { font-size: 22px; font-weight: 300; margin-bottom: 24px; opacity: 0.95; }
+  .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+  .hero-tag { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 8px 16px; border-radius: 10px; font-size: 14px; }
+  
+  /* 네비 */
+  .nav { position: sticky; top: 0; background: rgba(255,255,255,0.85); backdrop-filter: blur(10px); border-bottom: 1px solid #fed7aa; z-index: 100; padding: 12px 0; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+  .nav-inner { display: flex; gap: 8px; overflow-x: auto; padding: 0 24px; max-width: 960px; margin: 0 auto; }
+  .nav a { white-space: nowrap; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 500; background: #ffedd5; color: #9a3412; text-decoration: none; transition: all 0.2s; }
+  .nav a:hover { background: linear-gradient(90deg, #f97316, #ef4444); color: white; }
+  
+  /* 섹션 */
+  section { margin: 48px 0; scroll-margin-top: 80px; }
+  .section-title { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+  .section-number { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 900; font-size: 20px; }
+  .sn-1 { background: linear-gradient(135deg, #fb923c, #ef4444); }
+  .sn-2 { background: linear-gradient(135deg, #facc15, #f97316); }
+  .sn-3 { background: linear-gradient(135deg, #4ade80, #14b8a6); }
+  .sn-4 { background: linear-gradient(135deg, #a855f7, #ec4899); }
+  .sn-5 { background: linear-gradient(135deg, #ec4899, #ef4444); }
+  .sn-6 { background: linear-gradient(135deg, #6366f1, #a855f7); }
+  .section-title h2 { font-size: 28px; font-weight: 900; color: #111827; }
+  
+  /* 카드 */
+  .card { background: white; border-radius: 24px; padding: 32px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 24px; }
+  .card-border-l { border-left: 8px solid #fb923c; }
+  .card-border-red { border-left: 8px solid #ef4444; }
+  .card-border-green { border-top: 8px solid #4ade80; }
+  .card-border-rednotice { border-top: 8px solid #ef4444; }
+  .card-border-yellownotice { border-top: 8px solid #facc15; }
+  .card-border-gray { border-top: 4px solid #d1d5db; }
+  .card p { margin-bottom: 16px; font-size: 17px; color: #374151; }
+  .card p:last-child { margin-bottom: 0; }
+  
+  /* 팩트체크 박스 */
+  .claim-box { background: linear-gradient(135deg, #fef9c3, #fed7aa); border-radius: 24px; padding: 32px; border: 4px dashed #fb923c; position: relative; margin: 24px 0; }
+  .claim-badge { position: absolute; top: -14px; left: 24px; background: white; padding: 4px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; color: #ea580c; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+  .claim-box p { font-size: 21px; font-weight: 700; color: #1f2937; line-height: 1.5; padding-top: 6px; }
+  .claim-box .blue { color: #2563eb; }
+  .claim-box .red { color: #dc2626; }
+  
+  /* 알림 박스 */
+  .alert { border-radius: 14px; padding: 20px; margin: 16px 0; display: flex; gap: 12px; align-items: flex-start; }
+  .alert-pink { background: linear-gradient(90deg, #fdf2f8, #fce7f3); border-left: 4px solid #ec4899; }
+  .alert-teal { background: linear-gradient(90deg, #f0fdfa, #ecfeff); border-left: 4px solid #14b8a6; }
+  .alert-amber { background: #fef3c7; border-left: 4px solid #f59e0b; }
+  .alert-icon { font-size: 24px; flex-shrink: 0; }
+  .alert-title { font-weight: 700; color: #831843; margin-bottom: 8px; }
+  .alert-teal .alert-title { color: #115e59; }
+  .alert-amber .alert-title { color: #78350f; }
+  
+  /* 스탯 그리드 */
+  .stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 24px 0; }
+  .stat { border-radius: 20px; padding: 24px; color: white; box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+  .stat.red { background: linear-gradient(135deg, #ef4444, #ec4899); }
+  .stat.orange { background: linear-gradient(135deg, #f97316, #ef4444); }
+  .stat.amber { background: linear-gradient(135deg, #f59e0b, #f97316); }
+  .stat.rose { background: linear-gradient(135deg, #f43f5e, #dc2626); }
+  .stat-emoji { font-size: 36px; margin-bottom: 8px; }
+  .stat-num { font-size: 32px; font-weight: 900; margin-bottom: 4px; }
+  .stat-label { font-size: 13px; opacity: 0.9; }
+  
+  /* 3개 개념 카드 */
+  .concept-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; margin-top: 16px; }
+  .concept { border-radius: 16px; padding: 24px; border: 2px solid; }
+  .concept-blue { background: linear-gradient(135deg, #eff6ff, #e0e7ff); border-color: #bfdbfe; }
+  .concept-yellow { background: linear-gradient(135deg, #fefce8, #fef3c7); border-color: #fde68a; }
+  .concept-red { background: linear-gradient(135deg, #fef2f2, #fdf2f8); border-color: #fecaca; }
+  .concept-emoji { font-size: 32px; margin-bottom: 10px; }
+  .concept h4 { font-weight: 900; font-size: 18px; margin-bottom: 8px; }
+  .concept .detail { background: white; border-radius: 10px; padding: 10px; font-size: 13px; margin-top: 10px; }
+  
+  /* 차트 컨테이너 */
+  .chart-card { background: white; border-radius: 24px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 24px; }
+  .chart-card h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; color: #1f2937; }
+  .chart-card .chart-sub { font-size: 14px; color: #6b7280; margin-bottom: 16px; }
+  .chart-container { position: relative; height: 320px; }
+  .chart-container-tall { height: 380px; }
+  
+  /* 샤힌 프로젝트 정보 */
+  .shaheen-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; background: linear-gradient(135deg, #ffedd5, #fef3c7); border-radius: 20px; padding: 24px; margin: 16px 0; }
+  .shaheen-item .label { font-size: 13px; color: #6b7280; margin-bottom: 4px; }
+  .shaheen-item .value { font-size: 24px; font-weight: 900; color: #c2410c; }
+  .shaheen-item .sub { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+  
+  /* 공식 박스 */
+  .formula { background: linear-gradient(90deg, #eff6ff, #ecfdf5); border-radius: 14px; padding: 20px; font-family: 'Courier New', monospace; border: 2px dashed #86efac; margin: 16px 0; text-align: center; }
+  .formula .step { font-weight: 700; font-size: 18px; margin: 6px 0; }
+  .formula .blue { color: #1d4ed8; }
+  .formula .red { color: #b91c1c; }
+  .formula .orange { color: #c2410c; }
+  .formula .plus { font-size: 24px; margin: 4px 0; }
+  
+  /* 장벽 그리드 */
+  .barrier-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+  .barrier { border-radius: 18px; padding: 20px; border: 2px solid; }
+  .barrier-high { background: linear-gradient(135deg, #fef2f2, #fff7ed); border-color: #fecaca; }
+  .barrier-medium { background: linear-gradient(135deg, #fefce8, #fff7ed); border-color: #fde68a; }
+  .barrier-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .barrier-head .emoji { font-size: 28px; }
+  .barrier-head h4 { font-weight: 900; }
+  .badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; font-weight: 700; }
+  .badge-red { background: #fecaca; color: #991b1b; }
+  .badge-yellow { background: #fde68a; color: #92400e; }
+  .barrier p { font-size: 14px; color: #374151; line-height: 1.6; }
+  
+  /* 경제 제약 */
+  .constraint { display: flex; gap: 14px; padding: 16px; border-radius: 14px; border-left: 4px solid; margin-bottom: 12px; align-items: flex-start; }
+  .c-yellow { background: #fefce8; border-color: #facc15; }
+  .c-orange { background: #fff7ed; border-color: #fb923c; }
+  .c-red { background: #fef2f2; border-color: #ef4444; }
+  .c-pink { background: #fdf2f8; border-color: #ec4899; }
+  .constraint .emoji { font-size: 24px; }
+  .constraint .title { font-weight: 700; color: #1f2937; margin-bottom: 4px; }
+  .constraint .desc { font-size: 14px; color: #4b5563; }
+  
+  /* 업계 진단 박스 */
+  .industry-box { background: linear-gradient(135deg, #111827, #1f2937); color: white; border-radius: 24px; padding: 32px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); }
+  .industry-box .label { font-size: 13px; opacity: 0.75; margin-bottom: 10px; }
+  .industry-box .quote { font-size: 22px; font-weight: 700; line-height: 1.5; font-style: italic; margin-bottom: 16px; }
+  .industry-box .exp { font-size: 14px; opacity: 0.9; }
+  .industry-box .amber { color: #fcd34d; font-weight: 700; }
+  .industry-box .red { color: #fca5a5; font-weight: 700; }
+  
+  /* 패널 vs 현실 */
+  .panel-item { background: white; border-radius: 18px; overflow: hidden; box-shadow: 0 6px 15px rgba(0,0,0,0.08); margin-bottom: 16px; }
+  .panel-claim { background: linear-gradient(90deg, #fce7f3, #ffedd5); padding: 20px; }
+  .panel-reality { background: linear-gradient(90deg, #eff6ff, #f0fdfa); padding: 20px; }
+  .panel-inner { display: flex; gap: 12px; align-items: flex-start; }
+  .panel-inner .emoji { font-size: 28px; }
+  .panel-badge { font-size: 11px; font-weight: 700; margin-bottom: 6px; }
+  .panel-claim .panel-badge { color: #be185d; }
+  .panel-reality .panel-badge { color: #1d4ed8; }
+  .panel-claim p { font-weight: 700; font-style: italic; color: #1f2937; }
+  .panel-reality p { color: #374151; font-size: 15px; }
+  
+  /* 결론 카드 */
+  .conclusion-card { border-radius: 24px; padding: 24px; color: white; box-shadow: 0 12px 25px rgba(0,0,0,0.15); margin-bottom: 16px; display: flex; gap: 20px; align-items: flex-start; }
+  .conclusion-card.purple { background: linear-gradient(135deg, #6366f1, #a855f7); }
+  .conclusion-card.orange { background: linear-gradient(135deg, #f97316, #dc2626); }
+  .conclusion-card.teal { background: linear-gradient(135deg, #14b8a6, #22c55e); }
+  .conclusion-num { font-size: 52px; font-weight: 900; opacity: 0.5; line-height: 1; }
+  .conclusion-card h4 { font-size: 20px; font-weight: 900; margin-bottom: 8px; }
+  .conclusion-card p { opacity: 0.95; line-height: 1.6; }
+  
+  /* 최종 박스 */
+  .final-box { background: linear-gradient(135deg, #fef3c7, #fed7aa, #fecaca); border-radius: 24px; padding: 40px; border: 4px dashed #fb923c; text-align: center; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
+  .final-box .tag { font-size: 13px; font-weight: 700; color: #c2410c; margin-bottom: 12px; }
+  .final-box .main { font-size: 22px; font-weight: 900; color: #1f2937; line-height: 1.4; }
+  .final-box .main .orange { color: #ea580c; }
+  .final-box .main .red { color: #dc2626; }
+  .final-box .sub { font-size: 14px; color: #6b7280; font-weight: 400; display: block; margin-top: 12px; }
+  
+  /* 참고자료 */
+  .ref-list { list-style: none; font-size: 14px; color: #4b5563; }
+  .ref-list li { margin-bottom: 6px; padding-left: 12px; position: relative; }
+  .ref-list li::before { content: '·'; position: absolute; left: 0; }
+  
+  /* 푸터 */
+  footer { text-align: center; padding: 40px 20px; color: #6b7280; }
+  footer .emoji { font-size: 36px; margin-bottom: 8px; }
+  footer .sub { font-size: 12px; margin-top: 4px; opacity: 0.7; }
+
+  @media (max-width: 640px) {
+    .hero h1 { font-size: 30px; }
+    .hero p.subtitle { font-size: 17px; }
+    .card { padding: 24px; }
+    .section-title h2 { font-size: 22px; }
+    .claim-box p { font-size: 17px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 히어로 -->
+<div class="hero">
+  <div class="hero-emoji top-left">🛢️</div>
+  <div class="hero-emoji bottom-right">⛽</div>
+  <div class="container" style="position: relative;">
+    <div class="hero-badge">🔍 심층 리포트 · 2026년 4월 · 읽기 30분</div>
+    <h1>"미국산이랑 베네수엘라산<br>섞어서 쓰면 되는 거 아니에요?"</h1>
+    <p class="subtitle">한국 정유사의 중동 원유 의존, 왜 그렇게 단순한 문제가 아닐까</p>
+    <div class="hero-tags">
+      <span class="hero-tag">🎯 대상: 산업 잘 모르는 일반인</span>
+      <span class="hero-tag">📚 자료: 10+ 출처 크로스체크</span>
+      <span class="hero-tag">⚡ 결론: 가능은 한데, 공짜가 아님</span>
+    </div>
+  </div>
+</div>
+
+<!-- 네비 -->
+<div class="nav">
+  <div class="nav-inner">
+    <a href="#intro">🧭 들어가며</a>
+    <a href="#basics">📖 원유 기초</a>
+    <a href="#korea">🏭 한국 설비</a>
+    <a href="#core">🎯 핵심 쟁점</a>
+    <a href="#panels">📺 팩트체크</a>
+    <a href="#conclusion">✨ 결론</a>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- 섹션 1 -->
+<section id="intro">
+  <div class="section-title">
+    <div class="section-number sn-1">1</div>
+    <h2>들어가며: 이 질문이 왜 뜨거울까</h2>
+  </div>
+
+  <div class="card card-border-l">
+    <p>2026년 봄, 뉴스 보기가 무서운 시절입니다. 미국-이란 전쟁이 벌어지고 있고, 이란의 호르무즈 해협 봉쇄와 미국의 <strong style="color:#dc2626;">'역봉쇄'</strong>가 맞부딪히면서 중동산 원유 공급이 심각한 타격을 받았습니다.</p>
+    <p>이 상황에서 유튜브·뉴스 패널들이 이렇게 말합니다 👇</p>
+  </div>
+
+  <div class="claim-box">
+    <div class="claim-badge">👂 자주 듣는 주장</div>
+    <p>"그냥 <span class="blue">미국산 경질유</span>랑 <span class="red">베네수엘라 초중질유</span>를 섞어서 쓰면, 중동산 중질유랑 비슷한 비중이 나오니까 기존 설비에 그냥 넣으면 되잖아요?"</p>
+  </div>
+
+  <div class="alert alert-pink">
+    <div class="alert-icon">⚠️</div>
+    <div>
+      <div class="alert-title">잠깐, 시작 전에 한 가지만 짚고 갈게요</div>
+      <p style="margin: 0; font-size: 15px;">흔히 "미국산 석유는 나프타가 <s>적다</s>"고 말하는데, 사실은 <strong style="color:#be185d;">정반대</strong>예요. 미국산 셰일오일(WTI 계열)은 <strong>오히려 나프타가 많이 나오는</strong> 경질유입니다. 나프타가 적은 쪽은 중동산 중질유와 베네수엘라 초중질유죠. 이 차이가 왜 중요한지는 뒤에서 자세히 설명해드릴게요!</p>
+    </div>
+  </div>
+
+  <div class="stat-grid">
+    <div class="stat red">
+      <div class="stat-emoji">🚢</div>
+      <div class="stat-num">68~70%</div>
+      <div class="stat-label">한국 원유 수입의 중동 의존도 (2026)</div>
+    </div>
+    <div class="stat orange">
+      <div class="stat-emoji">⚡</div>
+      <div class="stat-num">70%</div>
+      <div class="stat-label">나프타의 중동 의존도 — '위기품목' 지정</div>
+    </div>
+    <div class="stat amber">
+      <div class="stat-emoji">🏗️</div>
+      <div class="stat-num">9.2조원</div>
+      <div class="stat-label">에쓰오일 샤힌 프로젝트 투자액</div>
+    </div>
+    <div class="stat rose">
+      <div class="stat-emoji">📈</div>
+      <div class="stat-num">+67%</div>
+      <div class="stat-label">나프타 가격 월간 급등 (2026.3)</div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>🗺️ 한국의 원유 수입처 (2025년)</h3>
+    <div class="chart-sub">자료: 한국무역협회 · 붉은 계열이 중동국</div>
+    <div class="chart-container"><canvas id="importChart"></canvas></div>
+  </div>
+</section>
+
+<!-- 섹션 2 -->
+<section id="basics">
+  <div class="section-title">
+    <div class="section-number sn-2">2</div>
+    <h2>원유는 다 같은 원유가 아니에요</h2>
+  </div>
+
+  <div class="card">
+    <p>원유를 이해하려면 세 가지 지표만 알면 됩니다. 이것만 알아도 뉴스가 달라 보여요.</p>
+    <div class="concept-grid">
+      <div class="concept concept-blue">
+        <div class="concept-emoji">💧</div>
+        <h4>① API 비중</h4>
+        <p style="font-size:14px;">원유가 가벼운가/무거운가 (숫자 높을수록 가벼움)</p>
+        <div class="detail">경질유: 35 이상<br>중질유: 20~30<br>초중질유: 10~20</div>
+      </div>
+      <div class="concept concept-yellow">
+        <div class="concept-emoji">🔥</div>
+        <h4>② 황 함량</h4>
+        <p style="font-size:14px;">Sweet(저황) / Sour(고황) 구분</p>
+        <div class="detail">Sweet: 0.5% 이하<br>Sour: 0.5% 이상<br>낮을수록 비쌈</div>
+      </div>
+      <div class="concept concept-red">
+        <div class="concept-emoji">🎯</div>
+        <h4>③ 점도</h4>
+        <p style="font-size:14px;">얼마나 끈적한가 (무거울수록 끈적)</p>
+        <div class="detail">초중질유는 파이프로<br>못 흘러서 희석제<br>(디루언트) 필수</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>🌈 주요 원유의 API 비중 스펙트럼</h3>
+    <div class="chart-sub">왼쪽(가벼움·저황) → 오른쪽(무거움·고황)</div>
+    <div class="chart-container chart-container-tall"><canvas id="apiChart"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <h3>🧪 원유 성격별 제품 수율 (%)</h3>
+    <div class="chart-sub">같은 원유를 넣어도 뽑히는 제품 비율이 전혀 다릅니다</div>
+    <div class="chart-container"><canvas id="yieldChart"></canvas></div>
+    <div class="alert alert-amber" style="margin-top: 20px;">
+      <div class="alert-icon">💡</div>
+      <div>
+        <div class="alert-title">핵심 포인트</div>
+        <p style="margin:0; font-size:14px;">경질유(WTI)는 나프타·LPG가 많이 나오고, 초중질유(Orinoco)는 잔사유가 엄청 많아요. 한국 정유사의 돈벌이는 <strong style="color:#c2410c;">중간유분(경유·항공유)</strong>인데, 이건 중질유에서 균형 있게 나옵니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 섹션 3 -->
+<section id="korea">
+  <div class="section-title">
+    <div class="section-number sn-3">3</div>
+    <h2>한국 정유·석유화학 설비의 DNA</h2>
+  </div>
+
+  <div class="card">
+    <h3 style="font-size:22px; margin-bottom:12px;">🏗️ "10조 규모 석유화학 단지"의 정체</h3>
+    <p>사용자가 언급한 바로 그 프로젝트는 <strong style="color:#c2410c;">에쓰오일의 샤힌 프로젝트</strong>입니다. 국내 석유화학 역사상 최대 규모예요.</p>
+    <div class="shaheen-grid">
+      <div class="shaheen-item">
+        <div class="label">💰 총 투자비</div>
+        <div class="value">9조 2,580억 원</div>
+        <div class="sub">1단계 RUC/ODC 포함 시 약 14조 원</div>
+      </div>
+      <div class="shaheen-item">
+        <div class="label">📍 위치</div>
+        <div class="value">울산 온산단지</div>
+        <div class="sub">축구장 120개 크기 (88만㎡)</div>
+      </div>
+      <div class="shaheen-item">
+        <div class="label">⏰ 완공</div>
+        <div class="value">2026년 하반기</div>
+        <div class="sub">상업 가동 2026년 말~2027년 초</div>
+      </div>
+      <div class="shaheen-item">
+        <div class="label">🎯 연간 생산</div>
+        <div class="value">에틸렌 180만t</div>
+        <div class="sub">총 석유화학 제품 320만 톤</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card card-border-red" style="background: linear-gradient(135deg, #fef2f2, #fff7ed);">
+    <h3 style="font-size:20px; margin-bottom:12px;">⚠️ 샤힌 프로젝트의 "중동 DNA"</h3>
+    <p>이 프로젝트의 핵심 기술인 <strong>TC2C(Thermal Crude to Chemical)</strong>는 사우디 아람코가 개발한 원천 기술이에요. 그리고 에쓰오일 지분 63.4%를 아람코가 보유하고 있죠.</p>
+    <p>TC2C 공정은 원유에서 바로 석유화학 원료(나프타·LPG)를 뽑아내는 혁신 기술로, 기존 공정 대비 기초유분 수율이 <strong style="color:#dc2626;">3~4배</strong> 높습니다. 근데 이 설비가 어떤 원유 기준으로 최적화됐을까요?</p>
+    <div style="background:white; border-radius:12px; padding:16px; border:2px dashed #fca5a5;">
+      <p style="font-weight:700; color:#b91c1c; font-size:18px; margin-bottom:8px;">🎯 답: 사우디산 원유 (아라비안 라이트·헤비)</p>
+      <p style="font-size:14px; color:#6b7280; margin:0;">에틸렌 180만톤 생산에 매일 원유 2만 배럴 + 중질유 2.6만 배럴 필요. 이게 다 <strong>중동산 공급을 전제로 설계된 수치</strong>입니다.</p>
+    </div>
+  </div>
+
+  <div class="chart-card">
+    <h3>📉 한국의 중동 원유 의존도 추이</h3>
+    <div class="chart-sub">10년간 17%p 떨어졌지만, 여전히 약 70%</div>
+    <div class="chart-container" style="height:260px;"><canvas id="trendChart"></canvas></div>
+  </div>
+
+  <div class="alert alert-teal">
+    <div class="alert-icon">💡</div>
+    <div>
+      <div class="alert-title">"설비가 세팅돼 있다"는 게 축복이자 족쇄</div>
+      <p style="margin:0; font-size:15px;"><strong style="color:#115e59;">✅ 축복:</strong> 값싼 중질유를 사서 비싼 경질 제품으로 바꿔 팔 수 있음 → 정제마진 확보<br><strong style="color:#b91c1c;">⚠️ 족쇄:</strong> 원유 특성 바뀌면 수율 하락, 촉매·파이프·반응기 손상 가능. 설비 개조는 수천억~수조 원, 3~7년 소요.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 섹션 4 -->
+<section id="core">
+  <div class="section-title">
+    <div class="section-number sn-4">4</div>
+    <h2>🎯 핵심 쟁점: 정말 블렌딩이 답인가?</h2>
+  </div>
+
+  <div style="background: linear-gradient(135deg, #a855f7, #ec4899); color:white; border-radius:24px; padding:32px; box-shadow:0 15px 35px rgba(0,0,0,0.15); margin-bottom:24px;">
+    <div style="font-size:13px; opacity:0.9; margin-bottom:8px;">한 줄 결론</div>
+    <p style="font-size:26px; font-weight:900; line-height:1.3; margin:0; color:white;">"산술적으로는 가능하지만,<br>현실에서는 심각한 제약이 많다."</p>
+  </div>
+
+  <!-- 층위 1 -->
+  <div class="card card-border-green">
+    <h3 style="font-size:22px; margin-bottom:12px; display:flex; align-items:center; gap:10px;">✅ 층위 1. "숫자상으로는" 맞다</h3>
+    <p>API 비중은 섞으면 평균이 나옵니다. 그래서 이론상 이렇게 계산돼요:</p>
+    <div class="formula">
+      <div class="step blue">WTI (API 40) 🪶</div>
+      <div class="plus">+</div>
+      <div class="step red">Orinoco (API 10) 🪨</div>
+      <div class="plus">=</div>
+      <div class="step orange">혼합유 (API 25) ≈ 아랍 헤비(28) 근처</div>
+    </div>
+    <p>실제로 베네수엘라 수출 블렌드 <strong>Merey 16</strong>도 초중질유에 경질 디루언트 섞어서 API 16 맞춘 '블렌드'예요. 즉, <strong style="color:#15803d;">"가벼운 + 무거운 = 중간"이라는 기본 아이디어는 틀린 말이 아닙니다.</strong></p>
+  </div>
+
+  <!-- 층위 2 -->
+  <div class="card card-border-rednotice">
+    <h3 style="font-size:22px; margin-bottom:12px; display:flex; align-items:center; gap:10px;">❌ 층위 2. 실전에서의 6가지 장벽</h3>
+    <p>하지만 정유는 음료수 블렌딩이 아닙니다. 맞춰야 할 게 API 하나가 아니에요.</p>
+    <div class="barrier-grid">
+      <div class="barrier barrier-high">
+        <div class="barrier-head">
+          <div class="emoji">⚗️</div>
+          <div><h4>황 함량</h4><span class="badge badge-red">심각</span></div>
+        </div>
+        <p>WTI(0.24%) + Orinoco(4~5%) = 평균 2~2.5% 수준. 사우디 라이트(1.8%)보다도 높아서 탈황 설비에 과부하.</p>
+      </div>
+      <div class="barrier barrier-high">
+        <div class="barrier-head">
+          <div class="emoji">🔬</div>
+          <div><h4>중금속 오염</h4><span class="badge badge-red">심각</span></div>
+        </div>
+        <p>베네수엘라 초중질유는 바나듐이 세계 최악 수준. 정제 촉매를 "피독"시켜서 수명을 크게 줄임.</p>
+      </div>
+      <div class="barrier barrier-high">
+        <div class="barrier-head">
+          <div class="emoji">📊</div>
+          <div><h4>잔사유 과다</h4><span class="badge badge-red">심각</span></div>
+        </div>
+        <p>초중질유는 잔사유가 50% 이상. 한국 정유사의 고도화 설비 처리 용량 초과.</p>
+      </div>
+      <div class="barrier barrier-medium">
+        <div class="barrier-head">
+          <div class="emoji">🏭</div>
+          <div><h4>코커 설비 부족</h4><span class="badge badge-yellow">주의</span></div>
+        </div>
+        <p>초중질유 처리에 필수인 딜레이드 코커(Delayed Coker)가 한국에 제한적.</p>
+      </div>
+      <div class="barrier barrier-medium">
+        <div class="barrier-head">
+          <div class="emoji">🧪</div>
+          <div><h4>아스팔텐 침전</h4><span class="badge badge-yellow">주의</span></div>
+        </div>
+        <p>서로 다른 원유 섞을 때 호환성 문제 발생 시 파이프·반응기 막힘 사고 가능.</p>
+      </div>
+      <div class="barrier barrier-high">
+        <div class="barrier-head">
+          <div class="emoji">🎯</div>
+          <div><h4>나프타 스펙</h4><span class="badge badge-red">심각</span></div>
+        </div>
+        <p>NCC(나프타 크래커)는 특정 성상 전제로 설계. 경질유 나프타는 파라핀 높아 수율 영향.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 층위 3 -->
+  <div class="card card-border-yellownotice">
+    <h3 style="font-size:22px; margin-bottom:12px;">⚠️ 층위 3. 경제·정치적 제약</h3>
+    <div class="constraint c-yellow">
+      <div class="emoji">🚢</div>
+      <div><div class="title">수송비·보험료</div><div class="desc">중동(1주) vs 베네수엘라(5주)·미국 걸프만(3주). VLCC 운용비 수백만 달러. 전쟁 지역 통과 시 해상보험료 수배.</div></div>
+    </div>
+    <div class="constraint c-orange">
+      <div class="emoji">🛡️</div>
+      <div><div class="title">베네수엘라 제재 리스크</div><div class="desc">미국 2차 제재(세컨더리 보이콧) 대상 가능. 미-한 관세 협상·동맹 관계에서 리스크 감수할지 의문.</div></div>
+    </div>
+    <div class="constraint c-red">
+      <div class="emoji">📉</div>
+      <div><div class="title">공급 불안정성</div><div class="desc">베네수엘라 PDVSA 생산능력 크게 훼손. 원유 품질의 일관성도 떨어짐.</div></div>
+    </div>
+    <div class="constraint c-pink">
+      <div class="emoji">⚡</div>
+      <div><div class="title">가격 변동성 증가</div><div class="desc">중동산 장기 계약의 안정성 상실. 여러 원유 스팟 구매는 가격 노출도 상승.</div></div>
+    </div>
+  </div>
+
+  <div class="industry-box">
+    <div class="label">💬 업계 관계자의 진단 (한국경제, 2026.3)</div>
+    <div class="quote">"설비를 바꾸지 않는 이상 원유 도입처 다변화는 제한적일 수밖에 없다"</div>
+    <div class="exp">즉, 블렌딩은 <span class="amber">"보조 수단"</span>으로는 쓸 수 있어도 <span class="red">"주력 수급 전략"</span>으로는 무리라는 게 업계 합의입니다.</div>
+  </div>
+</section>
+
+<!-- 섹션 5 -->
+<section id="panels">
+  <div class="section-title">
+    <div class="section-number sn-5">5</div>
+    <h2>📺 패널·유튜버 주장 팩트체크</h2>
+  </div>
+
+  <div class="card">
+    <p style="margin:0;">뉴스·유튜브에서 자주 보는 주장 vs 실제 현실을 나란히 놓고 봅시다.</p>
+  </div>
+
+  <div class="panel-item">
+    <div class="panel-claim"><div class="panel-inner"><div class="emoji">📺</div><div><div class="panel-badge">📢 주장</div><p>"그냥 미국산이랑 베네수엘라산 섞어서 쓰면 되는 거 아니에요?"</p></div></div></div>
+    <div class="panel-reality"><div class="panel-inner"><div class="emoji">✅</div><div><div class="panel-badge">🔍 현실</div><p>API 비중은 평균이 나오지만, 황·중금속·잔사유·아스팔텐 등 수십 가지 변수가 모두 맞아야 함. 산술 평균의 환상.</p></div></div></div>
+  </div>
+
+  <div class="panel-item">
+    <div class="panel-claim"><div class="panel-inner"><div class="emoji">🎤</div><div><div class="panel-badge">📢 주장</div><p>"미국산이 중동산보다 싸잖아요. 더 사오면 되지."</p></div></div></div>
+    <div class="panel-reality"><div class="panel-inner"><div class="emoji">✅</div><div><div class="panel-badge">🔍 현실</div><p>WTI가 배럴당 몇 달러 싸도, 운송비(1주+)·해상보험료·설비 부적합 비용까지 고려하면 한국에선 오히려 비쌀 수 있음.</p></div></div></div>
+  </div>
+
+  <div class="panel-item">
+    <div class="panel-claim"><div class="panel-inner"><div class="emoji">📰</div><div><div class="panel-badge">📢 주장</div><p>"베네수엘라 제재 풀리면 공짜로 원유 넘쳐요."</p></div></div></div>
+    <div class="panel-reality"><div class="panel-inner"><div class="emoji">✅</div><div><div class="panel-badge">🔍 현실</div><p>제재 해제는 미국 정치 변동 사항. PDVSA 생산능력 크게 훼손. 제재 리스크 감수 여부는 정치적 판단.</p></div></div></div>
+  </div>
+
+  <div class="panel-item">
+    <div class="panel-claim"><div class="panel-inner"><div class="emoji">🎬</div><div><div class="panel-badge">📢 주장</div><p>"설비 조금 고치면 되지 않나요?"</p></div></div></div>
+    <div class="panel-reality"><div class="panel-inner"><div class="emoji">✅</div><div><div class="panel-badge">🔍 현실</div><p>정유 설비 개조에 수천억~수조 원, 3~7년 소요. 그동안 공장 가동 중단 기회비용까지 고려해야.</p></div></div></div>
+  </div>
+</section>
+
+<!-- 섹션 6 -->
+<section id="conclusion">
+  <div class="section-title">
+    <div class="section-number sn-6">6</div>
+    <h2>✨ 결론: 세 가지 핵심 메시지</h2>
+  </div>
+
+  <div class="conclusion-card purple">
+    <div class="conclusion-num">01</div>
+    <div>
+      <h4>블렌딩은 '가능은 한데, 공짜가 아니다'</h4>
+      <p>API 비중만 맞추면 된다는 건 초등 수준 이해. 실제로는 황·중금속·잔사유·나프타 스펙 등 수십 가지 변수가 모두 맞아야 함.</p>
+    </div>
+  </div>
+  <div class="conclusion-card orange">
+    <div class="conclusion-num">02</div>
+    <div>
+      <h4>설비는 '특화된 자산'이자 '특화된 부채'</h4>
+      <p>중동산 중질유에 최적화된 설비는 효율의 극대화이자 유연성의 극소화. 바꾸려면 수조 원과 수년이 필요.</p>
+    </div>
+  </div>
+  <div class="conclusion-card teal">
+    <div class="conclusion-num">03</div>
+    <div>
+      <h4>'설비 유연화 + 에너지 전환'의 이중 전략</h4>
+      <p>단기 블렌딩으로 버티면서, 장기적으로는 설비 개조 + 화석연료 의존도 자체를 낮추는 길.</p>
+    </div>
+  </div>
+
+  <div class="final-box" style="margin-top:30px;">
+    <div class="tag">🎯 이 모든 걸 한 문장으로</div>
+    <div class="main">
+      "미국산 경질유와 베네수엘라 초중질유를 섞어서<br>한국 정유사 기존 설비에 넣는 건,<br>
+      <span class="orange">부분적으로는 가능하지만</span><br>
+      <span class="red">중동산 중질유를 '대체'할 수는 없다.</span>
+      <span class="sub">— 이건 엔지니어링의 문제이지 의지의 문제가 아니다."</span>
+    </div>
+  </div>
+</section>
+
+<!-- 참고자료 -->
+<section>
+  <div class="card card-border-gray">
+    <h3 style="font-size:18px; margin-bottom:12px;">📚 주요 출처</h3>
+    <ul class="ref-list">
+      <li>한국경제: 「'에너지 다변화' 수십년째 난제…한국은 왜 '탈중동' 못하나」</li>
+      <li>서울신문: 「석유·가스 중동 의존도 10년만에 20%p 감소」</li>
+      <li>뉴스1: 「에쓰오일 '아람코 효과'…사우디서 원유 조달 '샤힌'도 예정대로」</li>
+      <li>S-OIL 공식 블로그: 「샤힌 프로젝트로 석유화학 대전환 날개 펼쳤다」</li>
+      <li>Bloomberg: 「South Korea Secures Extra Oil, Naphtha For Non-Hormuz Delivery」</li>
+      <li>BloombergNEF: 「Venezuela's Oil Renaissance Faces Several High Hurdles」</li>
+      <li>Visual Capitalist: 「Oil Benchmarks Around the World」</li>
+      <li>Digital Refining: 「Challenges of heavy crude processing」</li>
+    </ul>
+    <div style="margin-top:16px; font-size:12px; color:#9ca3af;">자료 수집일: 2026년 4월 18일</div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="emoji">🛢️ ⚗️ 🏭</div>
+  <div style="font-size:14px;">원유 블렌딩 심층 리포트 · 2026</div>
+  <div class="sub">잘 모르는 분들을 위한 친절한 가이드</div>
+</footer>
+
+<script>
+  // 수입처 도넛 차트
+  new Chart(document.getElementById('importChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['사우디아라비아 32%', 'UAE 15%', '쿠웨이트 11%', '기타 중동 11%', '미국 12.5%', '호주·러시아·기타 18.5%'],
+      datasets: [{
+        data: [32, 15, 11, 11, 12.5, 18.5],
+        backgroundColor: ['#F59E0B', '#EA580C', '#DC2626', '#991B1B', '#3B82F6', '#8B5CF6'],
+        borderWidth: 2,
+        borderColor: '#fff'
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'right', labels: { font: { size: 12 } } }
+      }
+    }
+  });
+
+  // API 비중 바 차트
+  new Chart(document.getElementById('apiChart'), {
+    type: 'bar',
+    data: {
+      labels: ['WTI\n(미국)', 'Bakken\n(미국)', 'Brent\n(북해)', 'Arab Light\n(사우디)', 'Dubai\n(UAE)', 'Arab Heavy\n(사우디)', 'Merey 16\n(베네수엘라)', 'Orinoco\n(베네수엘라)'],
+      datasets: [{
+        label: 'API 비중',
+        data: [40, 43, 38, 33, 31, 28, 16, 10],
+        backgroundColor: ['#FCD34D', '#FCD34D', '#FBBF24', '#F59E0B', '#EA580C', '#DC2626', '#991B1B', '#450A0A'],
+        borderRadius: 8
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            afterLabel: function(ctx) {
+              const sulfurs = [0.24, 0.2, 0.37, 1.8, 2.0, 2.9, 2.5, 4.5];
+              const types = ['경질·저황', '경질·저황', '경질·저황', '중질·고황', '중질·고황', '중질·고황', '초중질', '초중질·초고황'];
+              return '황 함량: ' + sulfurs[ctx.dataIndex] + '% | ' + types[ctx.dataIndex];
+            }
+          }
+        }
+      },
+      scales: {
+        y: { beginAtZero: true, title: { display: true, text: 'API 비중' } }
+      }
+    }
+  });
+
+  // 수율 비교 차트
+  new Chart(document.getElementById('yieldChart'), {
+    type: 'bar',
+    data: {
+      labels: ['LPG/가스', '나프타', '등유·항공유', '경유', '중유', '잔사유'],
+      datasets: [
+        { label: '경질유 (WTI)', data: [5, 30, 15, 25, 15, 10], backgroundColor: '#FBBF24', borderRadius: 4 },
+        { label: '중질유 (Arab Light)', data: [3, 18, 15, 28, 20, 16], backgroundColor: '#EA580C', borderRadius: 4 },
+        { label: '초중질유 (Orinoco)', data: [1, 8, 10, 20, 25, 36], backgroundColor: '#7F1D1D', borderRadius: 4 }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { position: 'top' } },
+      scales: { y: { beginAtZero: true, title: { display: true, text: '수율 (%)' } } }
+    }
+  });
+
+  // 탈중동 추이
+  new Chart(document.getElementById('trendChart'), {
+    type: 'line',
+    data: {
+      labels: ['2016', '2018', '2020', '2022', '2024', '2025'],
+      datasets: [{
+        label: '중동 의존도 (%)',
+        data: [85.2, 79, 73, 71, 69.8, 68.8],
+        borderColor: '#EA580C',
+        backgroundColor: 'rgba(234, 88, 12, 0.1)',
+        fill: true,
+        borderWidth: 3,
+        pointRadius: 6,
+        pointBackgroundColor: '#EA580C',
+        tension: 0.3
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { min: 60, max: 90, title: { display: true, text: '%' } } }
+    }
+  });
+</script>
+
+</body>
+</html>
