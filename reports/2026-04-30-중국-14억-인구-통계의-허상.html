@@ -1,0 +1,1791 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#ffffff">
+<meta name="description" content="중국 인구 붕괴와 자본주의 시스템 위기 분석 - Executive Briefing">
+<title>중국 14억의 허상 | Executive Briefing</title>
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Serif+KR:wght@400;500;700;900&family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+
+<style>
+/* ===========================================================
+   RESET & BASE
+   =========================================================== */
+*,*::before,*::after{
+  margin:0;padding:0;box-sizing:border-box;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+}
+html{
+  scroll-behavior:smooth;
+  text-size-adjust:100%;
+  scroll-padding-top:20px;
+}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Noto Sans KR','Inter','Apple SD Gothic Neo','Malgun Gothic',-apple-system,BlinkMacSystemFont,'Helvetica Neue',Arial,sans-serif;
+  line-height:1.7;
+  overflow-x:hidden;
+  word-break:keep-all;
+  word-wrap:break-word;
+  min-height:100vh;
+  min-height:100dvh;
+}
+img,svg,canvas{max-width:100%;height:auto;display:block}
+canvas{height:100% !important}
+
+/* ===========================================================
+   THEME TOKENS
+   =========================================================== */
+:root{
+  --bg:#ffffff;
+  --bg-2:#f7f8fa;
+  --bg-3:#eef0f4;
+  --line:#e4e7ec;
+  --line-strong:#cbd2da;
+  --text:#0f172a;
+  --text-2:#475569;
+  --text-3:#94a3b8;
+  --red:#dc2626;
+  --red-deep:#991b1b;
+  --red-soft:#fef2f2;
+  --gold:#d97706;
+  --gold-deep:#b45309;
+  --gold-soft:#fffbeb;
+  --blue:#2563eb;
+  --green:#059669;
+  --shadow-sm:0 1px 2px rgba(15,23,42,.04),0 1px 3px rgba(15,23,42,.06);
+  --shadow-md:0 4px 6px -1px rgba(15,23,42,.06),0 2px 4px -2px rgba(15,23,42,.04);
+  --shadow-lg:0 10px 15px -3px rgba(15,23,42,.08),0 4px 6px -4px rgba(15,23,42,.04);
+  --pad-x:clamp(16px,4vw,24px);
+  --pad-y:clamp(60px,10vw,100px);
+  --safe-l:env(safe-area-inset-left,0px);
+  --safe-r:env(safe-area-inset-right,0px);
+}
+
+/* ===========================================================
+   CONTAINER
+   =========================================================== */
+.container{
+  max-width:1240px;
+  margin:0 auto;
+  padding-left:max(var(--pad-x), var(--safe-l));
+  padding-right:max(var(--pad-x), var(--safe-r));
+  width:100%;
+}
+
+/* ===========================================================
+   HERO
+   =========================================================== */
+.hero{
+  position:relative;
+  min-height:100vh;
+  min-height:100dvh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:80px var(--pad-x) 60px;
+  padding-left:max(var(--pad-x), var(--safe-l));
+  padding-right:max(var(--pad-x), var(--safe-r));
+  background:
+    radial-gradient(ellipse at top right, rgba(220,38,38,.08), transparent 55%),
+    radial-gradient(ellipse at bottom left, rgba(217,119,6,.05), transparent 55%),
+    linear-gradient(180deg, #ffffff 0%, #f7f8fa 100%);
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
+.hero::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background-image:
+    linear-gradient(rgba(15,23,42,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(15,23,42,.03) 1px, transparent 1px);
+  background-size:60px 60px;
+  -webkit-mask-image:radial-gradient(ellipse at center, black 30%, transparent 75%);
+  mask-image:radial-gradient(ellipse at center, black 30%, transparent 75%);
+  pointer-events:none;
+}
+.hero-content{
+  position:relative;
+  z-index:2;
+  max-width:1100px;
+  width:100%;
+}
+.hero-tag{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 14px;
+  background:var(--red-soft);
+  border:1px solid rgba(220,38,38,.2);
+  border-radius:100px;
+  font-size:clamp(10px,2.5vw,11px);
+  font-weight:700;
+  letter-spacing:1.5px;
+  color:var(--red);
+  text-transform:uppercase;
+  margin-bottom:24px;
+  animation:pulse 2.5s ease-in-out infinite;
+  white-space:nowrap;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.hero-tag .dot{
+  flex:0 0 auto;
+  width:6px;height:6px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 12px rgba(220,38,38,.6);
+}
+@keyframes pulse{50%{opacity:.75}}
+.hero h1{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(30px,7vw,82px);
+  font-weight:900;
+  line-height:1.1;
+  letter-spacing:-.03em;
+  margin-bottom:24px;
+  color:var(--text);
+}
+.hero h1 .red{
+  background:linear-gradient(135deg,#dc2626,#d97706);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero h1 .strike{
+  position:relative;
+  display:inline-block;
+  white-space:nowrap;
+}
+.hero h1 .strike::after{
+  content:'';
+  position:absolute;
+  left:0;top:55%;
+  width:100%;height:.08em;
+  background:var(--red);
+  transform-origin:left;
+  animation:strike 1.8s ease-out forwards;
+}
+@keyframes strike{
+  from{transform:scaleX(0)}
+  to{transform:scaleX(1)}
+}
+.hero p.lead{
+  font-size:clamp(14px,1.6vw,19px);
+  color:var(--text-2);
+  max-width:780px;
+  margin-bottom:40px;
+  line-height:1.75;
+}
+.hero-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:1px;
+  background:var(--line);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+.hero-stat{
+  background:var(--bg);
+  padding:clamp(16px,3vw,24px) clamp(14px,2.5vw,20px);
+  transition:all .3s;
+  min-width:0;
+}
+.hero-stat:hover{background:var(--bg-2)}
+.hero-stat .label{
+  font-size:clamp(9px,2vw,11px);
+  color:var(--text-3);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  margin-bottom:6px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.hero-stat .value{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(20px,4vw,34px);
+  font-weight:800;
+  letter-spacing:-.02em;
+  margin-bottom:4px;
+  color:var(--text);
+  line-height:1.1;
+}
+.hero-stat .value.red{color:var(--red)}
+.hero-stat .value.gold{color:var(--gold)}
+.hero-stat .desc{
+  font-size:clamp(10px,2.2vw,12px);
+  color:var(--text-2);
+  line-height:1.4;
+}
+.hero-meta{
+  margin-top:32px;
+  padding-top:24px;
+  border-top:1px solid var(--line);
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:12px;
+  font-size:clamp(10px,2vw,12px);
+  color:var(--text-3);
+  letter-spacing:.5px;
+  font-weight:600;
+}
+
+/* ===========================================================
+   SECTION
+   =========================================================== */
+section{
+  padding:var(--pad-y) 0;
+  position:relative;
+}
+section.alt{background:var(--bg-2)}
+.section-head{
+  margin-bottom:clamp(36px,6vw,60px);
+  max-width:900px;
+}
+.section-num{
+  display:inline-block;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:clamp(11px,2.5vw,13px);
+  color:var(--red);
+  letter-spacing:1.5px;
+  margin-bottom:14px;
+  font-weight:700;
+}
+.section-head h2{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(24px,4.5vw,46px);
+  font-weight:900;
+  line-height:1.25;
+  letter-spacing:-.02em;
+  margin-bottom:18px;
+  color:var(--text);
+}
+.section-head h2 .accent{color:var(--red)}
+.section-head .sub{
+  font-size:clamp(13px,1.6vw,17px);
+  color:var(--text-2);
+  line-height:1.7;
+}
+
+/* ===========================================================
+   EXEC SUMMARY
+   =========================================================== */
+.summary-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));
+  gap:16px;
+  margin-bottom:clamp(36px,5vw,60px);
+}
+.summary-card{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:clamp(20px,3vw,28px);
+  position:relative;
+  overflow:hidden;
+  transition:all .4s;
+  box-shadow:var(--shadow-sm);
+}
+.summary-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;
+  width:100%;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--gold));
+  transform:scaleX(0);
+  transform-origin:left;
+  transition:transform .5s;
+}
+.summary-card:hover::before{transform:scaleX(1)}
+.summary-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow-lg);
+  border-color:rgba(220,38,38,.3);
+}
+.summary-card .icon{
+  font-size:24px;
+  margin-bottom:14px;
+  display:inline-block;
+  line-height:1;
+}
+.summary-card h3{
+  font-size:clamp(15px,2vw,17px);
+  font-weight:700;
+  margin-bottom:10px;
+  letter-spacing:-.01em;
+  color:var(--text);
+  line-height:1.4;
+}
+.summary-card p{
+  font-size:clamp(13px,1.6vw,14px);
+  color:var(--text-2);
+  line-height:1.7;
+}
+.summary-card .metric{
+  font-family:'Inter',sans-serif;
+  font-size:clamp(26px,4.5vw,32px);
+  font-weight:800;
+  color:var(--red);
+  margin:6px 0 10px;
+  letter-spacing:-.02em;
+  line-height:1;
+}
+
+/* ===========================================================
+   KEY POINT QUOTE
+   =========================================================== */
+.keypoint{
+  background:linear-gradient(135deg, var(--red-soft), var(--gold-soft));
+  border:1px solid rgba(220,38,38,.15);
+  border-left:4px solid var(--red);
+  padding:clamp(20px,3vw,28px) clamp(20px,3vw,32px);
+  border-radius:8px;
+  margin:clamp(28px,4vw,40px) 0;
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(15px,2vw,20px);
+  font-weight:500;
+  line-height:1.7;
+  font-style:italic;
+  color:var(--text);
+  box-shadow:var(--shadow-sm);
+}
+.keypoint .quote-mark{
+  color:var(--red);
+  font-size:clamp(22px,3vw,28px);
+  font-weight:900;
+  line-height:0;
+  vertical-align:-4px;
+  margin-right:6px;
+}
+.keypoint .source{
+  display:block;
+  margin-top:14px;
+  font-style:normal;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:clamp(10px,1.8vw,12px);
+  color:var(--text-3);
+  letter-spacing:.5px;
+  font-weight:600;
+}
+
+/* ===========================================================
+   CHART CARDS
+   =========================================================== */
+.chart-card{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:clamp(20px,3vw,32px);
+  margin:clamp(20px,3vw,32px) 0;
+  box-shadow:var(--shadow-sm);
+}
+.chart-card h3{
+  font-size:clamp(15px,2vw,18px);
+  font-weight:700;
+  margin-bottom:6px;
+  color:var(--text);
+  line-height:1.4;
+}
+.chart-card .chart-sub{
+  font-size:clamp(12px,1.6vw,13px);
+  color:var(--text-3);
+  margin-bottom:clamp(16px,2.5vw,24px);
+  line-height:1.5;
+}
+.chart-wrap{
+  height:clamp(260px,40vw,320px);
+  position:relative;
+  width:100%;
+}
+.chart-wrap.tall{height:clamp(300px,50vw,420px)}
+
+.dual-chart{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+}
+@media(max-width:768px){
+  .dual-chart{grid-template-columns:1fr;gap:14px}
+}
+
+/* ===========================================================
+   EVIDENCE GRID
+   =========================================================== */
+.evidence-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr));
+  gap:14px;
+  margin:clamp(24px,4vw,32px) 0;
+}
+.evidence-item{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:clamp(20px,3vw,24px);
+  position:relative;
+  transition:all .3s;
+  box-shadow:var(--shadow-sm);
+}
+.evidence-item:hover{
+  border-color:var(--red);
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-md);
+}
+.evidence-item .num{
+  position:absolute;
+  top:18px;right:18px;
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:clamp(10px,1.8vw,11px);
+  color:var(--text-3);
+  font-weight:700;
+}
+.evidence-item .ic{
+  width:42px;height:42px;
+  border-radius:10px;
+  background:var(--red-soft);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:14px;
+  font-size:18px;
+}
+.evidence-item h4{
+  font-size:clamp(14px,1.8vw,15px);
+  font-weight:700;
+  margin-bottom:8px;
+  letter-spacing:-.01em;
+  color:var(--text);
+  padding-right:80px;
+  line-height:1.4;
+}
+.evidence-item p{
+  font-size:clamp(12px,1.6vw,13px);
+  color:var(--text-2);
+  line-height:1.65;
+}
+.evidence-item .data{
+  margin-top:12px;
+  padding-top:12px;
+  border-top:1px dashed var(--line-strong);
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:clamp(11px,1.6vw,12px);
+  color:var(--gold-deep);
+  font-weight:700;
+  word-break:break-all;
+}
+
+/* ===========================================================
+   TIMELINE
+   =========================================================== */
+.timeline{
+  position:relative;
+  margin:clamp(24px,4vw,40px) 0;
+  padding-left:32px;
+}
+.timeline::before{
+  content:'';
+  position:absolute;
+  left:10px;top:8px;bottom:8px;
+  width:2px;
+  background:linear-gradient(180deg,var(--red),var(--gold));
+}
+.tl-item{
+  position:relative;
+  padding-bottom:clamp(24px,4vw,36px);
+}
+.tl-item::before{
+  content:'';
+  position:absolute;
+  left:-28px;top:6px;
+  width:14px;height:14px;
+  border-radius:50%;
+  background:var(--bg);
+  border:3px solid var(--red);
+  box-shadow:0 0 0 4px var(--bg);
+}
+.tl-item:last-child{padding-bottom:0}
+.tl-year{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:clamp(11px,1.8vw,12px);
+  color:var(--gold-deep);
+  font-weight:700;
+  letter-spacing:.5px;
+  margin-bottom:6px;
+}
+.tl-title{
+  font-size:clamp(14px,2vw,16px);
+  font-weight:700;
+  margin-bottom:6px;
+  color:var(--text);
+  line-height:1.4;
+}
+.tl-desc{
+  font-size:clamp(13px,1.7vw,14px);
+  color:var(--text-2);
+  line-height:1.65;
+}
+
+/* ===========================================================
+   TABLE
+   =========================================================== */
+.table-wrap{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:16px;
+  overflow:hidden;
+  margin:clamp(24px,4vw,32px) 0;
+  box-shadow:var(--shadow-sm);
+}
+.t-head{
+  padding:clamp(18px,3vw,24px) clamp(20px,3vw,28px);
+  border-bottom:1px solid var(--line);
+  background:var(--bg-2);
+}
+.t-head h3{
+  font-size:clamp(15px,2vw,17px);
+  font-weight:700;
+  margin-bottom:4px;
+  color:var(--text);
+}
+.t-head p{
+  font-size:clamp(12px,1.6vw,13px);
+  color:var(--text-3);
+}
+.t-scroll{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+table{
+  width:100%;
+  min-width:520px;
+  border-collapse:collapse;
+}
+th,td{
+  padding:clamp(12px,2vw,16px) clamp(14px,2.2vw,20px);
+  text-align:left;
+  font-size:clamp(12px,1.7vw,14px);
+  border-bottom:1px solid var(--line);
+  white-space:nowrap;
+}
+td:last-child{white-space:normal}
+th{
+  background:var(--bg-2);
+  font-weight:700;
+  font-size:clamp(11px,1.5vw,12px);
+  color:var(--text-2);
+  text-transform:uppercase;
+  letter-spacing:.5px;
+}
+tbody tr{transition:background .2s}
+tbody tr:hover{background:var(--red-soft)}
+tbody tr:last-child td{border-bottom:none}
+td.num{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  color:var(--gold-deep);
+  font-weight:700;
+}
+.tag{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:6px;
+  font-size:clamp(10px,1.5vw,11px);
+  font-weight:700;
+  letter-spacing:.5px;
+  white-space:nowrap;
+}
+.tag.red{background:var(--red-soft);color:var(--red-deep)}
+.tag.gold{background:var(--gold-soft);color:var(--gold-deep)}
+.tag.blue{background:#eff6ff;color:#1d4ed8}
+.tag.gray{background:var(--bg-3);color:var(--text-2)}
+
+/* ===========================================================
+   RESISTANCE STAGES
+   =========================================================== */
+.stages{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin:clamp(28px,4vw,36px) 0;
+}
+@media(max-width:900px){.stages{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.stages{grid-template-columns:1fr}}
+.stage{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:clamp(18px,2.5vw,24px) clamp(16px,2.5vw,20px);
+  position:relative;
+  transition:all .4s;
+  box-shadow:var(--shadow-sm);
+}
+.stage:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
+.stage[data-level="1"]:hover{border-color:#fbbf24;background:#fffbeb}
+.stage[data-level="2"]:hover{border-color:#fb923c;background:#fff7ed}
+.stage[data-level="3"]:hover{border-color:#f87171;background:#fef2f2}
+.stage[data-level="4"]:hover{border-color:#dc2626;background:#fef2f2}
+.stage .lvl{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:clamp(10px,1.6vw,11px);
+  color:var(--text-3);
+  letter-spacing:1.5px;
+  margin-bottom:8px;
+  font-weight:700;
+}
+.stage h4{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(20px,3vw,24px);
+  font-weight:900;
+  margin-bottom:4px;
+  letter-spacing:-.02em;
+  line-height:1.2;
+}
+.stage[data-level="1"] h4{color:#b45309}
+.stage[data-level="2"] h4{color:#c2410c}
+.stage[data-level="3"] h4{color:#b91c1c}
+.stage[data-level="4"] h4{color:#991b1b}
+.stage .han{
+  font-size:clamp(12px,1.6vw,13px);
+  color:var(--text-3);
+  font-family:'Noto Serif KR',serif;
+  margin-bottom:14px;
+}
+.stage p{
+  font-size:clamp(12px,1.6vw,13px);
+  color:var(--text-2);
+  line-height:1.65;
+}
+.severity{
+  margin-top:14px;
+  display:flex;
+  gap:3px;
+}
+.sev-bar{
+  flex:1;
+  height:4px;
+  border-radius:2px;
+  background:var(--bg-3);
+}
+.sev-bar.on{background:var(--red)}
+
+/* ===========================================================
+   KOREA WARNING
+   =========================================================== */
+.korea-warn{
+  background:
+    radial-gradient(ellipse at top right,rgba(220,38,38,.06),transparent 60%),
+    var(--bg);
+  border:1px solid rgba(220,38,38,.25);
+  border-radius:20px;
+  padding:clamp(28px,5vw,48px);
+  margin:clamp(28px,4vw,40px) 0;
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow-md);
+}
+.korea-warn::before{
+  content:'⚠';
+  position:absolute;
+  top:-30px;right:-20px;
+  font-size:clamp(140px,25vw,280px);
+  opacity:.04;
+  font-weight:900;
+  color:var(--red);
+  pointer-events:none;
+}
+.korea-warn .label{
+  display:inline-block;
+  padding:5px 12px;
+  background:var(--red);
+  color:#fff;
+  font-size:clamp(10px,1.7vw,11px);
+  font-weight:700;
+  letter-spacing:1.5px;
+  border-radius:4px;
+  margin-bottom:18px;
+}
+.korea-warn h3{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(20px,3.5vw,32px);
+  font-weight:900;
+  margin-bottom:18px;
+  line-height:1.3;
+  color:var(--text);
+}
+.korea-warn p{
+  font-size:clamp(13px,1.8vw,15px);
+  color:var(--text-2);
+  line-height:1.8;
+  max-width:760px;
+}
+.korea-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(180px,100%),1fr));
+  gap:12px;
+  margin-top:28px;
+}
+.k-item{
+  padding:16px;
+  background:var(--bg-2);
+  border-radius:10px;
+  border:1px solid var(--line);
+  min-width:0;
+}
+.k-item .h{
+  font-size:clamp(11px,1.6vw,12px);
+  color:var(--text-3);
+  margin-bottom:6px;
+  letter-spacing:.5px;
+  font-weight:600;
+}
+.k-item .v{
+  font-size:clamp(13px,1.7vw,14px);
+  font-weight:600;
+  color:var(--text);
+  line-height:1.4;
+}
+.k-item .v.same{color:var(--red)}
+
+/* ===========================================================
+   TACTICS GRID
+   =========================================================== */
+.tactics{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));
+  gap:12px;
+  margin-top:clamp(24px,4vw,32px);
+}
+.tactic{
+  padding:clamp(18px,2.5vw,22px);
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-radius:12px;
+  position:relative;
+  overflow:hidden;
+  box-shadow:var(--shadow-sm);
+  transition:all .3s;
+}
+.tactic:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow-md);
+  border-color:rgba(220,38,38,.3);
+}
+.tactic .badge{
+  position:absolute;
+  top:16px;right:16px;
+  font-size:clamp(9px,1.5vw,10px);
+  padding:2px 8px;
+  background:var(--red-soft);
+  color:var(--red);
+  border-radius:4px;
+  font-weight:700;
+  letter-spacing:.5px;
+}
+.tactic h5{
+  font-size:clamp(13px,1.8vw,14px);
+  font-weight:700;
+  margin-bottom:8px;
+  padding-right:60px;
+  color:var(--text);
+  line-height:1.4;
+}
+.tactic p{
+  font-size:clamp(12px,1.7vw,13px);
+  color:var(--text-2);
+  line-height:1.6;
+}
+
+/* ===========================================================
+   COST BARS
+   =========================================================== */
+.cost-bars{margin:clamp(20px,3vw,32px) 0}
+.cost-row{
+  display:grid;
+  grid-template-columns:clamp(80px,18vw,120px) 1fr clamp(60px,15vw,90px);
+  align-items:center;
+  gap:clamp(10px,2vw,16px);
+  margin-bottom:12px;
+  font-size:clamp(12px,1.7vw,13px);
+}
+.cost-label{
+  font-weight:600;
+  color:var(--text);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.cost-bar{
+  height:clamp(24px,4vw,30px);
+  background:var(--bg-3);
+  border-radius:4px;
+  overflow:hidden;
+  position:relative;
+}
+.cost-fill{
+  height:100%;
+  border-radius:4px;
+  transition:width 1.5s cubic-bezier(.2,.8,.2,1);
+  width:0;
+  background:linear-gradient(90deg,var(--red-deep),var(--red));
+  max-width:100%;
+}
+.cost-fill.china{background:linear-gradient(90deg,#991b1b,#dc2626)}
+.cost-fill.korea{background:linear-gradient(90deg,#9a3412,#ea580c)}
+.cost-fill.usa{background:linear-gradient(90deg,#1e40af,#3b82f6)}
+.cost-fill.france{background:linear-gradient(90deg,#065f46,#10b981)}
+.cost-value{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-weight:700;
+  color:var(--gold-deep);
+  text-align:right;
+  white-space:nowrap;
+}
+
+/* ===========================================================
+   CONCLUSION
+   =========================================================== */
+.conclusion{
+  text-align:center;
+  padding:clamp(70px,12vw,120px) var(--pad-x);
+  background:
+    radial-gradient(ellipse at center,rgba(220,38,38,.05),transparent 60%),
+    var(--bg);
+  border-top:1px solid var(--line);
+}
+.conclusion h2{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(24px,5vw,52px);
+  font-weight:900;
+  letter-spacing:-.03em;
+  line-height:1.25;
+  margin-bottom:24px;
+  max-width:900px;
+  margin-left:auto;
+  margin-right:auto;
+  color:var(--text);
+}
+.conclusion h2 em{
+  font-style:normal;
+  background:linear-gradient(135deg,var(--red),var(--gold));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.conclusion p{
+  font-size:clamp(14px,2vw,17px);
+  color:var(--text-2);
+  max-width:720px;
+  margin:0 auto clamp(28px,5vw,40px);
+  line-height:1.8;
+}
+.takeaways{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  max-width:900px;
+  margin:clamp(36px,5vw,50px) auto 0;
+  text-align:left;
+}
+@media(max-width:768px){.takeaways{grid-template-columns:1fr}}
+.takeaway{
+  background:var(--bg);
+  border:1px solid var(--line);
+  border-left:3px solid var(--red);
+  padding:clamp(18px,3vw,24px);
+  border-radius:8px;
+  box-shadow:var(--shadow-sm);
+}
+.takeaway .n{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:clamp(10px,1.6vw,11px);
+  color:var(--red);
+  letter-spacing:1.5px;
+  margin-bottom:8px;
+  font-weight:700;
+}
+.takeaway p{
+  font-size:clamp(13px,1.7vw,14px);
+  color:var(--text);
+  line-height:1.65;
+  margin:0;
+}
+
+footer{
+  padding:clamp(28px,5vw,40px) var(--pad-x);
+  border-top:1px solid var(--line);
+  text-align:center;
+  font-size:clamp(11px,1.6vw,12px);
+  color:var(--text-3);
+  background:var(--bg-2);
+  font-weight:500;
+  line-height:1.7;
+  padding-bottom:max(clamp(28px,5vw,40px), env(safe-area-inset-bottom,0px));
+}
+
+/* ===========================================================
+   ANIMATIONS
+   =========================================================== */
+.fade-in{
+  opacity:0;
+  transform:translateY(20px);
+  transition:opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1);
+  will-change:opacity,transform;
+}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+    scroll-behavior:auto !important;
+  }
+  .fade-in{opacity:1;transform:none}
+  .hero h1 .strike::after{transform:scaleX(1)}
+}
+
+/* ===========================================================
+   INLINE SECTION HEADERS (h3 outside chart-card)
+   =========================================================== */
+.subhead{
+  margin:clamp(36px,5vw,48px) 0 8px;
+  font-size:clamp(17px,2.5vw,20px);
+  font-weight:700;
+  color:var(--text);
+  line-height:1.4;
+}
+.subhead-desc{
+  color:var(--text-2);
+  font-size:clamp(13px,1.7vw,14px);
+  margin-bottom:clamp(20px,3vw,24px);
+  line-height:1.6;
+}
+.cost-foot{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--line);
+  font-size:clamp(11px,1.5vw,12px);
+  color:var(--text-3);
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-weight:500;
+  line-height:1.5;
+}
+
+/* ===========================================================
+   SMALL DEVICE FINE-TUNES
+   =========================================================== */
+@media(max-width:600px){
+  .hero-stats{grid-template-columns:repeat(2,1fr)}
+  .hero-stat{padding:18px 14px}
+  .hero h1 .strike{display:inline}
+  .evidence-item h4{padding-right:64px}
+}
+@media(max-width:380px){
+  table{min-width:480px}
+  .hero-stats .label{font-size:10px}
+}
+
+/* ===========================================================
+   PRINT
+   =========================================================== */
+@media print{
+  body{background:#fff;color:#000}
+  .hero{min-height:auto;padding:40px 24px}
+  .fade-in{opacity:1;transform:none}
+  section{padding:30px 0;break-inside:avoid}
+  .chart-card,.summary-card,.evidence-item,.stage,.tactic,.takeaway,.korea-warn{
+    box-shadow:none;
+    border:1px solid #ccc;
+    break-inside:avoid;
+  }
+  .keypoint{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag"><span class="dot"></span> EXECUTIVE BRIEFING · CONFIDENTIAL</div>
+    <h1>중국 14억의 <span class="strike">허상</span>,<br><span class="red">자본주의의 종착역</span>을<br>경고하다</h1>
+    <p class="lead">
+      세계 최대 시장이라는 중국의 인구 통계가 정교하게 조작되어 왔으며, 청년 세대의 '생존 파업'이
+      자본주의 시스템 자체를 질식시키고 있다. 이는 단순한 인구 문제가 아닌, 동아시아 압축 성장
+      모델의 파멸적 결말을 미리 보여주는 거울이다.
+    </p>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="label">REAL POPULATION</div>
+        <div class="value red">8–9억</div>
+        <div class="desc">소금 소비량 역추산</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">2025 NEWBORNS</div>
+        <div class="value">792만</div>
+        <div class="desc">청나라 건륭제 수준</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">FAKE RECORDS</div>
+        <div class="value gold">5,800만</div>
+        <div class="desc">결핵 접종 기록 증발</div>
+      </div>
+      <div class="hero-stat">
+        <div class="label">RAISING COST</div>
+        <div class="value red">6.3×</div>
+        <div class="desc">1인당 GDP 대비</div>
+      </div>
+    </div>
+
+    <div class="hero-meta">
+      <span>SOURCE · 신사임당 「이슈임당」</span>
+      <span>STRATEGIC INTELLIGENCE</span>
+    </div>
+  </div>
+</section>
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <div class="section-num">01 — EXECUTIVE SUMMARY</div>
+      <h2>한 줄 요약: 14억 시장은 <span class="accent">허구</span>이며,<br>중국 청년은 시스템에서 <span class="accent">탈주</span>했다.</h2>
+      <p class="sub">의사결정자가 반드시 인지해야 할 4가지 근본 변화. 이 변화들은 글로벌 자본 배분, 공급망,
+      소비재 시장 전망, 그리고 국내 정책 설계 모두에 직접적인 영향을 미친다.</p>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card fade-in">
+        <div class="icon">📉</div>
+        <h3>인구 통계 신뢰성 붕괴</h3>
+        <div class="metric">−5억</div>
+        <p>공식 14억 대비 실제 추정치 격차. 결핵 예방접종 기록과 소금 소비량이라는 물리적 지표가 통계 조작을 입증하고 있다.</p>
+      </div>
+      <div class="summary-card fade-in">
+        <div class="icon">🚫</div>
+        <h3>자발적 출산 파업</h3>
+        <div class="metric">0.53</div>
+        <p>상하이 합계출산율. 자본의 심장에서 가장 낮은 출산율이 나오는 역설. 정책적 인센티브로는 회복 불가능한 단계.</p>
+      </div>
+      <div class="summary-card fade-in">
+        <div class="icon">🏚️</div>
+        <h3>부동산 신화 종료</h3>
+        <div class="metric">∞</div>
+        <p>헝다·비구이위안 연쇄 파산. 시스템 편입 = 경제적 자살이라는 청년 세대의 집단 인식이 고착화되었다.</p>
+      </div>
+      <div class="summary-card fade-in">
+        <div class="icon">⚠️</div>
+        <h3>한국형 모델의 위기</h3>
+        <div class="metric">0.72</div>
+        <p>한국 합계출산율. 동아시아 압축 성장의 끝에서 같은 신호가 감지된다. 중국은 한국의 미래 시나리오일 수 있다.</p>
+      </div>
+    </div>
+
+    <div class="keypoint fade-in">
+      <span class="quote-mark">❝</span>자본이 뭉쳐 있고 화려한 곳일수록 사람들의 생존 의지는 꺾여 버린다.
+      <span class="source">— 출처 영상 02:53</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 1: POPULATION EVIDENCE -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div class="section-num">02 — DATA FORENSICS</div>
+      <h2>"14억"은 <span class="accent">존재하지 않는 숫자</span>다</h2>
+      <p class="sub">속일 수 있는 행정 통계와 달리, 백신 접종 기록과 소금 소비량은 생물학적 실재를 증명한다.
+      네 가지 독립된 증거가 동일한 결론을 가리킨다.</p>
+    </div>
+
+    <div class="dual-chart">
+      <div class="chart-card fade-in">
+        <h3>출생아 수 급락 (2024 → 2025)</h3>
+        <div class="chart-sub">단 1년 만에 17% 증발 · 부산광역시 인구 규모 소멸</div>
+        <div class="chart-wrap"><canvas id="birthChart"></canvas></div>
+      </div>
+      <div class="chart-card fade-in">
+        <h3>역사적 비교: 2025 = 1738</h3>
+        <div class="chart-sub">건륭제 시절 1.5억 인구 때와 동일한 출생 규모</div>
+        <div class="chart-wrap"><canvas id="historicalChart"></canvas></div>
+      </div>
+    </div>
+
+    <div class="chart-card fade-in">
+      <h3>대도시 출산율 붕괴: 부유할수록 더 낮다</h3>
+      <div class="chart-sub">국가 유지선 1.0 · 경고선 0.7 · 인프라 집중 도시일수록 더 가파른 하락</div>
+      <div class="chart-wrap tall"><canvas id="cityChart"></canvas></div>
+    </div>
+
+    <div class="evidence-grid fade-in">
+      <div class="evidence-item">
+        <div class="num">EVIDENCE 01</div>
+        <div class="ic">📊</div>
+        <h4>출생·사망 데드크로스</h4>
+        <p>2025년 출생 792만 vs 사망 1,131만. 자연 감소만 339만 명, 부산광역시 전체 인구가 1년 만에 사라졌다.</p>
+        <div class="data">DEFICIT: −3,390,000 / YEAR</div>
+      </div>
+      <div class="evidence-item">
+        <div class="num">EVIDENCE 02</div>
+        <div class="ic">💉</div>
+        <h4>결핵 예방접종 격차</h4>
+        <p>2008–2021년 사이 신생아 필수 접종 기록 5,800만 명분이 시스템에서 비어 있다. 역산 시 가짜 인구 최대 2억.</p>
+        <div class="data">PHANTOM POP: ~200M</div>
+      </div>
+      <div class="evidence-item">
+        <div class="num">EVIDENCE 03</div>
+        <div class="ic">🧂</div>
+        <h4>소금 소비량 역추산</h4>
+        <p>일본 인구학자들의 평균 소금 섭취량 기반 추정. 14억은 8~9억으로 급락. 2015년 이미 인도가 1위.</p>
+        <div class="data">ACTUAL: 800M – 900M</div>
+      </div>
+      <div class="evidence-item">
+        <div class="num">EVIDENCE 04</div>
+        <div class="ic">📱</div>
+        <h4>휴대전화 가입자 증발</h4>
+        <p>2020년 팬데믹 춘절, 수천만 회선이 동시 해지. 통신망 기록은 정부가 은폐한 사망자를 조용히 증명한다.</p>
+        <div class="data">SIM CARDS: TENS OF MILLIONS</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 2: STATE CONTROL -->
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <div class="section-num">03 — STATE COERCION</div>
+      <h2>국가의 발작적 통제: <span class="accent">생물학적 권리</span>를 도구화하다</h2>
+      <p class="sub">14억 시장이라는 간판이 무너지면 글로벌 자본·외교·군사력의 근간이 흔들린다.
+      이를 막기 위해 중국은 피임 도구 과세부터 사상 검열까지 동원하고 있다.</p>
+    </div>
+
+    <div class="chart-card fade-in">
+      <h3>14억 vs 9억: 비즈니스 펀더멘털의 붕괴</h3>
+      <div class="chart-sub">소비 잠재력 차이는 단순 −36%가 아닌, 글로벌 자본 배분 논리의 전면 재편</div>
+      <div class="chart-wrap"><canvas id="marketChart"></canvas></div>
+    </div>
+
+    <div class="keypoint fade-in">
+      <span class="quote-mark">❝</span>14억 명한테 물건 파는 거랑 9억 명한테 파는 건 비즈니스 근본이 뒤흔들리는 완전히 다른 게임이다.
+      <span class="source">— 출처 영상 06:34</span>
+    </div>
+
+    <h3 class="subhead">국가가 동원한 5가지 강제 수단</h3>
+    <p class="subhead-desc">— 환경 개선 대신 물리적 장벽과 사상 통제로 출산을 강요</p>
+
+    <div class="tactics fade-in">
+      <div class="tactic">
+        <span class="badge">2025</span>
+        <h5>피임 부가가치세 13%</h5>
+        <p>30년간 비과세였던 피임약·콘돔에 세금 부과. 원치 않는 임신을 강제 유도.</p>
+      </div>
+      <div class="tactic">
+        <span class="badge">즉흥</span>
+        <h5>관광지 즉석 혼인센터</h5>
+        <p>유명 관광지에 즉석 혼인 신고 시설 설치. 분위기에 휩쓸린 즉흥 결혼 종용.</p>
+      </div>
+      <div class="tactic">
+        <span class="badge">기만</span>
+        <h5>월 6만 원 출산 지원금</h5>
+        <p>3세 미만 자녀당 연 3,600위안(약 72만 원). 양육비 1억 대비 0.7%에 불과.</p>
+      </div>
+      <div class="tactic">
+        <span class="badge">학제</span>
+        <h5>12년 → 9년 단축안</h5>
+        <p>관변 학자의 제안. 15세 조기 노동·출산 투입. 사람을 부품으로 보는 발상.</p>
+      </div>
+      <div class="tactic">
+        <span class="badge">검열</span>
+        <h5>청랑(淸朗) 작전</h5>
+        <p>2025년 춘절 대대적 검열. 비혼·결혼제도 모순 글 전면 삭제.</p>
+      </div>
+    </div>
+
+    <div class="keypoint fade-in" style="margin-top:clamp(36px,5vw,48px)">
+      <span class="quote-mark">❝</span>이제 그 연료(인구 배당금)가 다 떨어지니까 재빠르게 간판을 '인재 배당금'으로 갈아끼웠다.
+      <span class="source">— 출처 영상 07:04</span>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 3: WHY YOUTH REFUSE -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div class="section-num">04 — STRUCTURAL CAUSES</div>
+      <h2>왜 청년들은 <span class="accent">출산을 거부하는가</span></h2>
+      <p class="sub">살인적 양육비, 996 노동 문화, 36년 한 자녀 정책의 후유증. 정책 인센티브로는 해제 불가능한
+      구조적 방어 기제가 형성되었다.</p>
+    </div>
+
+    <div class="chart-card fade-in">
+      <h3>1인당 GDP 대비 양육비 부담 (자녀 1명당 18세까지)</h3>
+      <div class="chart-sub">중국이 세계 최상위권 · 정책 지원금으로는 메울 수 없는 절벽</div>
+      <div class="cost-bars">
+        <div class="cost-row">
+          <div class="cost-label">🇨🇳 중국</div>
+          <div class="cost-bar"><div class="cost-fill china" data-w="81">&nbsp;</div></div>
+          <div class="cost-value">6.3×</div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-label">🇰🇷 한국</div>
+          <div class="cost-bar"><div class="cost-fill korea" data-w="100">&nbsp;</div></div>
+          <div class="cost-value">7.8×</div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-label">🇯🇵 일본</div>
+          <div class="cost-bar"><div class="cost-fill korea" data-w="55">&nbsp;</div></div>
+          <div class="cost-value">4.3×</div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-label">🇺🇸 미국</div>
+          <div class="cost-bar"><div class="cost-fill usa" data-w="53">&nbsp;</div></div>
+          <div class="cost-value">4.1×</div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-label">🇫🇷 프랑스</div>
+          <div class="cost-bar"><div class="cost-fill france" data-w="37">&nbsp;</div></div>
+          <div class="cost-value">2.9×</div>
+        </div>
+        <div class="cost-row">
+          <div class="cost-label">🇩🇪 독일</div>
+          <div class="cost-bar"><div class="cost-fill france" data-w="46">&nbsp;</div></div>
+          <div class="cost-value">3.6×</div>
+        </div>
+      </div>
+      <div class="cost-foot">
+        ※ 중국 절대 금액 54.8만 위안(약 1억 원). 한국 등 비교치는 일반 통계 기반 추정.
+      </div>
+    </div>
+
+    <h3 class="subhead">한 자녀 정책 36년의 후유증 타임라인</h3>
+    <p class="subhead-desc">— 인위적 생물학적 엔지니어링이 만든 회복 불가능한 사회</p>
+
+    <div class="timeline fade-in">
+      <div class="tl-item">
+        <div class="tl-year">1979</div>
+        <div class="tl-title">덩샤오핑, 한 자녀 정책 강행</div>
+        <div class="tl-desc">국가가 자궁을 통제하는 잔혹한 생물학적 엔지니어링 시작. 무거운 벌금과 강제 낙태.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1980s–2010s</div>
+        <div class="tl-title">약 4억 명 잠재 생명 소멸 · 성비 붕괴</div>
+        <div class="tl-desc">남아 선호와 결합되어 정상 성비(103~107)가 한때 118까지 치솟음. 잉여 남성 3,000~4,000만 명 발생.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2010s–현재</div>
+        <div class="tl-title">'소황제' 세대의 정서적 붕괴</div>
+        <div class="tl-desc">조부모 4 + 부모 2가 자녀 1에 모든 것을 쏟아붓는 기형 구조. 다음 세대에 학대를 물려주지 않겠다 결심.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2013</div>
+        <div class="tl-title">조건부 2자녀 허용 → 실제 출산 14%만</div>
+        <div class="tl-desc">36년간 '형제자매' 개념이 소멸된 세대에게 갑작스러운 출산 명령은 통하지 않았다.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2016</div>
+        <div class="tl-title">전면 2자녀 허용</div>
+        <div class="tl-desc">출산율 그래프는 오히려 곤두박질. 정책 빗장을 풀었지만 봉인된 문화는 돌아오지 않음.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2021</div>
+        <div class="tl-title">3자녀 허용 → 정책 실패 확정</div>
+        <div class="tl-desc">국가가 주입한 '무자녀 DNA'를 청년들이 불치병처럼 내면화. 인센티브·억압 모두 무효.</div>
+      </div>
+    </div>
+
+    <div class="chart-card fade-in" style="margin-top:clamp(36px,5vw,48px)">
+      <h3>중국 합계출산율 추이 (1979–2025)</h3>
+      <div class="chart-sub">정책 완화에도 불구하고 회복하지 않는 곡선 — 신뢰의 붕괴</div>
+      <div class="chart-wrap tall"><canvas id="trendChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- SECTION 4: RESISTANCE -->
+<section>
+  <div class="container">
+    <div class="section-head fade-in">
+      <div class="section-num">05 — RESISTANCE EVOLUTION</div>
+      <h2>4단계로 진화한 <span class="accent">청년의 저항</span></h2>
+      <p class="sub">탕핑(눕기)에서 시작된 저항이 바이란(자포자기), 런학(탈출), 라오슈런(쥐인간)으로
+      급진화. 자본주의의 핵심 동력인 '소비 욕망' 자체가 소멸하고 있다.</p>
+    </div>
+
+    <div class="stages fade-in">
+      <div class="stage" data-level="1">
+        <div class="lvl">STAGE 01</div>
+        <h4>탕핑</h4>
+        <div class="han">躺平 · 눕기</div>
+        <p>경쟁·소비·결혼 거부. 침대에 누워 최소한의 생존만 유지하는 조용한 혁명.</p>
+        <div class="severity">
+          <div class="sev-bar on"></div>
+          <div class="sev-bar"></div>
+          <div class="sev-bar"></div>
+          <div class="sev-bar"></div>
+        </div>
+      </div>
+      <div class="stage" data-level="2">
+        <div class="lvl">STAGE 02</div>
+        <h4>바이란</h4>
+        <div class="han">摆烂 · 썩기</div>
+        <p>2021년~. 저항 의지조차 상실. 함께 썩어가겠다는 자포자기. 웨이보 9,320만 조회.</p>
+        <div class="severity">
+          <div class="sev-bar on"></div>
+          <div class="sev-bar on"></div>
+          <div class="sev-bar"></div>
+          <div class="sev-bar"></div>
+        </div>
+      </div>
+      <div class="stage" data-level="3">
+        <div class="lvl">STAGE 03</div>
+        <h4>런학</h4>
+        <div class="han">Run학 · 탈출</div>
+        <p>자본·능력 보유 계층의 해외 도피 연구. 공산당 수탈로부터 자산을 지키는 학문화.</p>
+        <div class="severity">
+          <div class="sev-bar on"></div>
+          <div class="sev-bar on"></div>
+          <div class="sev-bar on"></div>
+          <div class="sev-bar"></div>
+        </div>
+      </div>
+      <div class="stage" data-level="4">
+        <div class="lvl">STAGE 04</div>
+        <h4>라오슈런</h4>
+        <div class="han">老鼠人 · 쥐인간</div>
+        <p>2025년 신조어. 도시 지하 방공호·하수도에서 쥐처럼 숨어 지내는 최하층 청년.</p>
+        <div class="severity">
+          <div class="sev-bar on"></div>
+          <div class="sev-bar on"></div>
+          <div class="sev-bar on"></div>
+          <div class="sev-bar on"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-wrap fade-in">
+      <div class="t-head">
+        <h3>핵심 지표 한눈에 보기</h3>
+        <p>의사결정에 즉시 활용 가능한 정량 데이터 (가로로 스크롤)</p>
+      </div>
+      <div class="t-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>분류</th>
+            <th>지표</th>
+            <th>수치</th>
+            <th>의미</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="tag red">인구</span></td><td>2025 신생아</td><td class="num">7,920,000</td><td>1738년 청나라 수준</td></tr>
+          <tr><td><span class="tag red">인구</span></td><td>자연 감소</td><td class="num">−3,390,000</td><td>부산 인구 1년 소멸</td></tr>
+          <tr><td><span class="tag red">인구</span></td><td>실제 추정 인구</td><td class="num">800–900M</td><td>공식 14억의 60%</td></tr>
+          <tr><td><span class="tag gold">출산</span></td><td>전국 합계출산율</td><td class="num">0.90</td><td>국가 유지선 1.0 미달</td></tr>
+          <tr><td><span class="tag gold">출산</span></td><td>상하이 합계출산율</td><td class="num">0.53</td><td>세계 최저권</td></tr>
+          <tr><td><span class="tag gold">출산</span></td><td>2자녀 허용 후 실제 출산</td><td class="num">14%</td><td>정책 실패 확정</td></tr>
+          <tr><td><span class="tag blue">경제</span></td><td>양육비 (자녀 1명)</td><td class="num">¥548,000</td><td>1인당 GDP의 6.3배</td></tr>
+          <tr><td><span class="tag blue">경제</span></td><td>국가 출산 지원금</td><td class="num">¥3,600/년</td><td>양육비의 0.7%</td></tr>
+          <tr><td><span class="tag gray">사회</span></td><td>잉여 남성(광군)</td><td class="num">30–40M</td><td>인신매매 발생</td></tr>
+          <tr><td><span class="tag gray">사회</span></td><td>가짜 출생 기록</td><td class="num">58,000,000</td><td>2008–21 결핵접종 격차</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+
+    <div class="keypoint fade-in" style="margin-top:clamp(36px,5vw,48px)">
+      <span class="quote-mark">❝</span>결혼을 못 하는 게 아니다. 애를 안 낳는 게 아니다. 인간 대접도 안 해 주면서 시스템 부속품으로만 구르는 이 비정한 세상에 아예 게임 접속 자체를 거부해 버리는, 가장 뼈아픈 행동을 하고 있는 것이다.
+      <span class="source">— 출처 영상 19:53</span>
+    </div>
+  </div>
+</section>
+
+<!-- KOREA WARNING -->
+<section class="alt">
+  <div class="container">
+    <div class="section-head fade-in">
+      <div class="section-num">06 — IMPLICATION FOR KOREA</div>
+      <h2>대한민국에 비추는 <span class="accent">가장 날카로운 거울</span></h2>
+      <p class="sub">한국·대만·일본은 동일한 압축 성장 모델을 공유한다. 중국에서 가장 먼저 폭발한 증상이
+      한국에서 동일한 형태로 나타나고 있는지 점검해야 한다.</p>
+    </div>
+
+    <div class="korea-warn fade-in">
+      <span class="label">⚠ STRATEGIC WARNING</span>
+      <h3>중국의 오늘은, 한국의 내일이 될 수 있다</h3>
+      <p>피 말리는 서열화, 숨통 조이는 집값, 끝없는 무한 경쟁. 부모 세대의 처절한 헌신과
+      그 허무한 결말을 보고 자란 2030 세대에게 기존 시스템 편입 요구는 더 이상 유효하지 않다.
+      국가가 개인의 존엄을 지켜주지 않고 성장을 위해 맹목적인 착취만 계속한다면, 결국 '인구 소멸'이라는
+      절대 돌이킬 수 없는 방식으로 사회가 자멸한다.</p>
+
+      <div class="korea-grid">
+        <div class="k-item">
+          <div class="h">합계출산율</div>
+          <div class="v same">한국 0.72 / 중국 0.90</div>
+        </div>
+        <div class="k-item">
+          <div class="h">양육비 / GDP</div>
+          <div class="v same">한국 7.8× / 중국 6.3×</div>
+        </div>
+        <div class="k-item">
+          <div class="h">노동 문화</div>
+          <div class="v">996 ↔ 한국 장시간</div>
+        </div>
+        <div class="k-item">
+          <div class="h">부동산 압박</div>
+          <div class="v">신화 붕괴 ↔ 영끌</div>
+        </div>
+        <div class="k-item">
+          <div class="h">청년 저항</div>
+          <div class="v">탕핑 ↔ N포세대</div>
+        </div>
+        <div class="k-item">
+          <div class="h">정책 효과</div>
+          <div class="v same">양국 모두 무효</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card fade-in">
+      <h3>동아시아 합계출산율 비교 (2025)</h3>
+      <div class="chart-sub">압축 성장 모델 국가들의 동시 추락</div>
+      <div class="chart-wrap"><canvas id="asiaChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section class="conclusion">
+  <div class="container">
+    <h2 class="fade-in">소비할 인간이 사라지면,<br><em>자본주의는 질식한다.</em></h2>
+    <p class="fade-in">
+      AI는 퇴근길에 마라탕을 사 먹지 않는다. 로봇은 30년 만기 주택담보대출 서류에 서명하지 않는다.
+      과잉 생산의 늪에 빠진 중국 경제는 이미 수천만 채의 유령 아파트와 0%대 소매판매로
+      그 결과를 보여주고 있다. 의사결정자에게 남은 질문은 단 하나, "우리는 무엇이 다른가?"다.
+    </p>
+
+    <div class="takeaways">
+      <div class="takeaway fade-in">
+        <div class="n">TAKEAWAY 01</div>
+        <p><strong>중국 시장 가정의 전면 재검토.</strong> 14억 기준의 모든 사업 계획·자본 배분·M&amp;A 가정은 9억 시나리오로 스트레스 테스트되어야 한다.</p>
+      </div>
+      <div class="takeaway fade-in">
+        <div class="n">TAKEAWAY 02</div>
+        <p><strong>인센티브가 아닌 환경의 문제.</strong> 출산 지원금·세제 혜택만으로는 해결 불가. 노동시간·주거·경쟁 구조의 근본적 개조가 필수다.</p>
+      </div>
+      <div class="takeaway fade-in">
+        <div class="n">TAKEAWAY 03</div>
+        <p><strong>한국형 압축 성장의 임계점.</strong> 0.72 출산율은 이미 위험선 통과. 동일한 결말을 피하려면 시스템 자체에 대한 신뢰 회복이 선행되어야 한다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  EXECUTIVE BRIEFING · 중국 인구 붕괴와 자본주의 시스템 위기 분석<br>
+  원자료: 신사임당 「이슈임당」 영상(21:38) 기반 시각화 보고서 · 2026
+</footer>
+
+<script>
+(function(){
+  'use strict';
+
+  // Wait for Chart.js to be available
+  function init(){
+    if(typeof Chart === 'undefined'){
+      setTimeout(init, 50);
+      return;
+    }
+
+    // Detect mobile for chart sizing
+    var isMobile = window.matchMedia('(max-width: 600px)').matches;
+
+    // Chart.js global defaults — Light Mode
+    Chart.defaults.color = '#475569';
+    Chart.defaults.font.family = "'Inter','Noto Sans KR','Apple SD Gothic Neo',sans-serif";
+    Chart.defaults.font.size = isMobile ? 10 : 12;
+    Chart.defaults.borderColor = 'rgba(15,23,42,0.06)';
+    Chart.defaults.responsive = true;
+    Chart.defaults.maintainAspectRatio = false;
+
+    var TOOLTIP_STYLE = {
+      backgroundColor:'#ffffff',
+      titleColor:'#0f172a',
+      bodyColor:'#475569',
+      borderColor:'#e4e7ec',
+      borderWidth:1,
+      padding:12,
+      boxPadding:6,
+      titleFont:{weight:'700',size:13},
+      bodyFont:{size:12},
+      cornerRadius:8,
+      displayColors:true
+    };
+
+    var GRID_COLOR = 'rgba(15,23,42,0.05)';
+
+    function safeChart(id, config){
+      var el = document.getElementById(id);
+      if(!el) return null;
+      try{
+        return new Chart(el, config);
+      } catch(err){
+        console.warn('Chart init failed for', id, err);
+        return null;
+      }
+    }
+
+    // ====== Birth Chart ======
+    safeChart('birthChart', {
+      type: 'bar',
+      data: {
+        labels: ['2024', '2025'],
+        datasets: [
+          {
+            label: '신생아 (만 명)',
+            data: [954, 792],
+            backgroundColor: ['#3b82f6','#dc2626'],
+            borderRadius: 6,
+            barPercentage: 0.6
+          },
+          {
+            label: '사망자 (만 명)',
+            data: [1093, 1131],
+            backgroundColor: ['#94a3b8','#64748b'],
+            borderRadius: 6,
+            barPercentage: 0.6
+          }
+        ]
+      },
+      options: {
+        plugins:{
+          legend:{position:'top', labels:{boxWidth:12, padding:12, font:{size:isMobile?10:12,weight:600}, color:'#475569'}},
+          tooltip:TOOLTIP_STYLE
+        },
+        scales:{
+          y:{beginAtZero:true, grid:{color:GRID_COLOR}, ticks:{color:'#64748b'}},
+          x:{grid:{display:false}, ticks:{font:{weight:700},color:'#0f172a'}}
+        }
+      }
+    });
+
+    // ====== Historical comparison ======
+    safeChart('historicalChart', {
+      type: 'bar',
+      data: {
+        labels: ['1738 (인구 1.5억)', '2025 (인구 14억)'],
+        datasets: [{
+          label: '신생아 (만 명)',
+          data: [792, 792],
+          backgroundColor: ['#d97706','#dc2626'],
+          borderRadius: 6,
+          barPercentage: 0.5
+        }]
+      },
+      options: {
+        indexAxis:'y',
+        plugins:{
+          legend:{display:false},
+          tooltip:Object.assign({}, TOOLTIP_STYLE, {
+            callbacks:{label:function(ctx){return ctx.parsed.x+'만 명'}}
+          })
+        },
+        scales:{
+          x:{beginAtZero:true, grid:{color:GRID_COLOR}, ticks:{color:'#64748b'}},
+          y:{grid:{display:false}, ticks:{font:{weight:700},color:'#0f172a'}}
+        }
+      }
+    });
+
+    // ====== City fertility ======
+    safeChart('cityChart', {
+      type: 'bar',
+      data: {
+        labels: ['상하이', '톈진', '동북3성', '베이징', '전국 평균', '국가 유지선'],
+        datasets: [{
+          label: '합계출산율',
+          data: [0.53, 0.6, 0.6, 0.7, 0.9, 1.0],
+          backgroundColor: ['#991b1b','#dc2626','#dc2626','#ef4444','#f97316','#94a3b8'],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        plugins:{
+          legend:{display:false},
+          tooltip:Object.assign({}, TOOLTIP_STYLE, {
+            callbacks:{label:function(ctx){return 'TFR '+ctx.parsed.y.toFixed(2)}}
+          })
+        },
+        scales:{
+          y:{beginAtZero:true, max:1.2, grid:{color:GRID_COLOR},
+            ticks:{color:'#64748b', callback:function(v){return v.toFixed(1)}}},
+          x:{grid:{display:false}, ticks:{font:{weight:700},color:'#0f172a',maxRotation:45,minRotation:0}}
+        }
+      }
+    });
+
+    // ====== Market chart ======
+    safeChart('marketChart', {
+      type: 'doughnut',
+      data: {
+        labels: ['실제 추정 인구 8.5억', '허구로 추정되는 5.5억'],
+        datasets:[{
+          data:[8.5, 5.5],
+          backgroundColor:['#dc2626','#fecaca'],
+          borderColor:'#ffffff',
+          borderWidth:4
+        }]
+      },
+      options:{
+        cutout:'62%',
+        plugins:{
+          legend:{position:'bottom', labels:{boxWidth:12, padding:14, font:{size:isMobile?11:12,weight:600},color:'#475569'}},
+          tooltip:Object.assign({}, TOOLTIP_STYLE, {
+            callbacks:{label:function(ctx){return ctx.label+': '+ctx.parsed+'억'}}
+          })
+        }
+      }
+    });
+
+    // ====== Trend chart ======
+    safeChart('trendChart', {
+      type: 'line',
+      data: {
+        labels: ['1979','1990','2000','2010','2013','2016','2020','2023','2025'],
+        datasets: [{
+          label: '중국 합계출산율',
+          data: [2.75, 2.51, 1.51, 1.18, 1.24, 1.30, 1.30, 1.0, 0.9],
+          borderColor: '#dc2626',
+          backgroundColor: 'rgba(220,38,38,0.08)',
+          tension: 0.35,
+          fill:true,
+          pointRadius: isMobile ? 3 : 5,
+          pointHoverRadius: isMobile ? 5 : 7,
+          pointBackgroundColor:'#dc2626',
+          pointBorderColor:'#ffffff',
+          pointBorderWidth:2,
+          borderWidth: 3
+        },{
+          label: '국가 유지선 (1.0)',
+          data: [1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0,1.0],
+          borderColor: 'rgba(100,116,139,0.5)',
+          borderDash:[6,6],
+          borderWidth:1.5,
+          pointRadius:0,
+          fill:false
+        }]
+      },
+      options: {
+        plugins:{
+          legend:{position:'top', labels:{boxWidth:12, padding:12, font:{size:isMobile?10:12,weight:600},color:'#475569'}},
+          tooltip:TOOLTIP_STYLE
+        },
+        scales:{
+          y:{beginAtZero:true, max:3, grid:{color:GRID_COLOR}, ticks:{color:'#64748b'}},
+          x:{grid:{display:false}, ticks:{color:'#64748b'}}
+        }
+      }
+    });
+
+    // ====== Asia comparison ======
+    safeChart('asiaChart', {
+      type: 'bar',
+      data: {
+        labels: ['🇰🇷 한국','🇭🇰 홍콩','🇸🇬 싱가포르','🇨🇳 중국','🇹🇼 대만','🇯🇵 일본','유지선'],
+        datasets: [{
+          label: '합계출산율 (2025)',
+          data: [0.72, 0.77, 0.97, 0.90, 0.87, 1.20, 1.0],
+          backgroundColor: ['#991b1b','#dc2626','#ef4444','#f97316','#f97316','#d97706','#94a3b8'],
+          borderRadius: 6
+        }]
+      },
+      options: {
+        plugins:{
+          legend:{display:false},
+          tooltip:TOOLTIP_STYLE
+        },
+        scales:{
+          y:{beginAtZero:true, max:1.4, grid:{color:GRID_COLOR},
+            ticks:{color:'#64748b', callback:function(v){return v.toFixed(1)}}},
+          x:{grid:{display:false}, ticks:{font:{weight:700},color:'#0f172a',maxRotation:45,minRotation:0}}
+        }
+      }
+    });
+  }
+
+  // ====== Scroll animations ======
+  function setupAnimations(){
+    var fadeEls = document.querySelectorAll('.fade-in');
+    var costFills = document.querySelectorAll('.cost-fill');
+
+    function animateCostBars(){
+      costFills.forEach(function(bar){
+        var w = bar.getAttribute('data-w');
+        if(w) bar.style.width = w + '%';
+      });
+    }
+
+    if('IntersectionObserver' in window){
+      var observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            e.target.classList.add('visible');
+            // Trigger cost bars when chart card comes in
+            if(e.target.querySelector && e.target.querySelector('.cost-fill')){
+              animateCostBars();
+            }
+          }
+        });
+      }, {threshold:0.1, rootMargin:'-30px'});
+
+      fadeEls.forEach(function(el){observer.observe(el)});
+    } else {
+      // Fallback: just show everything
+      fadeEls.forEach(function(el){el.classList.add('visible')});
+    }
+
+    // Safety net: animate cost bars after 1s regardless
+    setTimeout(animateCostBars, 1000);
+  }
+
+  // Init when DOM is ready
+  if(document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', function(){
+      init();
+      setupAnimations();
+    });
+  } else {
+    init();
+    setupAnimations();
+  }
+
+  // Re-render charts on orientation change for mobile
+  var resizeTimer;
+  window.addEventListener('resize', function(){
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(function(){
+      // Chart.js handles its own resize, this is just to debounce
+    }, 200);
+  });
+})();
+</script>
+</body>
+</html>
