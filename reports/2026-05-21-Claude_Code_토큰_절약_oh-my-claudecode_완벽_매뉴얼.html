@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code 토큰 절약 & oh-my-claudecode 완벽 매뉴얼</title>
+<style>
+  :root{
+    --bg:#0e0d0c; --bg2:#181513; --bg3:#211d1a; --card:#1c1916;
+    --line:#332e29; --line2:#46403a;
+    --txt:#ece6df; --txt2:#b8aea3; --txt3:#7d756b;
+    --accent:#d97757; --accent2:#e8a87c; --accentdim:#3a2a22;
+    --green:#7fb069; --greendim:#26301f;
+    --yellow:#e0b341; --yellowdim:#332a14;
+    --red:#e06c5c; --reddim:#331c19;
+    --blue:#6ea8c4; --bluedim:#1a2a33;
+    --purple:#a98fd0; --purpledim:#241d33;
+    --mono:'SF Mono',ui-monospace,'JetBrains Mono',Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,'Pretendard','Segoe UI',Roboto,sans-serif;
+    background:var(--bg);color:var(--txt);line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+  .layout{display:flex;max-width:1500px;margin:0 auto}
+
+  /* Sidebar */
+  .sidebar{
+    width:280px;flex-shrink:0;position:sticky;top:0;height:100vh;overflow-y:auto;
+    background:var(--bg2);border-right:1px solid var(--line);padding:28px 18px;
+  }
+  .sb-logo{font-weight:800;font-size:17px;letter-spacing:-.4px;margin-bottom:4px;color:var(--txt)}
+  .sb-logo span{color:var(--accent)}
+  .sb-sub{font-size:11.5px;color:var(--txt3);margin-bottom:26px;line-height:1.5}
+  .nav-group{margin-bottom:20px}
+  .nav-title{font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.9px;color:var(--accent2);margin-bottom:8px;padding-left:6px}
+  .nav a{
+    display:block;padding:6.5px 12px;border-radius:8px;color:var(--txt2);
+    text-decoration:none;font-size:13.5px;transition:.15s;border-left:2px solid transparent;
+  }
+  .nav a:hover{background:var(--bg3);color:var(--txt)}
+  .nav a.active{background:var(--accentdim);color:var(--accent2);border-left-color:var(--accent)}
+
+  /* Main */
+  .main{flex:1;min-width:0;padding:0 0 120px}
+  .hero{
+    padding:70px 56px 54px;
+    background:
+      radial-gradient(900px 380px at 78% -8%,rgba(217,119,87,.22),transparent 60%),
+      radial-gradient(700px 320px at 8% 0%,rgba(126,176,105,.10),transparent 55%),
+      linear-gradient(180deg,#1a1512,#0e0d0c);
+    border-bottom:1px solid var(--line);
+  }
+  .badge{
+    display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.5px;
+    background:var(--accentdim);color:var(--accent2);padding:6px 14px;border-radius:999px;
+    border:1px solid var(--accent);margin-bottom:20px;
+  }
+  .hero h1{font-size:40px;font-weight:850;letter-spacing:-1.2px;line-height:1.15;margin-bottom:16px}
+  .hero h1 b{color:var(--accent)}
+  .hero p{font-size:16px;color:var(--txt2);max-width:680px}
+  .hero .meta{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+  .chip{font-size:12px;background:var(--bg3);border:1px solid var(--line2);color:var(--txt2);padding:5px 12px;border-radius:7px}
+
+  .content{padding:0 56px}
+  section{padding:48px 0;border-bottom:1px solid var(--line)}
+  section:last-child{border-bottom:none}
+  .sec-num{font-family:var(--mono);font-size:13px;color:var(--accent);font-weight:700;letter-spacing:1px}
+  h2{font-size:28px;font-weight:800;letter-spacing:-.6px;margin:6px 0 10px;line-height:1.2}
+  h3{font-size:19px;font-weight:750;margin:34px 0 12px;letter-spacing:-.3px;color:var(--txt)}
+  h3 .ico{color:var(--accent);margin-right:6px}
+  h4{font-size:15.5px;font-weight:700;margin:22px 0 8px;color:var(--accent2)}
+  p{color:var(--txt2);margin-bottom:14px;font-size:15px}
+  .lead{font-size:16px;color:var(--txt2);max-width:760px;margin-bottom:8px}
+  strong{color:var(--txt);font-weight:700}
+  a.link{color:var(--accent2);text-decoration:none;border-bottom:1px dotted var(--accent)}
+  ul,ol{margin:0 0 16px 0;padding-left:22px}
+  li{color:var(--txt2);margin-bottom:7px;font-size:15px}
+  li strong{color:var(--txt)}
+  code{font-family:var(--mono);font-size:12.5px;background:var(--bg3);color:var(--accent2);padding:2px 7px;border-radius:5px;border:1px solid var(--line)}
+
+  /* code block */
+  pre{
+    background:#0a0908;border:1px solid var(--line);border-radius:12px;
+    padding:16px 18px;overflow-x:auto;margin:14px 0;position:relative;
+  }
+  pre code{background:none;border:none;padding:0;color:#d9d0c5;font-size:13px;line-height:1.65;display:block}
+  pre .c{color:var(--txt3)}
+  pre .k{color:var(--accent2)}
+  pre .g{color:var(--green)}
+  .pre-label{
+    position:absolute;top:0;right:0;font-family:var(--mono);font-size:10px;
+    background:var(--bg3);color:var(--txt3);padding:3px 10px;border-radius:0 11px 0 8px;border-left:1px solid var(--line);border-bottom:1px solid var(--line);letter-spacing:.5px;
+  }
+  .copyhint{font-size:11px;color:var(--txt3);margin:-6px 0 14px;font-style:italic}
+
+  /* cards grid */
+  .grid{display:grid;gap:14px;margin:18px 0}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px}
+  .card h4{margin-top:0}
+  .card .num{font-family:var(--mono);font-size:22px;font-weight:800;color:var(--accent);line-height:1}
+  .card .lbl{font-size:12px;color:var(--txt3);margin-top:4px}
+  .card p{font-size:13.5px;margin-bottom:0}
+
+  /* callouts */
+  .box{border-radius:12px;padding:16px 18px;margin:18px 0;border:1px solid;font-size:14px}
+  .box p{margin-bottom:0;font-size:14px}
+  .box .bt{font-weight:700;font-size:13px;display:block;margin-bottom:6px;letter-spacing:.3px}
+  .tip{background:var(--greendim);border-color:#3a5230}.tip .bt{color:var(--green)}.tip p{color:#cdd9c4}
+  .warn{background:var(--yellowdim);border-color:#5a4a1e}.warn .bt{color:var(--yellow)}.warn p{color:#e3d6ad}
+  .danger{background:var(--reddim);border-color:#5a2e26}.danger .bt{color:var(--red)}.danger p{color:#e6c4bd}
+  .info{background:var(--bluedim);border-color:#27485a}.info .bt{color:var(--blue)}.info p{color:#bcd4de}
+  .note{background:var(--purpledim);border-color:#3e3257}.note .bt{color:var(--purple)}.note p{color:#d2c6e5}
+
+  /* tables */
+  .tbl-wrap{overflow-x:auto;margin:18px 0;border:1px solid var(--line);border-radius:12px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:520px}
+  th{background:var(--bg3);color:var(--accent2);text-align:left;padding:11px 14px;font-weight:700;font-size:12.5px;letter-spacing:.3px;border-bottom:1px solid var(--line2)}
+  td{padding:11px 14px;border-bottom:1px solid var(--line);color:var(--txt2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td code{font-size:11.5px}
+  .ok{color:var(--green);font-weight:700}
+  .no{color:var(--red);font-weight:700}
+
+  /* compare badcode/goodcode */
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  .vs .v{border-radius:11px;padding:14px 16px;border:1px solid}
+  .vbad{background:var(--reddim);border-color:#5a2e26}
+  .vgood{background:var(--greendim);border-color:#3a5230}
+  .vlabel{font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:8px;text-transform:uppercase}
+  .vbad .vlabel{color:var(--red)}.vgood .vlabel{color:var(--green)}
+  .vs .v p{font-size:13.5px;margin-bottom:0;color:var(--txt2)}
+  .vs .v code{display:block;background:#0a0908;padding:7px 10px;border-radius:7px;margin-top:6px;color:#d9d0c5;border-color:var(--line)}
+
+  /* pipeline */
+  .pipe{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:16px 0;font-family:var(--mono);font-size:12.5px}
+  .pipe .step{background:var(--bg3);border:1px solid var(--line2);padding:8px 13px;border-radius:8px;color:var(--accent2)}
+  .pipe .arr{color:var(--txt3);font-weight:700}
+
+  .step-row{display:flex;gap:14px;margin:16px 0;align-items:flex-start}
+  .step-row .n{flex-shrink:0;width:30px;height:30px;border-radius:9px;background:var(--accentdim);border:1px solid var(--accent);color:var(--accent2);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;font-family:var(--mono)}
+  .step-row .body{flex:1}
+  .step-row .body h4{margin:2px 0 4px}
+  .step-row .body p{font-size:14px;margin-bottom:6px}
+
+  .footer{padding:40px 56px;color:var(--txt3);font-size:12.5px;border-top:1px solid var(--line);background:var(--bg2)}
+  .footer a{color:var(--txt2);text-decoration:none}
+  .src-list{columns:2;column-gap:30px;margin-top:12px}
+  .src-list li{font-size:12px;margin-bottom:5px;break-inside:avoid}
+
+  .toc-mini{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:20px 24px;margin:8px 0 0}
+  .toc-mini ol{columns:2;column-gap:32px;padding-left:18px;margin-bottom:0}
+  .toc-mini li{margin-bottom:8px}
+  .toc-mini a{color:var(--txt2);text-decoration:none}
+  .toc-mini a:hover{color:var(--accent2)}
+
+  .star{display:inline-block;font-size:11px;background:var(--yellowdim);color:var(--yellow);border:1px solid #5a4a1e;padding:3px 9px;border-radius:6px;font-weight:700;margin-left:6px}
+
+  @media(max-width:1000px){
+    .sidebar{display:none}
+    .hero{padding:48px 24px 36px}.hero h1{font-size:30px}
+    .content{padding:0 24px}.footer{padding:32px 24px}
+    .g2,.g3,.g4,.vs{grid-template-columns:1fr}
+    .toc-mini ol,.src-list{columns:1}
+  }
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sb-logo">Claude Code <span>토큰 절약</span></div>
+    <div class="sb-sub">+ oh-my-claudecode 활용<br>실무 매뉴얼 · 2026</div>
+
+    <div class="nav-group">
+      <div class="nav-title">기초</div>
+      <nav class="nav">
+        <a href="#intro">0 · 시작하기 전에</a>
+        <a href="#basics">1 · 토큰의 기본 이해</a>
+        <a href="#check">2 · 사용량 확인 방법</a>
+      </nav>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">핵심 절약법</div>
+      <nav class="nav">
+        <a href="#habits">3 · 토큰 절약 10대 습관</a>
+        <a href="#claudemd">4 · CLAUDE.md 작성법</a>
+        <a href="#mcp">5 · MCP · CLI · 외부도구</a>
+        <a href="#subagent">6 · 서브에이전트 · 팀</a>
+        <a href="#model">7 · 모델 · 확장사고</a>
+      </nav>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">자율 실행</div>
+      <nav class="nav">
+        <a href="#goal">8 · /goal 명령어</a>
+      </nav>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">OMC</div>
+      <nav class="nav">
+        <a href="#omc-intro">9 · OMC란 무엇인가</a>
+        <a href="#omc-install">10 · 설치 & 첫 세션</a>
+        <a href="#omc-keywords">11 · 매직 키워드</a>
+        <a href="#omc-flows">12 · Autopilot · Team</a>
+        <a href="#omc-tools">13 · OMC 내장 도구</a>
+        <a href="#omc-cost">14 · OMC 비용 최적화</a>
+        <a href="#omc-anti">15 · 안티패턴</a>
+      </nav>
+    </div>
+    <div class="nav-group">
+      <div class="nav-title">정리</div>
+      <nav class="nav">
+        <a href="#workflow">16 · 실전 워크플로</a>
+        <a href="#checklist">17 · 최종 체크리스트</a>
+      </nav>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+    <div class="hero">
+      <span class="badge">CLAUDE CODE · 토큰 절약 · OMC 완벽 가이드</span>
+      <h1>토큰을 아끼고 <b>oh-my-claudecode</b>로<br>200% 활용하는 실무 매뉴얼</h1>
+      <p>Anthropic 공식 문서, OMC 공식 docs(허예찬 / Yeachan&nbsp;Heo), 카파시 CLAUDE.md, 그리고 지피터스·요즘IT·로보코 등 국내외 개발자 커뮤니티 자료를 종합했습니다. "메시지를 아끼자"가 아니라 <b>"토큰을 아끼자"</b>로 관점을 바꾸는 것이 핵심입니다.</p>
+      <div class="meta">
+        <span class="chip">컨텍스트 윈도우 관리</span>
+        <span class="chip">CLAUDE.md 다이어트</span>
+        <span class="chip">CLI · MCP · LSP</span>
+        <span class="chip">/goal 자율 실행</span>
+        <span class="chip">OMC 멀티에이전트</span>
+      </div>
+    </div>
+
+    <div class="content">
+
+    <!-- 0 -->
+    <section id="intro">
+      <div class="sec-num">SECTION 00</div>
+      <h2>시작하기 전에 — 이 매뉴얼의 한 줄 요약</h2>
+      <p class="lead">Claude(Claude Code 포함)는 <strong>메시지 개수가 아니라 토큰(token) 누적량</strong>으로 사용량을 측정합니다. 따라서 토큰을 아끼는 모든 방법은 결국 세 가지 원칙으로 수렴합니다.</p>
+      <div class="grid g3">
+        <div class="card"><div class="num">①</div><div class="lbl">CONTEXT</div><h4 style="margin-top:10px">컨텍스트를 작게</h4><p>대화 이력·파일·도구 정의가 매 요청마다 다시 토큰으로 계산됩니다. 컨텍스트가 작을수록 싸고 빠르고 정확합니다.</p></div>
+        <div class="card"><div class="num">②</div><div class="lbl">MODEL</div><h4 style="margin-top:10px">모델을 의식적으로</h4><p>단순 작업은 Haiku, 실무는 Sonnet, 깊은 추론만 Opus. 작업 규모에 맞는 모델 선택이 가장 큰 절감을 만듭니다.</p></div>
+        <div class="card"><div class="num">③</div><div class="lbl">REUSE</div><h4 style="margin-top:10px">다시 배우게 하지 않기</h4><p>Claude가 이미 알 수 있는 것을 매번 다시 탐색·재학습하게 만들지 마세요. 캐싱·메모리·스킬을 활용합니다.</p></div>
+      </div>
+      <div class="box tip"><span class="bt">📌 이 문서를 이렇게 쓰세요</span><p>1~8장은 <b>모든 Claude Code 사용자</b>를 위한 토큰 절약 핵심(8장 /goal 포함)이고, 9~15장은 <b>oh-my-claudecode(OMC)</b>를 얹어 한 단계 더 자동화하려는 사람을 위한 심화 섹션입니다. 16~17장은 둘을 합친 실전 워크플로와 체크리스트입니다.</p></div>
+
+      <div class="toc-mini">
+        <h4 style="margin-top:0;color:var(--accent2)">전체 목차</h4>
+        <ol>
+          <li><a href="#basics">토큰의 기본 이해</a></li>
+          <li><a href="#check">사용량 확인 방법</a></li>
+          <li><a href="#habits">토큰 절약 10대 습관</a></li>
+          <li><a href="#claudemd">CLAUDE.md 작성법 (+카파시)</a></li>
+          <li><a href="#mcp">MCP · CLI · 외부 도구</a></li>
+          <li><a href="#subagent">서브에이전트 · 에이전트 팀</a></li>
+          <li><a href="#model">모델 선택 · 확장 사고</a></li>
+          <li><a href="#goal">/goal 명령어 · 자율 실행</a></li>
+          <li><a href="#omc-intro">OMC란 무엇인가</a></li>
+          <li><a href="#omc-install">OMC 설치 & 첫 세션</a></li>
+          <li><a href="#omc-keywords">매직 키워드</a></li>
+          <li><a href="#omc-flows">Autopilot · Team 모드</a></li>
+          <li><a href="#omc-tools">OMC 내장 도구</a></li>
+          <li><a href="#omc-cost">OMC 비용 최적화</a></li>
+          <li><a href="#omc-anti">안티패턴</a></li>
+          <li><a href="#workflow">실전 워크플로</a></li>
+          <li><a href="#checklist">최종 체크리스트</a></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- 1 -->
+    <section id="basics">
+      <div class="sec-num">SECTION 01</div>
+      <h2>토큰의 기본 이해</h2>
+      <p class="lead">절약하려면 먼저 "무엇이 토큰을 먹는지" 알아야 합니다.</p>
+
+      <h3><span class="ico">▸</span>토큰이란?</h3>
+      <p>AI는 텍스트를 그대로 처리하지 않고 <strong>토크나이저(tokenizer)</strong>로 단어·기호·공백을 잘게 쪼갠 최소 단위, 즉 <strong>토큰</strong>으로 변환합니다. 대략적인 환산은 이렇습니다.</p>
+      <div class="grid g2">
+        <div class="card"><h4 style="margin-top:0">한국어</h4><p>1글자 ≈ <strong>2~3 토큰</strong>. 조사·어미·복합어가 분리되어 영어보다 토큰이 많아집니다.</p></div>
+        <div class="card"><h4 style="margin-top:0">영어</h4><p>1단어 ≈ <strong>1~2 토큰</strong>. 같은 의미라도 짧고 명확한 문장이 토큰 효율이 좋습니다.</p></div>
+      </div>
+      <div class="box danger"><span class="bt">⚡ 핵심 — AI에게 주는 지침은 영어로</span><p>같은 내용이라도 <b>한글이 영어보다 토큰을 3~5배 더 소비</b>합니다. CLAUDE.md·스킬·시스템 지침처럼 <b>반복 로드되는 텍스트는 반드시 영어로</b> 작성하세요. (4장에서 상세히 — 이 매뉴얼에서 가장 중요한 규칙입니다.)</p></div>
+
+      <h3><span class="ico">▸</span>입력 토큰 vs 출력 토큰</h3>
+      <p>한 번의 요청에는 눈에 보이는 내 메시지보다 훨씬 많은 정보가 함께 전송됩니다. 아래가 <strong>전부 입력 토큰</strong>으로 계산됩니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>입력 토큰에 포함되는 것</th><th>출력 토큰에 포함되는 것</th></tr>
+          <tr><td>내 요청 메시지</td><td>Claude의 응답 문장</td></tr>
+          <tr><td>세션 대화 이력 전체</td><td>자동 생성된 코드</td></tr>
+          <tr><td>CLAUDE.md · 시스템 프롬프트</td><td>분석 결과문</td></tr>
+          <tr><td>MCP 도구 정의(스키마)</td><td>수정된 diff</td></tr>
+          <tr><td><code>@</code>로 참조한 파일·문서 내용</td><td>확장 사고(thinking) 토큰 ※ 출력으로 청구</td></tr>
+        </table>
+      </div>
+      <div class="box warn"><span class="bt">⚠️ 짧은 요청 ≠ 적은 토큰</span><p>"이 함수 고쳐줘"라는 다섯 글자 요청도 대화 이력·CLAUDE.md·도구 정의·참조 파일이 함께 실리면 실제 입력 토큰은 <b>수만 개</b>일 수 있습니다.</p></div>
+
+      <h3><span class="ico">▸</span>컨텍스트 윈도우 — 작업 메모리</h3>
+      <p>컨텍스트 윈도우는 모델이 한 번에 "볼 수 있는" 모든 정보의 한계치입니다. 시스템 프롬프트, 대화 내역, 파일 읽기 결과, 도구 출력이 모두 이 안에 들어갑니다.</p>
+      <ul>
+        <li>표준 모델: <strong>200K 토큰</strong> (책 한 권 분량)</li>
+        <li>Opus 4.6/4.7 등 확장 컨텍스트: <strong>최대 1M 토큰</strong></li>
+        <li>대화가 누적될수록 매 턴 전체 이력을 다시 읽으므로 비용이 <strong>기하급수적으로</strong> 증가합니다.</li>
+      </ul>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>누적 메시지 수</th><th>누적 토큰 (평균 500토큰/회 기준)</th><th>비고</th></tr>
+          <tr><td>5개</td><td>약 7,500</td><td>가벼움</td></tr>
+          <tr><td>10개</td><td>약 27,500</td><td>—</td></tr>
+          <tr><td>20개</td><td>약 105,000</td><td>주의 구간</td></tr>
+          <tr><td>30개</td><td>약 232,000</td><td class="no">30번째는 1번째의 약 31배 비쌈</td></tr>
+        </table>
+      </div>
+      <div class="box info"><span class="bt">🕐 5시간 롤링 윈도우</span><p>구독 사용 한도는 자정에 리셋되는 게 아니라 <b>최근 5시간 사용 토큰</b>만 한도에 포함됩니다. 5시간 전 토큰은 자동으로 빠지므로, 작업을 시간대별로 분산하면 같은 요금제로 더 많이 쓸 수 있습니다. (한국 업무시간은 대체로 미국 비피크 시간대라 유리한 편)</p></div>
+    </section>
+
+    <!-- 2 -->
+    <section id="check">
+      <div class="sec-num">SECTION 02</div>
+      <h2>토큰 사용량 확인하기</h2>
+      <p class="lead">"디스크 공간처럼" 컨텍스트가 채워지므로, 정기적으로 확인하는 습관이 절약의 출발점입니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>명령 / 도구</th><th>역할</th><th>대상</th></tr>
+          <tr><td><code>/context</code></td><td>시스템 프롬프트·도구·메모리·메시지 등 <strong>컴포넌트별</strong> 토큰 사용량 표시</td><td>전체 사용자</td></tr>
+          <tr><td><code>/usage</code></td><td>현재 세션의 토큰 사용량 빠른 확인</td><td>전체 사용자</td></tr>
+          <tr><td><code>/cost</code></td><td>현재 세션의 API 토큰 비용·시간·코드 변경량</td><td>API 사용자</td></tr>
+          <tr><td><code>/stats</code></td><td>구독자용 사용 패턴 보기 (Max/Pro는 /cost가 청구와 무관)</td><td>구독자</td></tr>
+          <tr><td>상태줄(statusline)</td><td>컨텍스트 사용률을 항상 표시하도록 구성 가능</td><td>전체 사용자</td></tr>
+          <tr><td><code>ccusage</code></td><td>로컬 JSONL 로그를 일·월·세션별로 집계, 실시간 burn rate까지 (5장 참고)</td><td>전체 사용자</td></tr>
+          <tr><td>웹 토크나이저</td><td><code>token-counter.app</code>, <code>claude-tokenizer.vercel.app</code>로 텍스트 토큰 추정</td><td>전체 사용자</td></tr>
+        </table>
+      </div>
+      <div class="box tip"><span class="bt">기준선</span><p>200K 윈도우에서 기본 세션은 보통 약 20K(10%)를 시스템이 차지하고, 나머지 180K가 실제 작업용입니다. <code>/context</code>로 이 비율을 자주 점검하세요.</p></div>
+      <div class="box danger"><span class="bt">🔌 인증 경로 착각 주의</span><p>환경에 API key가 있으면 Claude Code가 <b>구독이 아니라 API 종량제</b>로 동작할 수 있습니다. "갑자기 토큰을 너무 먹는다"는 체감은 사실 청구 면(billing surface)이 바뀐 경우가 많습니다.</p></div>
+    </section>
+
+    <!-- 3 -->
+    <section id="habits">
+      <div class="sec-num">SECTION 03</div>
+      <h2>토큰 절약 10대 습관</h2>
+      <p class="lead">커뮤니티(특히 X @0x_kaize 스레드, 지피터스 정리본)에서 화제가 된 즉시 적용 가능한 습관들입니다. 채팅 UI와 Claude Code 양쪽에 통용됩니다.</p>
+
+      <div class="step-row"><div class="n">1</div><div class="body"><h4>후속 메시지 대신 원본을 편집한다</h4><p>"아니 그게 아니라…"를 보낼 때마다 이전 대화 전체가 다시 읽힙니다. 대신 원본 메시지의 <strong>편집(Edit)</strong> 버튼으로 수정·재생성하면 쓸모없는 이력이 쌓이지 않습니다.</p></div></div>
+      <div class="step-row"><div class="n">2</div><div class="body"><h4>15~20 메시지마다 새 세션을 연다</h4><p>100+ 메시지 채팅은 250만 토큰 이상을 소모하고, 그중 대부분이 이전 대화 재읽기입니다. "지금까지 내용을 요약해줘" → 요약본을 새 채팅 첫 메시지로 붙여넣기.</p></div></div>
+      <div class="step-row"><div class="n">3</div><div class="body"><h4>질문은 하나로 묶는다</h4><p>3개를 따로 보내면 컨텍스트 로딩 3회, 한 번에 묶으면 1회. 토큰도 아끼고 전체 맥락 파악이 좋아져 품질도 올라갑니다.</p></div></div>
+      <div class="step-row"><div class="n">4</div><div class="body"><h4>반복 파일은 Projects에 올린다</h4><p>같은 PDF를 여러 채팅에 올리면 매번 토큰 변환됩니다. Projects에 한 번만 올리면 캐시되어 추가 소모가 없습니다. (계약서·스타일 가이드·브리핑 등)</p></div></div>
+      <div class="step-row"><div class="n">5</div><div class="body"><h4>Memory / 사용자 설정을 저장한다</h4><p>"나는 ~야, 캐주얼하게, 짧게…"를 매번 쓰면 3~5 메시지를 잡아먹습니다. Settings의 Memory·User Settings에 한 번만 저장하세요.</p></div></div>
+      <div class="step-row"><div class="n">6</div><div class="body"><h4>안 쓰는 기능은 끈다</h4><p>웹 검색·커넥터·확장 사고는 켜져 있기만 해도 매 응답에 토큰을 추가합니다. <strong>내가 직접 켠 게 아니면 끈다</strong>가 기본 규칙.</p></div></div>
+      <div class="step-row"><div class="n">7</div><div class="body"><h4>단순 작업은 Haiku로</h4><p>맞춤법·포맷팅·짧은 번역·초안은 Haiku로 충분합니다. 모델 선택만으로 예산의 50~70%를 아낄 수 있습니다. (7장에서 상술)</p></div></div>
+      <div class="step-row"><div class="n">8</div><div class="body"><h4>하루를 2~3 세션으로 분산한다</h4><p>5시간 롤링 윈도우를 활용해 오전/오후/저녁으로 무거운 작업을 나누면 체감 한도가 훨씬 넉넉해집니다.</p></div></div>
+      <div class="step-row"><div class="n">9</div><div class="body"><h4>피크 시간대를 피한다</h4><p>2026년 3월 정책 변경 이후 피크 시간엔 한도가 더 빨리 소모됩니다. (미국 업무시간 ≈ 한국 밤 10시~새벽 4시). 한국 낮 시간 작업은 대체로 유리합니다.</p></div></div>
+      <div class="step-row"><div class="n">10</div><div class="body"><h4>Extra Usage를 안전장치로</h4><p>Pro/Max는 Settings → Usage에서 Overage(초과 사용)를 켤 수 있습니다. 절약법은 아니지만 중요한 작업 중 갑자기 막히는 상황을 방지합니다(월 지출 한도 설정 가능).</p></div></div>
+
+      <div class="box note"><span class="bt">💡 명확한 요청이 가장 강력한 절약 도구</span><p>모호한 요청은 광범위한 코드 스캔을 유발합니다. "로그인 기능 수정해줘"(×) → "<b>auth.py에서 JWT 만료 시간을 1h→24h로 늘려줘</b>"(○). 구체적일수록 Claude가 최소한의 파일만 읽습니다.</p></div>
+    </section>
+
+    <!-- 4 -->
+    <section id="claudemd">
+      <div class="sec-num">SECTION 04</div>
+      <h2>CLAUDE.md 작성법 — 가장 효과 큰 다이어트</h2>
+      <p class="lead">CLAUDE.md는 <strong>매 세션 시작 시 컨텍스트에 자동 로드</strong>됩니다. 길수록 모든 요청의 초기 비용이 불필요하게 커집니다. 관건은 "성장"이 아니라 "거버넌스"입니다.</p>
+
+      <div style="background:linear-gradient(135deg,#3a2a22,#2a1812);border:2px solid var(--accent);border-radius:18px;padding:26px 28px;margin:24px 0;box-shadow:0 0 0 4px rgba(217,119,87,.08)">
+        <div style="font-size:12.5px;font-weight:800;letter-spacing:1.5px;color:var(--accent);text-transform:uppercase;margin-bottom:10px">⚡ 가장 중요한 규칙 · #1 MOST IMPORTANT RULE</div>
+        <div style="font-size:25px;font-weight:850;color:var(--txt);line-height:1.28;margin-bottom:14px;letter-spacing:-.6px">CLAUDE.md · 스킬 · 지침은 <span style="color:var(--accent2);text-decoration:underline;text-decoration-color:var(--accent);text-underline-offset:5px">반드시 영어로</span> 작성하세요</div>
+        <p style="font-size:15.5px;color:var(--txt2);margin-bottom:12px;line-height:1.65">한국어는 1글자당 <strong style="color:var(--txt)">2~3토큰</strong>, 영어는 1단어당 <strong style="color:var(--txt)">1~2토큰</strong>입니다. 같은 내용이라도 <strong style="color:var(--accent2);font-size:17px">한글이 영어보다 토큰을 3~5배 더 소비</strong>합니다. 특히 CLAUDE.md는 <strong>매 세션·매 요청마다</strong> 컨텍스트에 다시 실리므로, 여기서의 언어 선택이 전체 비용에 <strong>가장 크게, 가장 반복적으로</strong> 누적됩니다.</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin:14px 0">
+          <div style="flex:1;min-width:180px;background:var(--reddim);border:1px solid #5a2e26;border-radius:10px;padding:12px 14px">
+            <div style="font-size:11px;font-weight:700;color:var(--red);letter-spacing:.5px;margin-bottom:5px">✗ 한글 지침 (낭비)</div>
+            <code style="display:block;background:#0a0908;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font-size:11.5px;color:#d9d0c5">"수정 요청한 파일 외에는<br>절대 건드리지 마세요"</code>
+          </div>
+          <div style="flex:1;min-width:180px;background:var(--greendim);border:1px solid #3a5230;border-radius:10px;padding:12px 14px">
+            <div style="font-size:11px;font-weight:700;color:var(--green);letter-spacing:.5px;margin-bottom:5px">✓ 영어 지침 (3~5배 절약)</div>
+            <code style="display:block;background:#0a0908;border:1px solid var(--line);border-radius:7px;padding:8px 10px;font-size:11.5px;color:#d9d0c5">"NEVER touch files<br>not mentioned in the task"</code>
+          </div>
+        </div>
+        <p style="font-size:14px;color:var(--txt3);margin:0;line-height:1.6">👉 규칙·지침·프롬프트의 <strong style="color:var(--txt2)">"내용"은 영어로</strong> 작성하고, 사람이 볼 메모만 한글로 다세요. <strong style="color:var(--accent2)">Claude는 영어 지시를 100% 이해하며 답변은 한국어로 받을 수 있습니다.</strong> 이 매뉴얼의 모든 절약법 중 <strong style="color:var(--txt)">투입 노력 대비 효과가 가장 큰 단 하나</strong>가 바로 이것입니다.</p>
+      </div>
+
+      <h3><span class="ico">▸</span>원칙 1 — 짧게, 구조화해서</h3>
+      <ul>
+        <li>"이 프로젝트는…" 같은 <strong>서술형 문장 제거</strong></li>
+        <li>헤딩·리스트·테이블로 <strong>구조화</strong></li>
+        <li>규칙은 최소 단위로 축약, 코드 예시는 과하게 넣지 않기</li>
+        <li>Anthropic 공식 권장: <strong>필수 항목만, 약 500줄(또는 그 이하) 유지</strong></li>
+      </ul>
+      <div class="vs">
+        <div class="v vbad"><div class="vlabel">✗ 비효율 (약 5,000토큰)</div><p>프로젝트 설명을 장황하게 서술하고, 기술 스택을 여러 문단에 중복하고, 코딩 규칙을 장문으로 상세히 기술.</p></div>
+        <div class="v vgood"><div class="vlabel">✓ 개선 (약 700토큰)</div><p>기술 스택·폴더 구조·핵심 규칙만 헤딩/리스트로 요약. 불필요한 문장 제거.</p></div>
+      </div>
+      <div class="box tip"><span class="bt">효과</span><p>이 원칙만 적용해도 문서 크기를 <b>80~90%</b>까지 줄일 수 있습니다.</p></div>
+
+      <h3><span class="ico">▸</span>⭐ 카파시(Karpathy) 4원칙 — 복붙용 CLAUDE.md <span class="star">GitHub 220,000+ ★</span></h3>
+      <p>안드레이 카파시가 "AI 코딩 에이전트가 반복적으로 저지르는 실수"로 지적한 내용을, 개발자 <strong>Forrest Chang</strong>이 단 4개의 짧은 행동 원칙으로 정리한 CLAUDE.md입니다. 의존성·빌드 단계 없이 단 한 파일로 GitHub 역사상 가장 빠르게 성장한 리포지토리 중 하나가 되었습니다(MIT 라이선스).</p>
+      <p>핵심은 이 <strong>4개의 짧은 문구</strong>입니다. 아래 블록을 그대로 복사해 프로젝트 루트의 <code>CLAUDE.md</code>에 붙여넣으면 됩니다.</p>
+      <pre><span class="pre-label">CLAUDE.md — copy &amp; paste (KEEP IT IN ENGLISH)</span><code><span class="c"># Behavioral Guidelines (Karpathy 4)</span>
+
+<span class="k">## 1. Think Before Coding</span>
+Don't assume. Don't hide confusion. Surface tradeoffs.
+- State assumptions explicitly. If uncertain, ask.
+- If multiple interpretations exist, present them — don't pick silently.
+- If a simpler approach exists, say so. Push back when warranted.
+
+<span class="k">## 2. Simplicity First</span>
+Minimum code that solves the problem. Nothing speculative.
+- No features beyond what was asked.
+- No abstractions for single-use code.
+- If you write 200 lines and it could be 50, rewrite it.
+
+<span class="k">## 3. Surgical Changes</span>
+Touch only what you must. Clean up only your own mess.
+- Don't "improve" adjacent code, comments, or formatting.
+- Don't refactor things that aren't broken. Match existing style.
+- Every changed line should trace directly to the user's request.
+
+<span class="k">## 4. Goal-Driven Execution</span>
+Define success criteria. Loop until verified.
+- "Add validation" → "Write tests for invalid inputs, then make them pass"
+- "Fix the bug" → "Write a test that reproduces it, then make it pass"
+- For multi-step tasks, state a brief plan first.</code></pre>
+      <p class="copyhint">⚠️ 위 블록을 <strong>한글로 번역하지 마세요.</strong> 영어 그대로 두어야 토큰이 3~5배 절약됩니다. 위 4문구는 영어 원문이며, Claude는 영어 지시를 완벽히 이해하고 한국어로 답합니다.</p>
+
+      <h4>30초 설치 — 방법 A · 이 프로젝트에만 (curl)</h4>
+      <pre><span class="pre-label">터미널 — 프로젝트 루트에서</span><code>echo "" >> CLAUDE.md && \
+curl https://raw.githubusercontent.com/forrestchang/andrej-karpathy-skills/main/CLAUDE.md >> CLAUDE.md</code></pre>
+      <h4>방법 B · 모든 프로젝트에 (플러그인/스킬, 호출 시에만 로드 → 토큰 절약)</h4>
+      <pre><span class="pre-label">Claude Code 세션 안에서 — 한 줄씩</span><code>/plugin marketplace add forrestchang/andrej-karpathy-skills
+/plugin install andrej-karpathy-skills@karpathy-skills</code></pre>
+      <div class="box info"><span class="bt">🔗 출처 & 메모</span><p>리포지토리: <b>github.com/forrestchang/andrej-karpathy-skills</b> (조직 미러: multica-ai/andrej-karpathy-skills). 전체 파일은 약 65줄로 짧아서 "그대로 따르는 템플릿"이 아니라 <b>입맛대로 고치는 메뉴</b>로 쓰는 것이 권장됩니다. OpenCode/Hermes 등 다른 도구에서는 파일명을 <code>AGENTS.md</code>로 바꾸면 됩니다.</p></div>
+      <div class="box warn"><span class="bt">⚠️ 보안 한 줄</span><p>스킬 생태계 전반에 보안 결함이 보고된 사례가 있습니다(2026년 2월 Snyk 감사). 외부 스킬/플러그인은 설치 전 출처와 내용을 확인하세요. 카파시 스킬은 단순 텍스트 가이드라인이라 위험이 낮은 편입니다.</p></div>
+
+      <h3><span class="ico">▸</span>원칙 2 — 분산 메모리 구조 (2-Tier)</h3>
+      <p>CLAUDE.md가 길어지면 보조 문서로 쪼개고, <strong>필요할 때만 불러오게</strong> 합니다. 기본 컨텍스트는 가볍게 유지됩니다.</p>
+      <pre><span class="pre-label">디렉토리</span><code>CLAUDE.md            <span class="c"># 핵심 규칙·스택·구조만 (가볍게)</span>
+docs/
+ ├─ api-guide.md     <span class="c"># 필요할 때만 참조</span>
+ ├─ db-guide.md
+ └─ deploy-guide.md</code></pre>
+      <ul>
+        <li><strong>토큰 절약:</strong> 기본 컨텍스트가 가벼워짐</li>
+        <li><strong>유지보수:</strong> 기능·역할별로 나뉘어 부분 수정 용이</li>
+        <li><strong>가독성:</strong> 필요한 정보를 빠르게 탐색</li>
+      </ul>
+
+      <h3><span class="ico">▸</span>원칙 3 — 특화 지침은 CLAUDE.md → Skills로 이동</h3>
+      <p>PR 검토, DB 마이그레이션처럼 <strong>특정 워크플로에서만 필요한</strong> 긴 지침을 CLAUDE.md에 두면, 무관한 작업을 할 때도 그 토큰이 항상 존재합니다. Skills는 <strong>호출될 때만 로드</strong>되므로 기본 컨텍스트를 작게 유지합니다.</p>
+      <pre><span class="pre-label">SKILL.md (예시)</span><code><span class="k">---</span>
+<span class="k">name:</span> pr-review
+<span class="k">description:</span> 우리 팀 PR 리뷰 규칙 적용
+<span class="k">---</span>
+<span class="c"># 호출 시에만 컨텍스트로 로드되는 상세 지침</span>
+1. 변경 범위 요약
+2. 보안 체크리스트 적용
+3. 테스트 커버리지 확인</code></pre>
+      <div class="box info"><span class="bt">compaction 동작도 커스터마이즈 가능</span><p>CLAUDE.md에 압축 지침을 넣어 요약 시 보존할 내용을 지정할 수 있습니다. 예: <code>/compact Focus on code samples and API usage</code> 또는 CLAUDE.md에 "When you use compact, focus on test output and code changes".</p></div>
+    </section>
+
+    <!-- 5 -->
+    <section id="mcp">
+      <div class="sec-num">SECTION 05</div>
+      <h2>MCP · CLI · 외부 도구 — 도구 정의의 숨은 비용</h2>
+      <p class="lead">각 MCP 서버는 <strong>유휴 상태에서도</strong> 도구 정의를 컨텍스트에 올립니다. GitHub·Web Search·Database·Playwright를 모두 켜면 시스템 영역에 1만 토큰 이상이 추가될 수 있습니다.</p>
+
+      <h3><span class="ico">▸</span>가능하면 MCP보다 CLI를 선호</h3>
+      <p>이게 공식 문서의 첫 번째 권장사항입니다. CLI 도구는 <strong>지속적인 도구 정의를 컨텍스트에 추가하지 않으므로</strong> MCP보다 효율적입니다. Claude가 오버헤드 없이 명령을 직접 실행합니다.</p>
+      <div class="vs">
+        <div class="v vbad"><div class="vlabel">✗ 항상 켜진 MCP</div><p>GitHub MCP 서버를 상시 연결 → 안 쓸 때도 스키마가 컨텍스트 점유.</p></div>
+        <div class="v vgood"><div class="vlabel">✓ CLI 직접 실행</div><p>Claude가 필요할 때 <code>gh pr list</code>를 그냥 실행. 도구 정의 오버헤드 0.</p></div>
+      </div>
+
+      <h3><span class="ico">▸</span>🧰 토큰 절약에 쓰는 CLI 도구 모음</h3>
+      <p>아래 CLI들은 ① MCP 스키마 오버헤드가 없고 ② "파일 통째 읽기" 대신 정밀 탐색/필터링을 가능하게 해 컨텍스트를 크게 아낍니다. Claude가 직접 실행하므로, 미리 설치만 해두면 됩니다. (설치 명령은 macOS Homebrew 기준이며 다른 OS는 각 공식 안내 참고)</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>도구</th><th>용도 / 토큰 절약 포인트</th><th>설치 명령</th></tr>
+          <tr><td><code>gh</code></td><td>GitHub CLI. PR·이슈·릴리스·workflow 조회/조작을 MCP 없이 직접</td><td><code>brew install gh</code></td></tr>
+          <tr><td><code>glab</code></td><td>GitLab CLI. gh의 GitLab 버전</td><td><code>brew install glab</code></td></tr>
+          <tr><td><code>ripgrep (rg)</code></td><td>초고속 코드 검색. 필요한 라인만 뽑아 파일 전체 읽기를 회피</td><td><code>brew install ripgrep</code></td></tr>
+          <tr><td><code>fd</code></td><td>빠른 파일 찾기(find 대체). 탐색 토큰 절약</td><td><code>brew install fd</code></td></tr>
+          <tr><td><code>ast-grep (sg)</code></td><td>정규식이 아닌 <strong>코드 구조(AST) 기반</strong> 검색·치환. 정밀하고 토큰 효율적</td><td><code>brew install ast-grep</code></td></tr>
+          <tr><td><code>jq</code></td><td>JSON을 grep·필터링해 필요한 필드만 반환(대용량 응답 다이어트)</td><td><code>brew install jq</code></td></tr>
+          <tr><td><code>tokei</code> / <code>cloc</code></td><td>코드 통계를 한 번에. 디렉토리 다 읽지 않고 규모 파악</td><td><code>brew install tokei</code></td></tr>
+          <tr><td><code>tree</code></td><td>디렉토리 구조를 한 번에 요약(여러 ls 호출 대체)</td><td><code>brew install tree</code></td></tr>
+          <tr><td><code>aws</code> / <code>gcloud</code> / <code>az</code></td><td>클라우드 CLI. 인프라 조회/조작을 MCP 없이 직접 (공식 문서 권장)</td><td>각 공식 설치 스크립트</td></tr>
+          <tr><td><code>sentry-cli</code></td><td>에러/릴리스 조회를 CLI로 (Sentry MCP 대체)</td><td><code>brew install getsentry/tools/sentry-cli</code></td></tr>
+          <tr><td><code>ccusage</code></td><td>토큰 사용량·비용 분석. 설치 없이 즉시 실행 가능</td><td><code>npx ccusage</code> / <code>bunx ccusage</code></td></tr>
+        </table>
+      </div>
+      <div class="box tip"><span class="bt">ccusage 자주 쓰는 명령</span><p><code>ccusage daily</code> 일별 · <code>ccusage monthly</code> 월별 · <code>ccusage session</code> 세션별 · <code>ccusage blocks --live</code> 실시간 burn rate 대시보드 · <code>--json</code> 자동화 연동. 모델(Opus/Sonnet/Haiku)별 비용 분류와 <code>--offline</code> 캐시 모드도 지원합니다.</p></div>
+
+      <h3><span class="ico">▸</span>MCP 관리 3원칙</h3>
+      <ul>
+        <li><strong>필요한 것만 활성화:</strong> 프런트엔드 작업엔 Playwright만, 백엔드엔 Database MCP만.</li>
+        <li><strong>사용 안 하는 서버 비활성화:</strong> <code>/mcp</code>로 구성 확인 후 끄기. <code>/context</code>로 점유량 확인.</li>
+        <li><strong>Tool Search 자동화:</strong> MCP 도구 설명이 컨텍스트의 10%를 넘으면 자동으로 도구를 연기(defer)하고 필요 시에만 로드합니다. <code>ENABLE_TOOL_SEARCH=auto:5</code>처럼 임계값을 더 낮출 수도 있습니다.</li>
+      </ul>
+      <div class="box tip"><span class="bt">즉시 효과</span><p>안 쓰는 MCP 정리만으로 컨텍스트 공간 <b>5~7%</b>를 즉시 회수할 수 있습니다.</p></div>
+
+      <h3><span class="ico">▸</span>코드 인텔리전스 플러그인 (LSP)</h3>
+      <p>타입 언어를 다룬다면 <strong>코드 인텔리전스 플러그인</strong> 설치를 강력 권장합니다. 텍스트 grep 대신 정확한 기호 탐색을 제공합니다.</p>
+      <ul>
+        <li><strong>"정의로 이동" 한 번</strong>이 grep + 여러 후보 파일 읽기를 대체 → 불필요한 파일 읽기 감소</li>
+        <li>편집 후 <strong>자동 타입 오류 보고</strong> → 컴파일러를 매번 돌리지 않고도 실수 포착</li>
+      </ul>
+
+      <h3><span class="ico">▸</span>Hooks로 전처리 오프로드</h3>
+      <p>Hook은 Claude가 데이터를 보기 <strong>전에</strong> 가공합니다. 1만 줄 로그를 통째로 읽는 대신, hook이 <code>ERROR</code>만 grep해 수백 토큰으로 줄일 수 있습니다.</p>
+      <pre><span class="pre-label">settings.json — 테스트 실패만 통과시키는 PreToolUse hook</span><code><span class="k">{</span>
+  <span class="k">"hooks"</span>: {
+    <span class="k">"PreToolUse"</span>: [{
+      <span class="k">"matcher"</span>: <span class="g">"Bash"</span>,
+      <span class="k">"hooks"</span>: [{ <span class="k">"type"</span>:<span class="g">"command"</span>,
+        <span class="k">"command"</span>:<span class="g">"~/.claude/hooks/filter-test-output.sh"</span> }]
+    }]
+  }
+<span class="k">}</span></code></pre>
+      <p>스크립트는 명령이 테스트 러너(<code>npm test</code>, <code>pytest</code>, <code>go test</code>)일 때 <code>grep -E '(FAIL|ERROR)'</code>로 실패 라인만 반환하도록 명령을 수정합니다.</p>
+
+      <h3><span class="ico">▸</span>Skills로 도메인 지식 주입</h3>
+      <p>"codebase-overview" 같은 skill에 아키텍처·주요 디렉토리·네이밍 규칙을 적어두면, Claude가 구조 파악을 위해 여러 파일을 읽는 대신 <strong>즉시 컨텍스트를 획득</strong>합니다.</p>
+
+      <div class="box note"><span class="bt">📚 함께 알아두면 좋은 외부 생태계</span><p>스펙 기반 개발을 자동화하는 <b>spec-kit</b>, 품질 가드레일 중심의 <b>Everything Claude Code(ECC)</b>, 그리고 본 문서의 주인공인 자동 오케스트레이션형 <b>oh-my-claudecode(OMC)</b>가 대표적인 확장 패키지입니다. OMC + ECC 규칙을 함께 쓰는(자동화 + 품질 가드레일) 조합도 커뮤니티에서 인기입니다.</p></div>
+
+      <h3><span class="ico">▸</span>Claude Code의 3-Layer 구조 (왜 위임이 싼가)</h3>
+      <div class="grid g3">
+        <div class="card"><h4 style="margin-top:0;color:var(--blue)">Core Layer</h4><p>기본 대화. 모든 메시지·파일·도구 출력이 공유 윈도우를 쓰며 <strong>토큰당 비용</strong> 발생. 가득 차면 품질 저하.</p></div>
+        <div class="card"><h4 style="margin-top:0;color:var(--green)">Delegation Layer</h4><p>서브에이전트가 <strong>깨끗한 컨텍스트</strong>에서 집중 작업 후 <strong>요약만</strong> 반환. 탐색 결과가 본 대화를 키우지 않음.</p></div>
+        <div class="card"><h4 style="margin-top:0;color:var(--purple)">Extension Layer</h4><p>MCP가 외부 서비스(DB·GitHub·Sentry)를 연결. 강력하지만 도구 정의 비용 주의 → 가능하면 CLI로.</p></div>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section id="subagent">
+      <div class="sec-num">SECTION 06</div>
+      <h2>서브에이전트 · 에이전트 팀</h2>
+      <p class="lead">대량 출력 작업(테스트 실행, 문서 가져오기, 로그 처리)은 본 대화를 오염시킵니다. 이를 서브에이전트에 위임하면 <strong>상세 출력은 서브에이전트 안에 남고 요약만 본 대화로</strong> 돌아옵니다.</p>
+
+      <h3><span class="ico">▸</span>서브에이전트의 토큰 이점</h3>
+      <ul>
+        <li>각 서브에이전트는 <strong>자체 컨텍스트 윈도우</strong>를 가짐 → 대형 코드베이스 탐색 시 사실상 추가 윈도우 확보</li>
+        <li>탐색·로그 분석 같은 작업을 <strong>더 저렴한 모델 티어</strong>로 라우팅 가능 (예: <code>model: haiku</code>)</li>
+        <li>여러 서브에이전트를 <strong>병렬</strong>로 실행 가능 ("4개 task로 디렉토리를 나눠 탐색")</li>
+      </ul>
+      <pre><span class="pre-label">서브에이전트 구성 — 단순 작업은 haiku로</span><code><span class="k">---</span>
+<span class="k">name:</span> explorer
+<span class="k">model:</span> haiku   <span class="c"># 탐색은 가벼운 모델로 비용 절감</span>
+<span class="k">---</span></code></pre>
+
+      <h3><span class="ico">▸</span>에이전트 팀 (실험 기능) — 강력하지만 비싸다</h3>
+      <p>에이전트 팀은 각자 컨텍스트 윈도우를 가진 여러 Claude 인스턴스를 띄웁니다. <strong>plan mode에서 표준 세션의 약 7배 토큰</strong>을 쓸 수 있습니다.</p>
+      <pre><span class="pre-label">settings.json — 에이전트 팀 활성화(기본 비활성)</span><code><span class="k">{</span> <span class="k">"env"</span>: { <span class="k">"CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS"</span>: <span class="g">"1"</span> } <span class="k">}</span></code></pre>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>비용 관리 원칙</th><th>이유</th></tr>
+          <tr><td>팀원은 Sonnet 사용</td><td>기능·비용 균형</td></tr>
+          <tr><td>팀을 작게 유지</td><td>토큰 사용량이 팀 규모에 대략 비례</td></tr>
+          <tr><td>spawn 프롬프트를 집중적으로</td><td>spawn 프롬프트의 모든 내용이 처음부터 컨텍스트에 추가됨</td></tr>
+          <tr><td>완료 후 팀 정리</td><td>활성 팀원은 유휴 상태에서도 토큰 소비</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section id="model">
+      <div class="sec-num">SECTION 07</div>
+      <h2>모델 선택 & 확장 사고 조정</h2>
+      <p class="lead">"매일 내리는 가장 중요한 결정"은 모델 선택입니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>모델</th><th>용도</th><th>비용</th></tr>
+          <tr><td><strong>Haiku</strong></td><td>파일 검색·맞춤법·포맷팅·짧은 번역·초안</td><td class="ok">낮음</td></tr>
+          <tr><td><strong>Sonnet</strong></td><td>대부분의 코딩·글쓰기·디버깅·실무</td><td>중간</td></tr>
+          <tr><td><strong>Opus</strong></td><td>복잡한 아키텍처 결정·다단계 추론·보안 리뷰</td><td class="no">높음</td></tr>
+        </table>
+      </div>
+      <ul>
+        <li>세션 중 전환: <code>/model</code> · 기본값 설정: <code>/config</code></li>
+        <li>서브에이전트 단순 작업: 구성에서 <code>model: haiku</code></li>
+        <li>Sonnet이 대부분의 코딩을 잘 처리합니다. Opus는 정말 깊은 추론에만 예약하세요.</li>
+      </ul>
+
+      <h3><span class="ico">▸</span>확장 사고(Extended Thinking) 조정</h3>
+      <p>확장 사고는 기본 <strong>약 32,000 토큰 예산</strong>으로 활성화되어 있고, 사고 토큰은 <strong>출력 토큰으로 청구</strong>됩니다. 깊은 추론이 필요 없는 작업이라면:</p>
+      <ul>
+        <li><code>/effort</code> 또는 <code>/model</code>에서 노력 수준 낮추기</li>
+        <li><code>/config</code>에서 사고 비활성화</li>
+        <li>예산 직접 축소: <code>MAX_THINKING_TOKENS=8000</code></li>
+      </ul>
+      <div class="box info"><span class="bt">프롬프트 캐싱은 자동</span><p>Claude Code는 시스템 프롬프트 등 반복 콘텐츠에 프롬프트 캐싱을 자동 적용합니다. 캐시 적중 시 기본 입력가의 <b>10%만 청구</b> → 최대 90% 비용 절감, 지연 85% 감소. 또한 컨텍스트 한도 근처에서 <b>auto-compaction</b>으로 이력을 자동 요약합니다.</p></div>
+    </section>
+
+    <!-- 8 · /goal -->
+    <section id="goal">
+      <div class="sec-num">SECTION 08 · 자율 실행</div>
+      <h2><code style="font-size:24px;padding:4px 12px">/goal</code> 명령어 — 자율 실행 루프</h2>
+      <p class="lead">2026년 5월 등장한 <strong>가장 화제의 명령어</strong>입니다. "한 턴 일하고 멈춰서 사용자에게 넘기는" 기존 방식을 끝내고, <strong>완료 조건(completion condition)</strong>을 정의하면 그 조건이 충족될 때까지 Claude가 스스로 계획·작성·테스트·검증·반복을 이어갑니다.</p>
+
+      <div class="box note"><span class="bt">🌊 트렌드 배경</span><p>먼저 <b>OpenAI Codex CLI</b>가 실험 기능으로 <code>/goal</code>을 출시했고(목표를 설정하면 confident한 정지 조건에 도달할 때까지 여러 턴 작동), 곧이어 <b>Anthropic이 Claude Code v2.1.139</b>(2026년 5월 12~13일)에 같은 개념을 추가했습니다. 현재는 <b>Codex · Claude Code · Hermes</b> 그리고 Claude Code 모바일까지 확산된 플랫폼 공통 기능입니다. "Keep Going"을 수동으로 누르던 시대를 끝냈다는 평가를 받습니다.</p></div>
+
+      <h3><span class="ico">▸</span>핵심 동작</h3>
+      <ul>
+        <li>완료 조건을 자연어로 정의하면, <strong>경량 완료 검증 모델(evaluator)</strong>이 매 반복마다 "목표가 객관적으로 충족됐는지" 평가합니다.</li>
+        <li>충족될 때까지 <strong>여러 턴(때로는 수 시간~수 일)</strong> 자율 진행하며 <strong>경과 시간·턴 수·토큰</strong>을 추적합니다.</li>
+        <li>목표가 달성되면 <strong>자동으로 goal이 해제</strong >됩니다.</li>
+        <li>대화형 모드, <code>-p</code> 플래그(헤드리스), Remote Control에서 모두 동작합니다.</li>
+      </ul>
+
+      <h3><span class="ico">▸</span>명령어 레퍼런스 (v2.1.139+)</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>명령</th><th>동작</th></tr>
+          <tr><td><code>/goal &lt;condition&gt;</code></td><td>활성 목표 설정/교체 (즉시 한 턴 시작). 조건은 최대 4,000자</td></tr>
+          <tr><td><code>/goal show</code></td><td>상태 확인: 조건, 턴 수, 토큰, 마지막 평가 사유</td></tr>
+          <tr><td><code>/goal clear</code></td><td>활성 목표 해제 (별칭: stop, off, reset, none, cancel)</td></tr>
+          <tr><td><code>/clear</code></td><td>새 대화 시작 → 활성 목표도 함께 해제</td></tr>
+          <tr><td><code>--resume</code> / <code>--continue</code></td><td>세션 재개 시 활성 목표 복원(턴/타이머/토큰 기준선은 리셋)</td></tr>
+          <tr><td><code>claude -p "/goal &lt;condition&gt;"</code></td><td>비대화형으로 완료까지 루프 실행 (Ctrl+C로 중지)</td></tr>
+        </table>
+      </div>
+      <div class="box info"><span class="bt">전제 조건</span><p>Claude Code <b>v2.1.139 이상</b>, 워크스페이스 신뢰(trust) 다이얼로그 수락 필요(평가기가 hooks 시스템의 일부). <code>disableAllHooks</code>가 켜져 있거나 관리 설정에 <code>allowManagedHooksOnly</code>가 설정되면 사용 불가(명령이 이유를 알려줌). <b>세션당 목표는 하나</b>이며, 새 <code>/goal</code>은 기존 목표를 대체합니다.</p></div>
+
+      <h3><span class="ico">▸</span>좋은 목표 vs 나쁜 목표 (4장 카파시 4원칙과 직결)</h3>
+      <p>"강한 완료 조건"이 핵심입니다. 모호하면 검증이 불가능해 무한 루프나 "그럴듯한 엉망"으로 끝납니다. 4장의 <strong>Goal-Driven Execution</strong> 원칙이 그대로 적용됩니다.</p>
+      <div class="vs">
+        <div class="v vbad"><div class="vlabel">✗ 약한 조건 (검증 불가)</div><p>막연해서 평가기가 판단 못 함.<code>/goal make it work</code></p></div>
+        <div class="v vgood"><div class="vlabel">✓ 강한 조건 (검증 가능)</div><p>객관적 통과 기준이 명확.<code>/goal all tests pass and `npm run build` succeeds with no type errors</code></p></div>
+      </div>
+      <pre><span class="pre-label">실전 예시</span><code>/goal pytest 전체 통과 + ruff 린트 0 에러 + 커버리지 80% 이상
+/goal /auth 모듈의 보안 취약점을 수정하고 회귀 테스트를 추가해 모두 통과시킨다
+/goal show          <span class="c"># 진행 상황·토큰 점검</span>
+/goal clear         <span class="c"># 중단</span></code></pre>
+
+      <h3><span class="ico">▸</span>⚠️ 토큰 관점에서의 주의</h3>
+      <div class="box danger"><span class="bt">자율 루프 = 토큰 소모도 자율</span><p><code>/goal</code>은 수 시간 자율 실행이 가능한 만큼, 약한 조건이나 넓은 범위로 돌리면 <b>할당량을 빠르게 소진</b>할 수 있습니다. 안전하게 쓰려면 — ① 조건을 좁고 검증 가능하게, ② 작업당 범위를 작게 분리, ③ <code>/goal show</code>로 토큰을 주기적으로 점검, ④ 무거운 작업은 모델/노력 수준을 낮춰서, ⑤ 이상하면 <code>Ctrl+C</code>/<code>/goal clear</code>로 즉시 중단. 즉 <b>5~7장의 절약 원칙을 켜둔 채로</b> /goal을 쓰는 것이 정석입니다.</p></div>
+
+      <h3><span class="ico">▸</span>OMC에도 /goal이 있나? — 개념적 등가물</h3>
+      <p>OMC 공식 문서에 동일한 이름의 <code>/goal</code> 명령은 (현재 확인 범위에선) 없습니다. 다만 <strong>"완료될 때까지 멈추지 않는 자율 실행"</strong>이라는 개념은 OMC가 이미 다른 이름으로 제공합니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>개념</th><th>네이티브 Claude Code</th><th>OMC 등가물</th></tr>
+          <tr><td>완료까지 지속 실행</td><td><code>/goal &lt;condition&gt;</code></td><td><code>ralph</code> (완료까지 루프)</td></tr>
+          <tr><td>계획→실행 자동 전 과정</td><td>—</td><td><code>autopilot</code> (5단계 파이프라인)</td></tr>
+          <tr><td>완료 검증</td><td>경량 evaluator 모델</td><td>QA/Validation 단계 + verifier 에이전트</td></tr>
+        </table>
+      </div>
+      <div class="box tip"><span class="bt">정리</span><p>네이티브 <code>/goal</code>은 "조건 하나로 자율 루프", OMC <code>ralph</code>/<code>autopilot</code>은 "역할 분업 + 완료 보증"입니다. 단순·단일 목표면 <code>/goal</code>, 멀티 역할 대형 작업이면 OMC가 더 자연스럽습니다. 둘 다 자율 실행이라 <b>토큰 모니터링은 필수</b>라는 점은 동일합니다.</p></div>
+    </section>
+
+    <!-- 9 -->
+    <section id="omc-intro">
+      <div class="sec-num">SECTION 09 · OMC</div>
+      <h2>oh-my-claudecode(OMC)란 무엇인가</h2>
+      <p class="lead">허예찬(Yeachan Heo)이 만든 OMC는 Claude Code 위에 얹는 <strong>멀티 에이전트 오케스트레이션 레이어</strong>입니다. 한 줄 요약은 — <em>"Don't learn Claude Code. Just use OMC."</em></p>
+      <div class="grid g2">
+        <div class="card"><h4 style="margin-top:0">핵심 1 · 자동 위임</h4><p>"복잡한 작업"이라고 말하면 설계·리서치·실행·QA 등 전문 역할로 쪼개 <strong>병렬로</strong> 실행합니다.</p></div>
+        <div class="card"><h4 style="margin-top:0">핵심 2 · 자동 모드 전환</h4><p>"plan this", "don't stop until done" 같은 표현을 감지해 계획 인터뷰나 지속 실행 모드를 자동으로 켭니다.</p></div>
+      </div>
+
+      <h3><span class="ico">▸</span>OMC의 작동 철학 — 스킬 합성(Skill Synthesis)</h3>
+      <p>Claude Code는 마스터 에이전트를 교체하지 않고 <strong>고정된 마스터에 스킬을 주입(inject)</strong>해 행동을 바꿉니다. OMC는 이를 레이어로 정리합니다.</p>
+      <div class="pipe">
+        <span class="step">Execution Skill</span><span class="arr">+</span>
+        <span class="step">0~N Enhancement Skills</span><span class="arr">+</span>
+        <span class="step">Optional Guarantee</span>
+      </div>
+      <p>예: "UI 작업 + 여러 파일 수정 + 커밋"이면 실행 레이어 위에 <code>frontend-ui-ux</code>, <code>git-master</code>를 얹습니다. 모드를 '갈아타는' 게 아니라 행동을 '겹겹이 쌓는' 방식이라 맥락이 끊기지 않습니다.</p>
+
+      <h3><span class="ico">▸</span>패키지 구성 (버전에 따라 수치 변동)</h3>
+      <div class="grid g2">
+        <div class="card"><div class="num">19~27</div><div class="lbl">SPECIALIZED AGENTS</div><p style="margin-top:8px">architect, explore, researcher, executor, designer, writer, vision, critic, analyst, planner, qa-tester 등 역할별 분업</p></div>
+        <div class="card"><div class="num">28~37</div><div class="lbl">SKILLS</div><p style="margin-top:8px">autopilot, ralph, ultrawork, team, planner, git-master, frontend-ui-ux, learner 등 자동화 워크플로</p></div>
+        <div class="card"><h4 style="margin-top:0">HUD Statusline</h4><p>오케스트레이션 진행 상황을 상태바에 요약 표시 <code>[OMC] autopilot:planning | agents:2 | ctx:32%</code></p></div>
+        <div class="card"><h4 style="margin-top:0">메모리/노트 시스템</h4><p>컨텍스트 압축 이후에도 핵심 정보를 남기는 <strong>3-Tier 메모리</strong>(우선순위 / 작업 / 수동 노트)</p></div>
+      </div>
+      <div class="box warn"><span class="bt">⚠️ 트레이드오프 (커뮤니티 평가)</span><p>OMC는 속도·편의성이 강점이지만, 병렬화와 보강 스킬은 본질적으로 <b>더 많은 호출/사고</b>를 유도합니다. 즉 <b>토큰·시간·비용 증가</b>와 <b>자동화의 불투명성</b>이 명확한 비용입니다. 작은 프로젝트엔 과잉 설계가 될 수 있습니다.</p></div>
+    </section>
+
+    <!-- 10 -->
+    <section id="omc-install">
+      <div class="sec-num">SECTION 10 · OMC</div>
+      <h2>설치 & 첫 세션 (약 30초)</h2>
+      <h4>Step 1 — 설치 (슬래시 명령은 한 줄씩 입력)</h4>
+      <pre><span class="pre-label">Claude Code 세션 안에서</span><code><span class="c"># 1) 마켓플레이스 추가</span>
+/plugin marketplace add https://github.com/Yeachan-Heo/oh-my-claudecode
+
+<span class="c"># 2) 플러그인 설치</span>
+/plugin install oh-my-claudecode</code></pre>
+      <p>npm CLI 경로를 선호하면(패키지명 주의 — 브랜드는 oh-my-claudecode지만 npm 패키지는 <code>oh-my-claude-sisyphus</code>):</p>
+      <pre><span class="pre-label">터미널</span><code>npm i -g oh-my-claude-sisyphus@latest</code></pre>
+
+      <h4>Step 2 — 설정 (CLAUDE.md 갱신)</h4>
+      <pre><span class="pre-label">세션 안 / 터미널</span><code>/setup            <span class="c"># 또는</span>  /omc-setup
+omc setup         <span class="c"># 터미널에서</span></code></pre>
+
+      <h4>Step 3 — 무언가 만들기</h4>
+      <pre><span class="pre-label">자연어로</span><code>autopilot build me a todo CLI app
+/autopilot "build a REST API for managing tasks"</code></pre>
+
+      <h3><span class="ico">▸</span>CLI 명령 vs 세션 내 스킬</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>기능</th><th>터미널 CLI</th><th>세션 내 스킬</th></tr>
+          <tr><td>설정</td><td><code>omc setup</code></td><td><code>/setup</code>, <code>/omc-setup</code></td></tr>
+          <tr><td>다른 모델에 질의</td><td><code>omc ask codex "…"</code></td><td><code>/ask codex "…"</code></td></tr>
+          <tr><td>팀 오케스트레이션</td><td><code>omc team 2:codex</code> (tmux 워커)</td><td><code>/team 3:executor</code> (네이티브)</td></tr>
+          <tr><td>Autopilot/Ralph 등</td><td>—</td><td><code>/autopilot</code> <code>/ralph</code> <code>/ultrawork</code></td></tr>
+        </table>
+      </div>
+
+      <h3><span class="ico">▸</span>요구사항이 막연할 때 — Deep Interview</h3>
+      <pre><span class="pre-label">소크라테스식 질문으로 요구사항 명료화</span><code>/deep-interview "I want to build a task management app"</code></pre>
+
+      <h3><span class="ico">▸</span>업데이트 & 문제 해결</h3>
+      <pre><span class="pre-label">유지보수</span><code><span class="c"># npm 설치 시</span>
+npm i -g oh-my-claude-sisyphus@latest
+
+<span class="c"># 마켓플레이스 설치 시</span>
+/plugin marketplace update omc
+/setup
+
+<span class="c"># 문제 발생 시 캐시 진단</span>
+/omc-doctor</code></pre>
+    </section>
+
+    <!-- 11 -->
+    <section id="omc-keywords">
+      <div class="sec-num">SECTION 11 · OMC</div>
+      <h2>매직 키워드 — 파이프라인을 한 마디로</h2>
+      <p class="lead">대부분 자동이지만, 필요하면 키워드로 모드를 강제할 수 있습니다.</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>키워드</th><th>효과</th></tr>
+          <tr><td><code>ralph</code></td><td>완료될 때까지 멈추지 않는 지속 실행 (네이티브 <code>/goal</code>과 유사한 개념)</td></tr>
+          <tr><td><code>ralplan</code></td><td>여러 관점의 합의를 만들며 반복 계획</td></tr>
+          <tr><td><code>ulw</code> / <code>ultrawork</code></td><td>최대 병렬 실행</td></tr>
+          <tr><td><code>plan</code></td><td>계획 인터뷰 시작</td></tr>
+          <tr><td><code>autopilot</code> / <code>ap</code></td><td>자율 실행 플로우</td></tr>
+          <tr><td><code>analyze</code> / <code>deep-analyze</code></td><td>debugger 에이전트 즉시 호출(원인 분석)</td></tr>
+          <tr><td><code>cancelomc</code> / stop / abort</td><td>맥락에 맞춰 진행 중단(진행분은 보존)</td></tr>
+        </table>
+      </div>
+      <div class="box tip"><span class="bt">중단해도 안전</span><p><code>cancelomc</code>로 멈춰도 그때까지의 진행 상황은 보존되어 나중에 이어서 재개할 수 있습니다.</p></div>
+    </section>
+
+    <!-- 12 -->
+    <section id="omc-flows">
+      <div class="sec-num">SECTION 12 · OMC</div>
+      <h2>Autopilot · Team 모드</h2>
+
+      <h3><span class="ico">▸</span>Autopilot — 5단계 자동 파이프라인</h3>
+      <p>아이디어 하나를 주면 완성 코드까지 자동으로 만듭니다.</p>
+      <div class="pipe">
+        <span class="step">Expansion</span><span class="arr">→</span>
+        <span class="step">Planning</span><span class="arr">→</span>
+        <span class="step">Execution</span><span class="arr">→</span>
+        <span class="step">QA</span><span class="arr">→</span>
+        <span class="step">Validation</span>
+      </div>
+      <ol>
+        <li><strong>Expansion</strong> — analyst·architect가 아이디어를 기능 요구사항·기술 스펙으로 확장 (<code>.omc/autopilot/spec.md</code>)</li>
+        <li><strong>Planning</strong> — planner가 구현 계획 작성, critic이 빈틈 검토 (<code>.omc/plans/autopilot-impl.md</code>)</li>
+        <li><strong>Execution</strong> — executor가 ralph+ultrawork 모드로 완료까지 코딩(필요 시 병렬)</li>
+        <li><strong>QA</strong> — 빌드·테스트 검증, 실패 시 자동 수정·재검증(최대 5회)</li>
+        <li><strong>Validation</strong> — 기능·보안·품질 3관점 최종 리뷰. 모두 APPROVED여야 완료(최대 3라운드)</li>
+      </ol>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>옵션</th><th>기본값</th><th>설명</th></tr>
+          <tr><td><code>parallelExecutors</code></td><td>5</td><td>병렬 executor 수</td></tr>
+          <tr><td><code>maxQaCycles</code></td><td>5</td><td>QA 재시도 횟수</td></tr>
+          <tr><td><code>maxValidationRounds</code></td><td>3</td><td>최종 검증 라운드</td></tr>
+          <tr><td><code>skipQa</code> / <code>skipValidation</code></td><td>false</td><td>단계 스킵(토큰 절약용)</td></tr>
+        </table>
+      </div>
+
+      <h3><span class="ico">▸</span>Team 모드 — 여러 에이전트 동시 실행</h3>
+      <pre><span class="pre-label">형식: N:agent-type "작업"</span><code>/team 3:executor "fix all TypeScript errors"
+omc team 2:codex "review auth module for security"   <span class="c"># tmux 워커</span>
+team ralph 3:executor "implement full auth system"   <span class="c"># team + ralph</span></code></pre>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>구분</th><th>autopilot</th><th>team</th></tr>
+          <tr><td>자동화</td><td>완전 자동(5단계)</td><td>반자동(방향 지시 필요)</td></tr>
+          <tr><td>에이전트 수</td><td>자동 결정</td><td>사용자 지정(2~5 권장)</td></tr>
+          <tr><td>적합</td><td>엔드투엔드 자동 실행</td><td>특정 단계 병렬 처리</td></tr>
+        </table>
+      </div>
+      <div class="box danger"><span class="bt">🔥 토큰 경고</span><p>Team 모드는 여러 에이전트를 동시에 굴려 <b>토큰 비용이 높습니다</b>. 단순 작업엔 단일 에이전트가 훨씬 효율적입니다.</p></div>
+
+      <h3><span class="ico">▸</span>계획 워크플로 선택</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>워크플로</th><th>적합</th><th>비용</th></tr>
+          <tr><td><code>/plan</code></td><td>빠른 계획이 필요할 때</td><td class="ok">낮음</td></tr>
+          <tr><td><code>/ralplan</code></td><td>여러 관점의 합의가 필요할 때(Planner→Architect→Critic 반복)</td><td>중간</td></tr>
+          <tr><td><code>autopilot</code></td><td>계획부터 실행까지 자동화</td><td class="no">높음</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section id="omc-tools">
+      <div class="sec-num">SECTION 13 · OMC</div>
+      <h2>OMC 내장 MCP 도구 — 토큰을 아끼는 무기들</h2>
+      <p class="lead">OMC는 에이전트가 <strong>내부적으로</strong> 쓰는 MCP 도구를 제공합니다. 이 중 상당수가 직접적인 토큰 절약 장치입니다.</p>
+      <div class="grid g2">
+        <div class="card"><h4 style="margin-top:0">📝 Notepad</h4><p><strong>컨텍스트 압축에도 살아남는</strong> 노트 시스템. 긴 세션에서 윈도우 밖으로 밀려나도 핵심 정보가 보존됨. <code>/note</code>로 저장.</p></div>
+        <div class="card"><h4 style="margin-top:0">🧠 Project Memory</h4><p>프로젝트 구조·규칙·학습한 지식을 <strong>세션 간</strong> 유지. 매번 다시 탐색할 필요 없음.</p></div>
+        <div class="card"><h4 style="margin-top:0">🔎 LSP</h4><p><code>lsp_goto_definition</code>, <code>lsp_find_references</code> 등. 타입 정보·정의 이동·참조 찾기로 <strong>파일 통째 읽기를 대체</strong>.</p></div>
+        <div class="card"><h4 style="margin-top:0">🌳 AST Grep</h4><p><code>ast_grep_search/replace</code>. 정규식이 아니라 <strong>코드 구조 패턴</strong>으로 검색·치환 → 정확하고 토큰 효율적.</p></div>
+        <div class="card"><h4 style="margin-top:0">🐍 Python REPL</h4><p>세션 간 상태가 유지되는 영속 Python 환경에서 데이터 분석 수행.</p></div>
+        <div class="card"><h4 style="margin-top:0">🗂 State / Shared Memory</h4><p>autopilot·ralph 등 실행 모드의 상태 저장, 팀 간 교차 공유 메모리로 협업 조율.</p></div>
+      </div>
+      <div class="box tip"><span class="bt">왜 토큰을 아끼나</span><p>LSP·AST Grep·Notepad·Project Memory는 모두 "<b>같은 정보를 다시 읽지 않게</b>" 만드는 장치입니다. 즉 5장의 "코드 인텔리전스로 불필요한 파일 읽기 줄이기" 원칙을 OMC가 내장 제공하는 셈입니다.</p></div>
+    </section>
+
+    <!-- 14 -->
+    <section id="omc-cost">
+      <div class="sec-num">SECTION 14 · OMC</div>
+      <h2>OMC 비용 최적화 — Haiku-First 원칙</h2>
+      <p class="lead">OMC는 3개 모델 티어를 쓰며, 적절한 티어 선택만으로 <strong>토큰 30~50%</strong>를 절감한다고 공식 문서가 안내합니다. 핵심은 "가장 가벼운 모델로 시작하고 필요할 때만 올린다".</p>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>작업 유형</th><th>권장 모델</th><th>이유</th></tr>
+          <tr><td>파일 검색·코드 탐색</td><td class="ok">haiku</td><td>단순 작업</td></tr>
+          <tr><td>문서 작성</td><td class="ok">haiku</td><td>구조화된 텍스트 생성</td></tr>
+          <tr><td>일반 코드 구현</td><td>sonnet</td><td>품질-비용 균형</td></tr>
+          <tr><td>디버깅</td><td>sonnet</td><td>코드 이해 필요</td></tr>
+          <tr><td>아키텍처 설계</td><td class="no">opus</td><td>깊은 추론 필요</td></tr>
+          <tr><td>보안 리뷰</td><td class="no">opus</td><td>철저한 분석 필요</td></tr>
+        </table>
+      </div>
+
+      <h3><span class="ico">▸</span>고비용 작업 (꼭 필요할 때만)</h3>
+      <ul>
+        <li><code>team</code> — 여러 에이전트 동시 실행</li>
+        <li><code>ralph</code> — 완료까지 루프</li>
+        <li><code>autopilot</code> — 5단계 풀 파이프라인</li>
+        <li><code>qa-tester</code> — tmux 세션 기반 검증</li>
+      </ul>
+
+      <h3><span class="ico">▸</span>검증 비용 최적화 (싼 것부터)</h3>
+      <div class="tbl-wrap">
+        <table>
+          <tr><th>우선순위</th><th>방법</th><th>비용</th></tr>
+          <tr><td>1</td><td>기존 테스트 실행</td><td class="ok">낮음</td></tr>
+          <tr><td>2</td><td>명령 직접 실행(curl, CLI)</td><td class="ok">낮음</td></tr>
+          <tr><td>3</td><td>qa-tester (tmux)</td><td class="no">높음 — 정말 필요할 때만</td></tr>
+        </table>
+      </div>
+
+      <h3><span class="ico">▸</span>일반 팁</h3>
+      <ol>
+        <li><strong>작게 시작:</strong> 단일 에이전트로 시작해 필요 시 team/autopilot으로 확장</li>
+        <li><strong>계획 먼저:</strong> 복잡한 작업은 <code>/plan</code>·<code>ralplan</code>으로 먼저 계획</li>
+        <li><strong>노트 활용:</strong> <code>/note</code>로 핵심 정보를 컴팩션에서 살리기</li>
+        <li><strong>상태 모니터링:</strong> HUD·상태 파일로 진행 추적</li>
+        <li><strong>중단 타이밍:</strong> <code>cancelomc</code>로 불필요한 작업 빠르게 중지</li>
+      </ol>
+    </section>
+
+    <!-- 15 -->
+    <section id="omc-anti">
+      <div class="sec-num">SECTION 15 · OMC</div>
+      <h2>안티패턴 — 토큰을 태우는 흔한 실수</h2>
+      <div class="vs">
+        <div class="v vbad"><div class="vlabel">✗ 단순 작업에 무거운 모드</div><p>오타 하나 고치는데 autopilot 호출.<code>autopilot fix the typo in README.md</code></p></div>
+        <div class="v vgood"><div class="vlabel">✓ 직접 요청</div><p>그냥 바로 시킨다.<code>Fix the typo in README.md</code></p></div>
+      </div>
+      <div class="vs">
+        <div class="v vbad"><div class="vlabel">✗ 모든 에이전트를 opus로</div><p><code>explore / writer / executor 전부 opus</code></p></div>
+        <div class="v vgood"><div class="vlabel">✓ 기본값 유지, 필요한 곳만</div><p><code>executor만 opus (복잡한 프로젝트)</code></p></div>
+      </div>
+      <div class="vs">
+        <div class="v vbad"><div class="vlabel">✗ 테스트 있는데 qa-tester</div><p><code>qa-tester verify the login feature</code></p></div>
+        <div class="v vgood"><div class="vlabel">✓ 기존 테스트 실행</div><p><code>npm test -- --grep "login"</code></p></div>
+      </div>
+      <div class="vs">
+        <div class="v vbad"><div class="vlabel">✗ /goal에 약한 조건</div><p>검증 불가 → 무한 루프로 토큰 소진.<code>/goal make it better</code></p></div>
+        <div class="v vgood"><div class="vlabel">✓ 검증 가능한 조건</div><p><code>/goal all tests pass and build succeeds</code></p></div>
+      </div>
+      <div class="box warn"><span class="bt">✗ 검증 없이 "완료" 선언</span><p>에이전트가 "done"이라고 해도 바로 넘어가지 마세요. 항상 빌드/테스트 결과를 <b>증거 기반(evidence-based)</b>으로 먼저 확인합니다 — 이것이 재작업으로 인한 토큰 낭비를 막는 핵심입니다.</p></div>
+    </section>
+
+    <!-- 16 -->
+    <section id="workflow">
+      <div class="sec-num">SECTION 16</div>
+      <h2>실전 워크플로 — 토큰 의식 + OMC + /goal</h2>
+      <p class="lead">큰 작업을 토큰 효율적으로 끝내는 표준 흐름입니다.</p>
+      <div class="step-row"><div class="n">1</div><div class="body"><h4>계획부터 (Plan Mode)</h4><p>아키텍처 변경·인증 교체처럼 범위가 큰 작업은 바로 수정하지 말고 <code>Shift+Tab</code>으로 plan mode 진입. 또는 OMC <code>ralplan</code>으로 변경 파일·순서·리스크 정리. 초기 방향 오류로 인한 값비싼 재작업을 방지합니다.</p></div></div>
+      <div class="step-row"><div class="n">2</div><div class="body"><h4>/context로 점검</h4><p>작업 시작 전 컨텍스트 사용률 확인. 무관한 MCP는 <code>/mcp</code>로 끄고, 가능하면 CLI(gh·rg·ast-grep)를 쓰도록 유도.</p></div></div>
+      <div class="step-row"><div class="n">3</div><div class="body"><h4>구체적으로 지시 + 검증 대상 제공</h4><p>"auth.ts 로그인 함수에 입력 검증 추가"처럼 구체적으로. 테스트 케이스·예상 출력·스크린샷을 함께 주면 Claude가 스스로 검증합니다. (카파시 4원칙을 CLAUDE.md에 깔아두면 이 습관이 강제됩니다)</p></div></div>
+      <div class="step-row"><div class="n">4</div><div class="body"><h4>긴 작업은 /goal 또는 OMC에 위임</h4><p>검증 가능한 완료 조건이 명확하면 <code>/goal</code>로 자율 루프. 멀티 역할 대형 작업이면 OMC <code>autopilot</code>. 대량 출력(로그·테스트)은 서브에이전트로 격리해 요약만 받기.</p></div></div>
+      <div class="step-row"><div class="n">5</div><div class="body"><h4>토큰 모니터링 + 조기 방향 수정</h4><p>자율 실행 중에는 <code>/goal show</code>·<code>ccusage blocks --live</code>로 소모를 주시. 방향이 틀리면 <code>Esc</code>/<code>Ctrl+C</code>로 즉시 중지, <code>/rewind</code> 또는 <code>Esc Esc</code>로 체크포인트 복원.</p></div></div>
+      <div class="step-row"><div class="n">6</div><div class="body"><h4>문서화 후 /clear, 다음 단계로</h4><p>대규모 작업은 진행 상황을 마크다운으로 저장 → <code>/clear</code>로 초기화 → 새 세션에서 그 파일을 읽어 이어가기. 작업 전환 시 <code>/rename</code> 후 <code>/resume</code>로 복귀.</p></div></div>
+      <div class="box note"><span class="bt">멀티 터미널 전략</span><p>터미널1=백엔드, 터미널2=프런트엔드, 터미널3=문서/배포처럼 물리적으로 분리하면 컨텍스트 충돌을 막고 메모리 효율이 올라갑니다.</p></div>
+
+      <h3><span class="ico">▸</span>OMC 스킬 파이프라인 예시</h3>
+      <div class="pipe">
+        <span class="step">deep-interview</span><span class="arr">→</span>
+        <span class="step">omc-plan</span><span class="arr">→</span>
+        <span class="step">autopilot</span>
+      </div>
+      <p>요구사항을 deep-interview로 명료화 → omc-plan으로 계획 → autopilot으로 실행. 막연한 아이디어를 토큰 낭비 없이 완성으로 가져가는 안전한 경로입니다.</p>
+    </section>
+
+    <!-- 17 -->
+    <section id="checklist">
+      <div class="sec-num">SECTION 17</div>
+      <h2>최종 체크리스트</h2>
+      <div class="grid g2">
+        <div class="card">
+          <h4 style="margin-top:0">🪙 토큰 절약 (모든 사용자)</h4>
+          <ul style="margin-bottom:0">
+            <li>후속 메시지 대신 <strong>편집</strong>하기</li>
+            <li>15~20 메시지마다 <strong>새 세션</strong>·요약 인계</li>
+            <li>질문은 <strong>하나로 묶기</strong></li>
+            <li>반복 파일은 <strong>Projects</strong>·메모리에</li>
+            <li>안 쓰는 기능·MCP <strong>끄기</strong></li>
+            <li>단순 작업은 <strong>Haiku</strong></li>
+            <li>하루 <strong>2~3 세션</strong>으로 분산</li>
+            <li>요청은 <strong>구체적으로</strong></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">⚙️ Claude Code 설정</h4>
+          <ul style="margin-bottom:0">
+            <li>CLAUDE.md <strong>500줄 이하</strong>·구조화</li>
+            <li><strong>카파시 4원칙</strong> 깔기(forrestchang)</li>
+            <li>특화 지침은 <strong>Skills로 이동</strong></li>
+            <li>긴 CLAUDE.md는 <strong>분산 메모리</strong>로</li>
+            <li>MCP보다 <strong>CLI 선호</strong>(gh·rg·ast-grep…)</li>
+            <li>타입 언어엔 <strong>코드 인텔리전스(LSP)</strong></li>
+            <li>전처리는 <strong>Hooks</strong>로 오프로드</li>
+            <li>확장 사고 예산 조정(<code>MAX_THINKING_TOKENS</code>)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">🤖 자율 실행 (/goal · OMC)</h4>
+          <ul style="margin-bottom:0">
+            <li><code>/goal</code>은 <strong>검증 가능한 조건</strong>으로만</li>
+            <li>자율 루프 중 <code>/goal show</code>로 토큰 점검</li>
+            <li><strong>Haiku-first</strong>, 필요할 때만 승급</li>
+            <li>단순 작업에 <strong>autopilot/team 금지</strong></li>
+            <li>검증은 <strong>기존 테스트→CLI→qa-tester</strong> 순</li>
+            <li>완료 후 <strong>팀 정리</strong>(유휴도 과금)</li>
+            <li>막힐 때 <code>Ctrl+C</code>·<code>cancelomc</code>로 즉시 중단</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h4 style="margin-top:0">🔍 점검 명령 & 도구</h4>
+          <ul style="margin-bottom:0">
+            <li><code>/context</code> · <code>/usage</code> — 사용량</li>
+            <li><code>/cost</code> · <code>/stats</code> — 비용/패턴</li>
+            <li><code>ccusage daily|monthly|blocks --live</code></li>
+            <li><code>/mcp</code> — 활성 MCP 점검</li>
+            <li><code>/clear</code> · <code>/compact</code> — 비우기/요약</li>
+            <li><code>/rewind</code> — 체크포인트 복원</li>
+            <li><code>/model</code> · <code>/effort</code> — 모델·노력</li>
+            <li><code>/omc-doctor</code> — OMC 진단</li>
+          </ul>
+        </div>
+      </div>
+      <div class="box tip" style="margin-top:24px"><span class="bt">🎯 한 문장 결론</span><p><b>컨텍스트를 줄이고, 모델을 의식적으로 선택하고, Claude가 이미 알 수 있는 것을 다시 배우게 하지 마라.</b> 이 세 가지가 가장 크게 먹힙니다. <code>/goal</code>·OMC 같은 자율 도구는 이 원칙을 자동화하지만, 자동화 자체가 토큰을 더 쓸 수 있으니 "작업 규모에 맞는 도구"를 고르고 "검증 가능한 목표"를 주는 판단은 여전히 사람의 몫입니다.</p></div>
+    </section>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <strong style="color:var(--txt)">출처 (2026년 5월 기준)</strong>
+      <ul class="src-list">
+        <li>Anthropic 공식 — Claude Code: 비용을 효과적으로 관리하기 (code.claude.com/docs/ko/costs)</li>
+        <li>Anthropic 공식 — 컨텍스트 윈도우 / 확장 사고 (platform.claude.com/docs)</li>
+        <li>Claude Code v2.1.139 릴리스 — /goal 명령어 (explainx.ai, geeky-gadgets, Medium 필드가이드 등)</li>
+        <li>oh-my-claudecode 공식 docs — Getting Started / Guides / Tools (omc.vibetip.help/docs)</li>
+        <li>oh-my-claudecode GitHub — Yeachan-Heo/oh-my-claudecode</li>
+        <li>forrestchang/andrej-karpathy-skills — 카파시 4원칙 CLAUDE.md (MIT)</li>
+        <li>요즘IT — 개발자를 위한 Claude Code 토큰 사용량 최적화 전략</li>
+        <li>지피터스(GPTers) — Claude Code 토큰 절약하는 10가지 방법 (원 출처 X @0x_kaize)</li>
+        <li>로보코(ROBOCO) — Oh My Claude Code / ECC vs OMC 비교 리포트</li>
+        <li>ccusage 관련 — daleseo.com, apidog, lobehub 등</li>
+        <li>velog @sammy0329 / 인프런 / news.hada.io 등 커뮤니티 정리본</li>
+      </ul>
+      <p style="margin-top:16px;color:var(--txt3)">※ OMC의 에이전트/스킬 개수·버전, <code>/goal</code> 세부 동작은 빈번히 업데이트되므로 설치 시 공식 docs에서 최신 사항을 확인하세요. ※ 카파시 스킬의 GitHub 스타 수치는 시점에 따라 변동합니다. ※ 본 매뉴얼은 정보 제공용이며, 비용·요금 정책은 Anthropic 공식 안내가 우선합니다.</p>
+    </div>
+  </main>
+</div>
+
+<script>
+  const links=[...document.querySelectorAll('.nav a')];
+  const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));
+  const obs=new IntersectionObserver((es)=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const a=map.get(e.target.id); if(a)a.classList.add('active');
+      }
+    });
+  },{rootMargin:'-20% 0px -70% 0px'});
+  document.querySelectorAll('section[id]').forEach(s=>obs.observe(s));
+</script>
+</body>
+</html>
