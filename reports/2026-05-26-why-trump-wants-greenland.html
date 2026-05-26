@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>보이지 않는 국경선 — 트럼프가 그린란드에 집착한 진짜 이유</title>
+<meta name="description" content="2,500m 바다 밑바닥을 둘러싼 강대국들의 영토 쟁탈전. UNCLOS 제76조, 로모노소프 해령, 해저 케이블, 그리고 한국의 제7광구까지.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css">
+<style>
+:root{
+  --sans:'Pretendard','Pretendard Variable',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --serif:'Nanum Myeongjo','Noto Serif KR',serif;
+
+  --paper:#f4f5f2;
+  --paper-2:#eaecea;
+  --surface:#fbfcfb;
+  --ink:#0d1a1e;
+  --ink-2:#0a1417;
+  --text:#1d2a2d;
+  --text-soft:#586a6d;
+  --text-faint:#93a09f;
+  --teal:#0b6675;
+  --teal-deep:#064d59;
+  --teal-light:#6fa9b1;
+  --clay:#a64f2c;
+  --clay-deep:#85391b;
+  --clay-light:#cf9a7d;
+  --line:#d4dbd6;
+  --line-soft:#e2e7e3;
+  --mark:#cfe2df;
+  --mark-clay:#f0ddcf;
+  --gold:#b08a35;
+
+  --col:710px;
+  --colw:900px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--sans);
+  background:var(--paper);
+  color:var(--text);
+  line-height:1.82;
+  -webkit-font-smoothing:antialiased;
+  letter-spacing:-.003em;
+  overflow-x:hidden;
+}
+img{max-width:100%}
+::selection{background:var(--mark);color:var(--ink)}
+
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--teal);z-index:200;transition:width .08s linear}
+
+.col{max-width:var(--col);margin:0 auto;padding:0 24px}
+.colw{max-width:var(--colw);margin:0 auto;padding:0 24px}
+section{padding:clamp(54px,9vw,100px) 0}
+
+/* ---------------- type ---------------- */
+.label{
+  display:flex;align-items:baseline;gap:14px;
+  font-size:12.5px;font-weight:800;letter-spacing:.16em;color:var(--teal);
+  text-transform:uppercase;margin-bottom:22px;
+}
+.label .ln{
+  font-family:var(--serif);font-size:30px;font-weight:800;color:var(--ink);
+  letter-spacing:0;line-height:.8;position:relative;top:3px;
+}
+.label .ln.clay{color:var(--clay)}
+.label.clay{color:var(--clay)}
+
+h2{
+  font-family:var(--serif);font-weight:800;
+  font-size:clamp(27px,5vw,42px);line-height:1.32;letter-spacing:-.02em;
+  color:var(--ink);margin-bottom:26px;word-break:keep-all;
+}
+h3{
+  font-size:clamp(18px,3vw,21px);font-weight:800;color:var(--teal-deep);
+  margin:42px 0 14px;letter-spacing:-.01em;word-break:keep-all;
+}
+p{margin-bottom:20px;font-size:clamp(16px,2.3vw,17.5px);color:var(--text);word-break:keep-all}
+.lead{font-size:clamp(17px,2.7vw,20px);color:var(--text-soft);font-weight:500;line-height:1.74}
+.dropcap::first-letter{
+  font-family:var(--serif);font-weight:800;font-size:3.4em;line-height:.82;
+  float:left;margin:8px 12px 0 0;color:var(--teal-deep);
+}
+
+strong{font-weight:800;color:var(--ink)}
+.k{font-weight:800;color:var(--teal)}
+.kc{font-weight:800;color:var(--clay)}
+em{font-style:normal;font-weight:700;box-shadow:inset 0 -2px 0 var(--teal-light)}
+.mark{
+  background-image:linear-gradient(var(--mark),var(--mark));
+  background-repeat:no-repeat;background-position:0 84%;background-size:0 40%;
+  transition:background-size .9s .15s cubic-bezier(.16,1,.3,1);
+  color:var(--text);font-weight:700;padding:0 1px;
+}
+.in .mark{background-size:100% 40%}
+.mark.clay{background-image:linear-gradient(var(--mark-clay),var(--mark-clay))}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+
+.rule{height:1px;background:var(--line);border:0;margin:0}
+.rule-short{width:54px;height:2px;background:var(--ink);border:0;margin:0 0 30px}
+
+/* ---------------- HERO ---------------- */
+.hero{
+  position:relative;min-height:100svh;display:flex;align-items:center;
+  background:var(--ink);color:#e7eeed;overflow:hidden;
+  padding:90px 0 70px;
+}
+.hero .contours{position:absolute;inset:0;opacity:.5}
+.hero .contours svg{width:100%;height:100%}
+.hero .glow{position:absolute;top:-30%;right:-10%;width:70%;height:80%;
+  background:radial-gradient(closest-side,rgba(38,120,134,.35),transparent);filter:blur(10px)}
+.hero-inner{position:relative;z-index:3;max-width:760px;margin:0 auto;padding:0 24px;width:100%}
+.hero .tagline{
+  font-size:12.5px;font-weight:800;letter-spacing:.24em;color:var(--teal-light);
+  text-transform:uppercase;margin-bottom:30px;display:flex;align-items:center;gap:14px;
+  opacity:0;animation:fadein .9s .1s forwards;
+}
+.hero .tagline::before{content:"";width:40px;height:1px;background:var(--teal-light)}
+.hero h1{
+  font-family:var(--serif);font-weight:800;
+  font-size:clamp(34px,7.5vw,68px);line-height:1.16;letter-spacing:-.025em;
+  margin-bottom:30px;word-break:keep-all;
+  opacity:0;animation:rise 1s .2s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero h1 .em-t{color:#7fc9d4}
+.hero h1 .em-c{color:#e3a07f;font-style:italic}
+.hero .sub{
+  font-size:clamp(16px,2.6vw,20px);color:#a9c2c2;font-weight:400;line-height:1.78;
+  max-width:560px;border-left:2px solid rgba(127,201,212,.4);padding-left:20px;
+  opacity:0;animation:rise 1s .42s cubic-bezier(.16,1,.3,1) forwards;
+}
+.hero .sub b{color:#cfe0df;font-weight:700}
+@keyframes fadein{to{opacity:1}}
+@keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+.hero .meta{
+  margin-top:46px;font-size:12.5px;letter-spacing:.05em;color:#6d8788;
+  display:flex;gap:18px;flex-wrap:wrap;opacity:0;animation:fadein 1s .7s forwards;
+}
+.hero .meta span{display:flex;align-items:center;gap:7px}
+.hero .meta span::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--teal-light)}
+.cue{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);z-index:3;opacity:0;animation:fadein 1s 1s forwards}
+.cue .ln{width:1px;height:34px;background:linear-gradient(#7fc9d4,transparent);margin:0 auto;animation:grow 1.8s ease-in-out infinite}
+@keyframes grow{0%,100%{height:14px;opacity:.4}50%{height:34px;opacity:1}}
+
+/* ---------------- pull quote ---------------- */
+.pull{
+  font-family:var(--serif);font-weight:800;
+  font-size:clamp(23px,4.6vw,38px);line-height:1.42;letter-spacing:-.02em;
+  color:var(--ink);text-align:center;padding:clamp(34px,6vw,58px) 0;word-break:keep-all;
+}
+.pull .t{color:var(--teal)}
+.pull .c{color:var(--clay);font-style:italic}
+.pull-rule{width:38px;height:2px;background:var(--clay);margin:0 auto 26px}
+
+/* ---------------- callout ---------------- */
+.note{
+  border-left:3px solid var(--teal);padding:6px 0 6px 26px;margin:34px 0;
+}
+.note .nt{font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--teal);margin-bottom:8px}
+.note.clay{border-color:var(--clay)}
+.note.clay .nt{color:var(--clay)}
+.note p:last-child{margin-bottom:0}
+
+.dark-note{
+  background:var(--ink);color:#dde7e6;border-radius:4px;
+  padding:clamp(26px,5vw,40px);margin:38px 0;position:relative;overflow:hidden;
+}
+.dark-note::after{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:#3f95a3}
+.dark-note .nt{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7fc9d4;margin-bottom:14px}
+.dark-note p{color:#dde7e6;margin-bottom:0;font-size:clamp(16px,2.5vw,19px);line-height:1.7}
+.dark-note strong{color:#fff}
+.dark-note .kt{color:#86d3dd;font-weight:800}
+.dark-note .kw{color:#e8a583;font-weight:800}
+
+/* ---------------- figure ---------------- */
+figure{margin:42px 0}
+.fig{border:1px solid var(--line);background:var(--surface);border-radius:6px;padding:clamp(20px,4vw,30px)}
+.fig svg{width:100%;height:auto;display:block}
+.figttl{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--line-soft)}
+figcaption{font-size:13.5px;color:var(--text-soft);line-height:1.7;margin-top:16px;word-break:keep-all}
+figcaption b{color:var(--ink);font-weight:700}
+
+/* data row */
+.data{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0;margin:34px 0;border-top:1px solid var(--ink)}
+.data .cell{padding:22px 14px 18px;border-bottom:1px solid var(--line)}
+.data .v{font-family:var(--serif);font-weight:800;font-size:clamp(30px,5.5vw,46px);color:var(--ink);line-height:1;letter-spacing:-.02em}
+.data .v .u{font-size:.42em;font-weight:700;color:var(--teal);margin-left:3px;font-family:var(--sans)}
+.data .v.clay{color:var(--clay)}
+.data .l{font-size:12.5px;color:var(--text-soft);margin-top:11px;font-weight:600;letter-spacing:.02em}
+
+/* timeline */
+.tl{margin:34px 0;border-top:1px solid var(--line)}
+.tl-item{display:grid;grid-template-columns:88px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid var(--line)}
+.tl-item .yr{font-family:var(--serif);font-weight:800;font-size:21px;color:var(--teal);letter-spacing:-.01em}
+.tl-item.clay .yr{color:var(--clay)}
+.tl-item .tt{font-weight:800;color:var(--ink);font-size:16.5px;margin-bottom:4px}
+.tl-item .ds{font-size:14.5px;color:var(--text-soft);line-height:1.6}
+@media(max-width:480px){.tl-item{grid-template-columns:64px 1fr;gap:14px}.tl-item .yr{font-size:18px}}
+
+/* list */
+ul.ed{list-style:none;margin:22px 0}
+ul.ed li{position:relative;padding-left:26px;margin-bottom:16px;font-size:16px;color:var(--text);word-break:keep-all}
+ul.ed li::before{content:"";position:absolute;left:2px;top:13px;width:8px;height:2px;background:var(--teal)}
+ul.ed li.clay::before{background:var(--clay)}
+
+/* table */
+.tablewrap{overflow-x:auto;margin:34px 0;border:1px solid var(--line);border-radius:6px}
+table{width:100%;border-collapse:collapse;min-width:560px;background:var(--surface)}
+thead th{background:var(--ink);color:#dde7e6;font-weight:700;font-size:13px;padding:14px 16px;text-align:left;letter-spacing:.02em}
+tbody td{padding:14px 16px;border-top:1px solid var(--line);font-size:14px;vertical-align:top;color:var(--text)}
+tbody td:first-child{font-weight:800;color:var(--ink);white-space:nowrap}
+.pill{display:inline-block;font-size:11.5px;font-weight:800;padding:3px 10px;border-radius:50px;letter-spacing:.02em}
+.pill.in{background:var(--mark);color:var(--teal-deep)}
+.pill.out{background:var(--mark-clay);color:var(--clay-deep)}
+
+/* portugal bars */
+.bars{display:flex;align-items:flex-end;justify-content:center;gap:30px;height:250px;padding-top:50px}
+.bar{width:84px;position:relative;border-radius:3px 3px 0 0;transition:height 1.3s cubic-bezier(.16,1,.3,1)}
+.bar .cap{position:absolute;top:-44px;left:50%;transform:translateX(-50%);text-align:center;width:140px}
+.bar .cap b{font-family:var(--serif);font-size:26px;font-weight:800;color:var(--ink)}
+.bar .cap small{display:block;font-size:12px;color:var(--text-soft);font-weight:600;margin-top:2px}
+.bar.sea{background:var(--teal);height:0}.in .bar.sea{height:88%}
+.bar.land{background:var(--clay);height:0}.in .bar.land{height:8%}
+
+/* donut */
+.donut-row{display:flex;gap:30px;align-items:center;flex-wrap:wrap;justify-content:center}
+.donut{position:relative;width:168px;height:168px;flex-shrink:0}
+.donut svg{transform:rotate(-90deg)}
+.donut .bg{fill:none;stroke:var(--line);stroke-width:14}
+.donut .fg{fill:none;stroke:var(--teal);stroke-width:14;stroke-linecap:round;stroke-dasharray:471;stroke-dashoffset:471;transition:stroke-dashoffset 1.7s cubic-bezier(.16,1,.3,1)}
+.in .donut .fg{stroke-dashoffset:4.7}
+.donut .ctr{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.donut .ctr b{font-family:var(--serif);font-size:42px;font-weight:800;color:var(--ink);line-height:1}
+.donut .ctr span{display:block;font-size:12px;color:var(--text-soft);font-weight:600;margin-top:5px}
+.donut-row .txt{max-width:330px}
+
+/* korea countdown */
+.cd{display:flex;align-items:center;justify-content:center;gap:18px;margin:30px 0}
+.cd .box{text-align:center}
+.cd .box b{font-family:var(--serif);font-size:clamp(34px,7vw,52px);font-weight:800;color:var(--ink);line-height:1;display:block}
+.cd .box.clay b{color:var(--clay)}
+.cd .box small{font-size:12px;color:var(--text-soft);font-weight:700;letter-spacing:.04em;margin-top:8px;display:block}
+.cd .arr{font-family:var(--serif);font-size:30px;color:var(--text-faint)}
+
+/* TOC */
+#tocBtn{position:fixed;right:20px;bottom:20px;z-index:120;background:var(--ink);color:#e7eeed;border:0;
+  border-radius:50px;padding:13px 20px;font-family:var(--sans);font-weight:700;font-size:13px;letter-spacing:.04em;
+  box-shadow:0 8px 28px -10px rgba(13,26,30,.5);cursor:pointer;transition:transform .18s}
+#tocBtn:active{transform:scale(.95)}
+#toc{position:fixed;right:20px;bottom:72px;z-index:120;background:var(--surface);border:1px solid var(--line);
+  border-radius:10px;box-shadow:0 16px 40px -12px rgba(13,26,30,.3);padding:8px;max-width:268px;
+  opacity:0;pointer-events:none;transform:translateY(8px);transition:.22s}
+#toc.open{opacity:1;pointer-events:auto;transform:none}
+#toc a{display:flex;gap:10px;padding:8px 12px;border-radius:7px;font-size:13.5px;color:var(--text-soft);text-decoration:none;font-weight:600}
+#toc a .n{font-family:var(--serif);font-weight:800;color:var(--teal);width:24px;flex-shrink:0}
+#toc a:hover{background:var(--paper-2);color:var(--ink)}
+
+footer{background:var(--ink);color:#8fa3a3;padding:60px 24px}
+footer .col{text-align:center}
+footer .ft-rule{width:40px;height:2px;background:#3f95a3;margin:0 auto 28px}
+footer .src{font-size:14px;color:#cfe0df;line-height:1.7;margin-bottom:14px}
+footer .src b{color:#fff;font-family:var(--serif)}
+footer .tags{font-size:12px;color:#6d8788;letter-spacing:.06em;line-height:1.9}
+
+@media(max-width:540px){
+  .bars{gap:18px}.bar{width:66px}
+  .data{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero">
+  <div class="glow"></div>
+  <div class="contours" aria-hidden="true">
+    <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" fill="none">
+      <g stroke="#2c6b78" stroke-width="1">
+        <path d="M-100,420 C200,360 420,470 650,420 C880,370 1050,440 1320,400"/>
+        <path d="M-100,470 C220,410 430,520 660,470 C890,420 1060,490 1320,450"/>
+        <path d="M-100,520 C240,460 440,570 670,520 C900,470 1070,540 1320,500"/>
+        <path d="M-100,570 C260,510 450,620 680,570 C910,520 1080,590 1320,550"/>
+        <path d="M-100,620 C280,560 460,670 690,620 C920,570 1090,640 1320,600"/>
+        <path d="M-100,360 C180,300 410,420 640,370 C870,320 1040,390 1320,350"/>
+        <path d="M-100,310 C160,250 400,370 630,320 C860,270 1030,340 1320,300"/>
+      </g>
+    </svg>
+  </div>
+  <div class="hero-inner">
+    <div class="tagline">21세기 지정학 · 심해 영토 전쟁</div>
+    <h1>보이지 않는 국경선,<br><span class="em-t">그린란드</span>에 집착한<br><span class="em-c">진짜 이유</span></h1>
+    <p class="sub">대부분 "또 부동산 쇼냐"며 비웃었습니다. 하지만 이건 섬 이야기가 아닙니다. 바닷속 <b>2,500m 아래</b>, 우리가 보는 지도에는 그려지지도 않은 땅을 누가 차지하느냐의 게임입니다.</p>
+    <div class="meta"><span>UNCLOS 제76조</span><span>로모노소프 해령</span><span>해저 케이블</span><span>제7광구</span></div>
+  </div>
+  <div class="cue"><div class="ln"></div></div>
+</header>
+
+<!-- ===================== INTRO ===================== -->
+<section>
+  <div class="col">
+    <hr class="rule-short reveal">
+    <p class="lead dropcap reveal">지금 전 세계 뉴스는 온통 이란·중동이라는 '화약고'에 쏠려 있습니다. 그런데 그동안 이상할 만큼 조용하게, 그러면서도 거대한 패권 경쟁 하나가 진행돼 왔습니다. 바로 <strong>북극을 누가 통째로 삼키느냐</strong>의 싸움입니다.</p>
+    <p class="reveal d1">이 판을 제대로 보려면 머릿속에 박힌 프레임 하나를 버려야 합니다. "트럼프가 그린란드를 갖고 싶어 한다" — 맞는 말이지만, 핵심이 아닙니다. 우리가 던져야 할 진짜 질문은 따로 있습니다.</p>
+
+    <div class="pull reveal">
+      <div class="pull-rule"></div>
+      왜 하필 <span class="t">그린란드</span>인가?
+    </div>
+
+    <p class="reveal">캐나다의 누나부트도, 아이슬란드도, 스발바르도 아닌데 — 왜 그린란드일까요? 그 답을 보려면 <strong>육지를 봐서는 안 됩니다.</strong> 해수면 위에는 답이 없습니다. 답은 수천 미터 깊고 어두운 <em>해수면 아래</em>에 숨겨져 있습니다.</p>
+
+    <div class="dark-note reveal">
+      <div class="nt">이 글의 핵심</div>
+      <p>이 영토 게임에서, 세계 최강대국 미국은 <strong>좌석표조차 없는 유일한 구경꾼</strong>입니다. 그리고 그린란드는 미국이 이 판에 끼어들 수 있는 <span class="kt">거의 유일한 입장권</span>입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 01 UNCLOS ===================== -->
+<section style="background:var(--paper-2)">
+  <div class="col">
+    <div class="label reveal"><span class="ln">01</span> 바다의 헌법</div>
+    <h2 class="reveal d1">1982년, 바다에 헌법이 생겼다</h2>
+    <p class="reveal d1">이 바둑판을 이해하려면 1982년으로 가야 합니다. 그해 <strong>UN 해양법 협약</strong>이 탄생했습니다. 풀어 쓰면 <em>United Nations Convention on the Law of the Sea</em>, 너무 길어 보통 <span class="k">UNCLOS(유엔클로스)</span>라 부릅니다.</p>
+    <p class="reveal d1">국제법 역사상 가장 방대한 조약 중 하나로, 이른바 <span class="mark">'바다의 헌법'</span>이라 불립니다. 나라마다 바다 경계를 정하는 기준이 제각각이라 충돌이 끊이지 않으니, 다 같이 언어와 기준의 틀을 맞추자는 약속이었죠. 즉 <strong>"내 바다라는 기준이 무엇인가"</strong>를 정하는 협약입니다.</p>
+
+    <h3 class="reveal">200해리 배타적 경제수역(EEZ)</h3>
+    <p class="reveal">땅 위 공역은 간단합니다 — "내 땅 위 공기는 내 것." 그런데 바다는 복잡합니다. 그래서 협약은 한 나라의 해안선에서 <span class="k">200해리</span>까지를 그 나라의 <strong>배타적 경제수역(EEZ)</strong>으로 인정했습니다.</p>
+
+    <div class="data reveal">
+      <div class="cell"><div class="v" data-target="200">0</div><div class="l">해리 (n mile)</div></div>
+      <div class="cell"><div class="v" data-target="370">0<span class="u">km</span></div><div class="l">약 370km에 해당</div></div>
+      <div class="cell"><div class="v" style="font-size:clamp(20px,4vw,30px)">서울→울산</div><div class="l">대략 이만큼의 거리</div></div>
+    </div>
+    <p class="reveal">지도상 국경선에서 바다로 그 정도 거리는 <strong>온전히 내 것</strong> — 이렇게 정리됐습니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 02 ARTICLE 76 ===================== -->
+<section>
+  <div class="col">
+    <div class="label reveal"><span class="ln">02</span> 숨겨진 폭탄, 제76조</div>
+    <h2 class="reveal d1">'연장 대륙붕' — 보이지 않는 영토</h2>
+    <p class="reveal d1">EEZ보다 훨씬 중요한 조항이 숨어 있습니다. 바로 <span class="k">제76조, '연장 대륙붕'</span>입니다.</p>
+    <p class="reveal d1">내 육지가 바다 밑으로 들어가는데, 그 땅덩어리가 <strong>200해리를 넘어서까지 자연스럽게 이어져 있다</strong>는 걸 <em>과학적으로 증명</em>해내면 — 그 바닷속으로 이어진 땅의 끝머리까지 전부 "내 땅"으로 인정해주겠다는 겁니다.</p>
+  </div>
+
+  <div class="colw">
+    <figure class="reveal">
+      <div class="fig">
+        <div class="figttl">단면도 — 무엇이 누구의 것인가</div>
+        <svg viewBox="0 0 760 360" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard, sans-serif">
+          <rect x="0" y="0" width="760" height="135" fill="#eef3f2"/>
+          <rect x="175" y="78" width="585" height="200" fill="#c5dad9"/>
+          <defs>
+            <linearGradient id="land" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#cbb486"/><stop offset="1" stop-color="#b09865"/></linearGradient>
+            <marker id="ar" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#a64f2c"/></marker>
+          </defs>
+          <path d="M0,135 L0,360 L760,360 L760,300 C660,282 560,258 470,252 C385,246 305,212 245,162 C218,140 198,118 175,78 C145,90 80,112 0,135 Z" fill="url(#land)"/>
+          <text x="62" y="118" font-size="15" font-weight="800" fill="#6e5a2c">육지</text>
+          <line x1="175" y1="78" x2="175" y2="290" stroke="#0d1a1e" stroke-width="1.5" stroke-dasharray="5 4"/>
+          <text x="182" y="98" font-size="11.5" font-weight="700" fill="#0d1a1e">해안 기준선</text>
+          <line x1="470" y1="78" x2="470" y2="290" stroke="#0b6675" stroke-width="1.5"/>
+          <text x="322" y="70" font-size="12.5" font-weight="800" fill="#0b6675" text-anchor="middle">◀ 200해리 (EEZ) ▶</text>
+          <text x="478" y="98" font-size="11.5" font-weight="700" fill="#0b6675">200해리 한계</text>
+          <text x="295" y="150" font-size="13.5" font-weight="800" fill="#0a4d57" text-anchor="middle">바닷물 · 수면 위 배</text>
+          <text x="295" y="170" font-size="11.5" fill="#3f6669" text-anchor="middle">국제적으로 자유 (간섭 없음)</text>
+          <text x="600" y="198" font-size="12.5" font-weight="800" fill="#0d1a1e" text-anchor="middle">연장 대륙붕</text>
+          <text x="600" y="216" font-size="11" fill="#586a6d" text-anchor="middle">(200해리 너머로 이어진 땅)</text>
+          <line x1="600" y1="224" x2="600" y2="286" stroke="#a64f2c" stroke-width="2" marker-end="url(#ar)"/>
+          <text x="612" y="322" font-size="13" font-weight="800" fill="#a64f2c">해저 토양 + 지하 자원</text>
+          <text x="612" y="340" font-size="11.5" font-weight="700" fill="#a64f2c">→ 완전히 내 것 (독점)</text>
+        </svg>
+      </div>
+      <figcaption>물 위의 배도, 물속의 항행도 자유. 그러나 <b>해저 밑바닥 토양과 그 아래 묻힌 지하 자원</b>에 대한 권리는 독점할 수 있다.</figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <div class="note reveal">
+      <div class="nt">패러다임의 전환</div>
+      <p>20세기 영토 확장은 군대를 보내 깃발을 꽂는 일이었습니다. 그러나 21세기 영토 확장은 <strong>아무도 볼 수 없는 곳</strong>에서 벌어집니다. 핵심은 <span class="k">해저의 지질학적 알박기</span> — 누가 더 정밀하게 바닷속 땅을 증명하느냐의 싸움입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 03 DORMANT ===================== -->
+<section style="background:var(--paper-2)">
+  <div class="col">
+    <div class="label reveal"><span class="ln">03</span> 잠든 조약</div>
+    <h2 class="reveal d1">20년간 '그림의 떡'이었다</h2>
+    <p class="reveal d1">1982년 야심차게 조약은 만들었지만, 문제가 있었습니다. <strong>"자연적인 연장"을 도대체 어떻게 증명하나?</strong> 해저 지형을 3차원으로 정밀하게 매핑해야 하는데, 1980년대 기술로는 어림없었습니다.</p>
+    <ul class="ed reveal d1">
+      <li>GPS는 아직 민간에 개방조차 되지 않았다.</li>
+      <li><strong>다중빔 음파 탐지</strong> 기술은 걸음마 단계였다.</li>
+      <li>해저 지진파 탐사 비용은 80년대 초 기준 <span class="mark clay">천문학적인 부담</span>이었다.</li>
+    </ul>
+    <p class="reveal">그래서 이 조약은 약 <strong>20년 동안</strong> 거의 그림의 떡이었습니다. "언젠가는 내 해저가 어디까지인지 알고 싶다"는 꿈만 품은 채, <em>수면 상태</em>에 빠져 있었던 거죠.</p>
+  </div>
+</section>
+
+<!-- ===================== 04 SPACE TECH ===================== -->
+<section>
+  <div class="col">
+    <div class="label reveal"><span class="ln">04</span> 우주에서 심해로</div>
+    <h2 class="reveal d1">우주 기술이 심해를 깨우다</h2>
+    <p class="reveal d1">2000년대가 되며 인터넷이 깔리고, 스마트폰이 보급되고, 위성 GPS가 널리 퍼졌습니다. 많은 나라가 자기만의 위성을 올렸고, 음파 기술은 점점 저렴해졌습니다. 사각지대였던 <strong>해저의 윤곽이 그려지기 시작</strong>한 겁니다.</p>
+
+    <div class="note reveal">
+      <div class="nt">가장 아이러니한 대목</div>
+      <p>이 기술 상당수는 <span class="k">우주 탐사 산업</span>에서 넘어왔습니다. 화성 지형을 스캔하던 기술을 지구에 적용해보니, <strong>바다 밑바닥을 스캔하기에 딱이었던 것</strong>입니다. 결국 우주 기술 덕분에 심해를 정복하게 된 셈이죠.</p>
+    </div>
+
+    <p class="reveal">바로 이 순간부터, 다들 꿈만 같던 <span class="k">제76조</span>에 번쩍 눈을 뜨게 됩니다. "이제 대륙 연장을 증명할 수 있겠구나" 하고 달려드는 나라들이 등장합니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 05 RUSSIA + RIDGE ===================== -->
+<section style="background:var(--paper-2)">
+  <div class="col">
+    <div class="label reveal"><span class="ln">05</span> 러시아의 선공</div>
+    <h2 class="reveal d1">로모노소프 해령을 향한 3파전</h2>
+    <p class="reveal d1">위성과 분석 기술을 갖고, 북극에 상당한 주장을 펼 수 있을 법한 나라 — 바로 <span class="k">러시아</span>였습니다. <strong>2001년 12월</strong>, 러시아는 'UN 대륙붕한계위원회(CLCS)'에 첫 신청서를 제출합니다. 자국 대륙이 북극점 바로 아래까지 뻗어 있으니 "우리 것"이라는 주장이었죠.</p>
+
+    <h3 class="reveal">핵심 증거: 로모노소프 해령</h3>
+    <p class="reveal d1">러시아가 내민 핵심 증거는 <span class="k">로모노소프 해령</span>이라는 해저 지형입니다. 북극해 한가운데를 가로지르는, 길이 약 <strong>1,800km</strong>의 거대한 해저 산맥입니다. 시베리아 끝에서 시작해 <strong>북극점을 관통</strong>, 캐나다 엘즈미어 섬까지 이어지고, 사실상 그린란드 옆구리까지 닿습니다.</p>
+  </div>
+
+  <div class="colw">
+    <figure class="reveal">
+      <div class="fig">
+        <div class="figttl">북극해 위에서 본 로모노소프 해령</div>
+        <svg viewBox="0 0 700 450" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard, sans-serif">
+          <circle cx="350" cy="225" r="180" fill="#dfeceb" stroke="#a9c2c2" stroke-width="1.5"/>
+          <circle cx="350" cy="225" r="120" fill="none" stroke="#c3d6d4" stroke-width="1" stroke-dasharray="3 5"/>
+          <path d="M205,115 Q330,195 350,225 Q372,262 470,355" stroke="#0d1a1e" stroke-width="6" fill="none" stroke-linecap="round"/>
+          <path d="M205,115 Q330,195 350,225 Q372,262 470,355" stroke="#6fa9b1" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="5 7"/>
+          <circle cx="350" cy="225" r="5.5" fill="#a64f2c"/>
+          <text x="360" y="222" font-size="11.5" font-weight="800" fill="#a64f2c">북극점</text>
+          <text x="296" y="186" font-size="12.5" font-weight="800" fill="#0d1a1e" transform="rotate(27 296 186)">로모노소프 해령 · 약 1,800km</text>
+          <ellipse cx="185" cy="92" rx="112" ry="52" fill="#cbb486" opacity=".5"/>
+          <text x="150" y="66" font-size="14" font-weight="800" fill="#6e5a2c">러시아 · 시베리아</text>
+          <ellipse cx="520" cy="372" rx="118" ry="56" fill="#9ec0a4" opacity=".5"/>
+          <text x="492" y="420" font-size="14" font-weight="800" fill="#3a6b46">캐나다 · 엘즈미어</text>
+          <ellipse cx="600" cy="235" rx="66" ry="76" fill="#bcd6d8" opacity=".9" stroke="#a9c2c2" stroke-width="1.2"/>
+          <text x="600" y="232" font-size="13.5" font-weight="800" fill="#0a4d57" text-anchor="middle">그린란드</text>
+          <text x="600" y="250" font-size="10.5" font-weight="700" fill="#586a6d" text-anchor="middle">(덴마크령)</text>
+          <g>
+            <rect x="36" y="378" width="148" height="56" rx="6" fill="#f0ddcf" stroke="#a64f2c" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <text x="110" y="402" font-size="12.5" font-weight="800" fill="#85391b" text-anchor="middle">미국 · 알래스카</text>
+            <text x="110" y="421" font-size="11" font-weight="700" fill="#85391b" text-anchor="middle">해령과 연결 없음 ✕</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption>시베리아 → 북극점 → 캐나다·그린란드로 이어지는 해저 산맥. <b>러시아·캐나다·덴마크</b>가 같은 해령을 두고 "내 대륙의 연장"이라며 3파전을 벌인다. 미국(알래스카)은 이 해령과 연결되지 않는다.</figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <div class="data reveal">
+      <div class="cell"><div class="v" data-target="1800">0<span class="u">km</span></div><div class="l">해령 전체 길이</div></div>
+      <div class="cell"><div class="v" data-target="3500">0<span class="u">m</span></div><div class="l">최고 높이 (해저 기준)</div></div>
+      <div class="cell"><div class="v" style="font-size:clamp(18px,3.4vw,26px)">한라산·<br>백두산↑</div><div class="l">그보다 더 높다</div></div>
+    </div>
+    <div class="note reveal">
+      <div class="nt">왜 이 해령이 결정적인가</div>
+      <p>이 해령은 <span class="k">대륙 지각</span>으로 이루어져 있습니다. 즉 "우리 대륙이 바다 밑으로 뻗어 나온 것"이라 주장할 <strong>완벽한 명분</strong>을 가진 지형입니다. 그래서 <strong>러시아·캐나다·덴마크(그린란드)</strong> 세 나라가 똑같은 해저를 두고, 각자 조금씩 다른 논리로 다투고 있습니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 06 FLAG ===================== -->
+<section>
+  <div class="col">
+    <div class="label reveal"><span class="ln">06</span> 2007년의 깃발</div>
+    <h2 class="reveal d1">바다 밑바닥에 꽂힌 티타늄 깃발</h2>
+    <p class="lead reveal d1">2007년, 러시아 잠수정이 북극해 <span class="k">약 4,260m</span> 아래로 내려가, 녹슬지 않는 <strong>티타늄 깃발</strong>을 꽂고 올라왔습니다.</p>
+    <p class="reveal">서방 언론은 "구시대적 쇼"라며 비웃었습니다. 하지만 그렇게 웃을 일이 아니었습니다. 그것은 <span class="mark">치밀하게 계산된 법적 근거 쌓기</span>이자, "이 정도 깊이까지 내려갈 수 있다"는 기술력을 과시하는 <strong>전략적 퍼포먼스</strong>였습니다.</p>
+    <div class="data reveal" style="max-width:260px">
+      <div class="cell"><div class="v clay" data-target="4260">0<span class="u">m</span></div><div class="l">러시아 잠수정 도달 깊이 · 2007</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 07 US EMPTY SEAT ===================== -->
+<section style="background:var(--ink)">
+  <div class="col">
+    <div class="label clay reveal" style="color:#e8a583"><span class="ln clay">07</span> <span style="color:#7fc9d4">미국의 빈자리</span></div>
+    <h2 class="reveal d1" style="color:#fff">테이블에 의자조차 없는 강대국</h2>
+    <p class="reveal d1" style="color:#bcd0cf;font-size:clamp(16px,2.5vw,18px)">러시아·덴마크·캐나다가 해저를 두고 명분을 쌓는 동안, 미국만 쏙 빠져 있습니다. 이유가 기가 막힙니다.</p>
+
+    <h3 class="reveal" style="color:#7fc9d4">① 그곳에 내세울 지형이 없다</h3>
+    <p class="reveal" style="color:#cfe0df">미국은 로모노소프 해령으로 이어질 대륙적 연결이 없습니다. 알래스카는 있지만, <strong style="color:#fff">북극 한가운데까지 대륙이 이어지지 않습니다.</strong></p>
+
+    <h3 class="reveal" style="color:#7fc9d4">② 40년간 UNCLOS를 비준하지 않았다</h3>
+    <p class="reveal" style="color:#cfe0df">1982년 협약에 <strong style="color:#fff">서명은 해놓고</strong>, 약 <span style="color:#e8a583;font-weight:800">40년 동안 상원에서 비준</span>을 시키지 않은 채 방치했습니다. 모양새만 갖춘 채, 실제 법적 효력은 인정하지 않겠다는 것이죠.</p>
+    <p class="reveal" style="color:#cfe0df">레이건 대통령 시절, 심해저 광물 자원을 나누는 조항이 "비준하면 미국의 주권 침해가 된다"고 해석됐고, 그 기조가 미국 보수 진영의 <span style="color:#e8a583;font-weight:800">이념적 DNA</span>로 굳어져 지금까지 이어졌습니다.</p>
+  </div>
+
+  <div class="colw">
+    <figure class="reveal">
+      <div class="fig" style="background:rgba(255,255,255,.04);border-color:rgba(127,201,212,.25)">
+        <div class="figttl" style="color:#7fc9d4;border-color:rgba(127,201,212,.18)">북극 해저를 둘러싼 테이블</div>
+        <svg viewBox="0 0 700 380" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard, sans-serif">
+          <ellipse cx="350" cy="180" rx="190" ry="120" fill="none" stroke="#3f95a3" stroke-width="2"/>
+          <ellipse cx="350" cy="180" rx="150" ry="86" fill="rgba(63,149,163,.08)" stroke="rgba(127,201,212,.3)" stroke-width="1" stroke-dasharray="4 5"/>
+          <!-- seats -->
+          <g>
+            <circle cx="350" cy="60" r="34" fill="#0d1a1e" stroke="#7fc9d4" stroke-width="2"/>
+            <text x="350" y="56" font-size="13" font-weight="800" fill="#e7eeed" text-anchor="middle">러시아</text>
+            <text x="350" y="72" font-size="10" fill="#9ab" text-anchor="middle">해령=우리것</text>
+          </g>
+          <g>
+            <circle cx="150" cy="245" r="34" fill="#0d1a1e" stroke="#7fc9d4" stroke-width="2"/>
+            <text x="150" y="241" font-size="13" font-weight="800" fill="#e7eeed" text-anchor="middle">덴마크</text>
+            <text x="150" y="257" font-size="10" fill="#9ab" text-anchor="middle">그린란드보유</text>
+          </g>
+          <g>
+            <circle cx="550" cy="245" r="34" fill="#0d1a1e" stroke="#7fc9d4" stroke-width="2"/>
+            <text x="550" y="241" font-size="13" font-weight="800" fill="#e7eeed" text-anchor="middle">캐나다</text>
+            <text x="550" y="257" font-size="10" fill="#9ab" text-anchor="middle">엘즈미어연결</text>
+          </g>
+          <!-- US outside -->
+          <g>
+            <circle cx="350" cy="330" r="34" fill="none" stroke="#e8a583" stroke-width="2" stroke-dasharray="5 5"/>
+            <text x="350" y="326" font-size="13" font-weight="800" fill="#e8a583" text-anchor="middle">미국</text>
+            <text x="350" y="342" font-size="10" fill="#cf9a7d" text-anchor="middle">입장권 없음</text>
+            <line x1="350" y1="296" x2="350" y2="262" stroke="#e8a583" stroke-width="1.5" stroke-dasharray="3 4"/>
+            <text x="350" y="372" font-size="11" font-weight="700" fill="#cf9a7d" text-anchor="middle">밖에서 서성이는 중</text>
+          </g>
+        </svg>
+      </div>
+      <figcaption style="color:#8fa3a3">칩을 쌓고 증거를 제출하는 세 나라. 세계 최강 해군을 가진 미국은, 자국이 비준을 안 한 탓에 신청서를 내도 <b style="color:#cfe0df">법적 효력이 없어</b> 테이블 밖에 있다.</figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <div class="dark-note reveal" style="background:rgba(166,79,44,.16);border-radius:4px">
+      <div class="nt" style="color:#e8a583">그 결과</div>
+      <p>2023년 12월, 미국 국무부는 7개 지역에서 <strong>한반도 약 4배 면적</strong>의 연장 대륙붕을 선언했습니다. 하지만 이는 <span class="kw">미국 국내법상</span>의 주장일 뿐, 국제법적으로는 인정받지 못합니다. 빼앗기지도, 가져오지도 못하는 상태 — 남는 건 <strong>하드파워</strong>뿐입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 08 GREENLAND COORDINATE ===================== -->
+<section>
+  <div class="col">
+    <div class="label reveal"><span class="ln">08</span> 땅이 아니라 좌표</div>
+    <h2 class="reveal d1">왜 하필 그린란드인가, 그 진짜 답</h2>
+    <p class="reveal d1">히토류 견제, 러시아·중국 견제 — 다 맞는 말입니다. 하지만 거기서 끝이 아닙니다. 우리는 아직 그린란드에 어떤 자원이 얼마나 있는지조차 확실히 모릅니다. 그런데도 왜 그렇게 집착할까요?</p>
+
+    <div class="pull reveal">
+      <div class="pull-rule"></div>
+      그린란드는 <span class="t">로모노소프 해령</span>에<br>합법적으로 접속할 수 있는<br><span class="c">거의 유일한 카드</span>다.
+    </div>
+
+    <p class="reveal">지금 그린란드는 <strong>덴마크령</strong>입니다. 따라서 그 해저 권리는 덴마크, 즉 <span class="k">유럽연합(EU)</span>으로 넘어가는 흐름으로 심사받고 있습니다. 그런데 만약 그린란드가 <strong>독립</strong>한다면? (그린란드는 실제로 독립을 원합니다.) 판이 완전히 달라집니다.</p>
+  </div>
+
+  <div class="colw">
+    <figure class="reveal">
+      <div class="fig">
+        <div class="figttl">그린란드의 운명에 따른 두 갈래</div>
+        <svg viewBox="0 0 700 440" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard, sans-serif">
+          <!-- start -->
+          <rect x="200" y="20" width="300" height="62" rx="6" fill="#fbfcfb" stroke="#b08a35" stroke-width="2"/>
+          <text x="350" y="48" font-size="14" font-weight="800" fill="#0d1a1e" text-anchor="middle">그린란드의 해저 권리</text>
+          <text x="350" y="68" font-size="11.5" fill="#586a6d" text-anchor="middle">로모노소프 해령으로 가는 합법적 명분</text>
+          <!-- split lines -->
+          <path d="M350,82 L350,108 M350,108 L180,108 L180,134 M350,108 L520,108 L520,134" stroke="#a9c2c2" stroke-width="1.5" fill="none"/>
+          <!-- EU -->
+          <rect x="40" y="134" width="280" height="74" rx="6" fill="#eef3f2" stroke="#0b6675" stroke-width="1.5"/>
+          <text x="56" y="160" font-size="13" font-weight="800" fill="#0b6675">현재 — 덴마크령</text>
+          <text x="56" y="183" font-size="12" fill="#3f6669">해저 권리가 덴마크 → 유럽연합으로</text>
+          <text x="56" y="200" font-size="12" fill="#3f6669">귀속되는 흐름</text>
+          <!-- US path -->
+          <rect x="380" y="134" width="280" height="74" rx="6" fill="#f7eadf" stroke="#a64f2c" stroke-width="1.5"/>
+          <text x="396" y="160" font-size="13" font-weight="800" fill="#a64f2c">만약 독립 + 미국과 손잡으면</text>
+          <text x="396" y="183" font-size="12" fill="#85391b">권리가 '그린란드 단독'이 되고,</text>
+          <text x="396" y="200" font-size="12" fill="#85391b">미국이 가져갈 기회가 열림</text>
+          <!-- arrow down to scenario -->
+          <path d="M520,208 L520,250 L350,250 L350,276" stroke="#a64f2c" stroke-width="1.5" fill="none" stroke-dasharray="4 4"/>
+          <polygon points="350,288 344,274 356,274" fill="#a64f2c"/>
+          <!-- scenario -->
+          <rect x="90" y="292" width="520" height="120" rx="6" fill="#0d1a1e"/>
+          <text x="116" y="322" font-size="14" font-weight="800" fill="#e8a583">미국의 시나리오 — 자유연합협정(COFA)</text>
+          <text x="116" y="348" font-size="12.5" fill="#cfe0df">태평양 섬나라들처럼, 국방·외교를 대행하는 대가로</text>
+          <text x="116" y="368" font-size="12.5" fill="#cfe0df">영토 주장을 대신할 수 있다. 그 순간 미국은</text>
+          <text x="116" y="392" font-size="13" font-weight="800" fill="#86d3dd">북극 중앙 해저로 가는 합법적 입장권을 손에 쥔다.</text>
+        </svg>
+      </div>
+      <figcaption>그린란드 독립은 '서방의 위기'가 아니라, 미국 입장에선 <b>판을 뒤집을 유일한 기회</b>일 수 있다.</figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <div class="note clay reveal">
+      <div class="nt">통념의 반전</div>
+      <p>우리가 생각했던 것과 정반대일 수 있습니다. 그린란드 독립이 미국에게 위기가 아니라 <span class="mark clay">유일한 카드</span>가 될 수 있다는 것 — 그렇기에 미국이 그것을 <strong>원할 수도</strong> 있다는 얘기입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 09 CABLES ===================== -->
+<section style="background:var(--paper-2)">
+  <div class="col">
+    <div class="label reveal"><span class="ln">09</span> 진짜 본질</div>
+    <h2 class="reveal d1">해저 광케이블 — 21세기의 혈관</h2>
+    <p class="reveal d1">북극 해저에 석유·천연가스가 어마어마하게 묻혀 있을 거란 보고서가 쏟아지지만, 아직 확인되지는 않았습니다. 잠재력은 분명하지만, 진짜 본질은 따로 있습니다. 바로 <span class="k">해저 광케이블</span>입니다.</p>
+  </div>
+
+  <div class="colw">
+    <figure class="reveal">
+      <div class="fig">
+        <div class="figttl">전 세계 국제 데이터 통신의 흐름</div>
+        <div class="donut-row">
+          <div class="donut">
+            <svg viewBox="0 0 160 160" width="168" height="168">
+              <circle class="bg" cx="80" cy="80" r="75"/>
+              <circle class="fg" cx="80" cy="80" r="75"/>
+            </svg>
+            <div class="ctr"><b data-target="99">0</b><span>해저 케이블</span></div>
+          </div>
+          <div class="txt">
+            <p style="margin-bottom:0">전 세계 국제 데이터의 약 <strong>99%</strong>는 우주 위성이 아니라, 여전히 <span class="k">바닷속 해저 케이블</span>로 흐릅니다. 대기권을 벗어나는 것보다 해저에서 관리하는 편이 더 현실적이기 때문입니다. 이것이 <span class="mark">21세기 글로벌 경제의 혈관이자 신경망</span>입니다.</p>
+          </div>
+        </div>
+      </div>
+      <figcaption>위성이 아니라 바다 밑 — 이것이 디지털 경제의 실제 통로다.</figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <h3 class="reveal">왜 지금, 북극인가</h3>
+    <p class="reveal d1">북극해는 꽁꽁 얼어 있어 아직 케이블 망이 침투하지 못했습니다. 그러나 <strong>온난화로 얼음이 후퇴</strong>하면서 진입 조건이 생기고 있습니다. 이미 <span class="k">일본 → 알래스카 → 캐나다 → 그린란드 → 유럽</span>으로 이어지는, 북극을 가로지르는 <strong>초장거리 해저 케이블 프로젝트</strong>가 시작됐습니다.</p>
+
+    <div class="dark-note reveal">
+      <div class="nt">핵심 메커니즘</div>
+      <p>그 바다 밑바닥 소유권을 가진 나라 — 즉 <strong>대륙붕 권리를 가진 나라</strong>가 이 데이터 통행 경로에 막강한 <span class="kt">'갑(甲)'의 권한</span>을 행사하게 됩니다. 이것은 아날로그 자원 전쟁을 넘어선, <span class="kt">미래 데이터의 통제권 전쟁</span>입니다.</p>
+    </div>
+
+    <p class="reveal">덴마크조차 자국 앞바다 케이블망을 지키려 막대한 국방 예산을 쏟아붓고 있습니다. 북극 해저는 곧 <strong>AI 시대 데이터 인프라의 새로운 초고속도로</strong>가 깔리는 곳이기 때문입니다.</p>
+  </div>
+</section>
+
+<!-- ===================== 10 NOT JUST ARCTIC ===================== -->
+<section>
+  <div class="col">
+    <div class="label reveal"><span class="ln">10</span> 북극만이 아니다</div>
+    <h2 class="reveal d1">전 세계 국경이 다시 그려진다</h2>
+
+    <h3 class="reveal">포르투갈 — 육지의 3%만 보이는 나라</h3>
+    <p class="reveal d1">육지 면적은 작지만, 대서양 한가운데 <strong>아소르스 제도</strong>를 가진 포르투갈은 무려 <span class="k">약 200만 km²</span>의 대륙붕을 신청해 놓았습니다. 이게 통과되면, 포르투갈 전체 영토의 <strong>97%가 바닷속</strong>이 됩니다.</p>
+  </div>
+
+  <div class="colw">
+    <figure class="reveal">
+      <div class="fig">
+        <div class="figttl">포르투갈 영토의 재구성 (신청 통과 시)</div>
+        <div class="bars">
+          <div class="bar land"><span class="cap"><b>3%</b><small>우리가 아는 육지</small></span></div>
+          <div class="bar sea"><span class="cap"><b>97%</b><small>바닷속 대륙붕</small></span></div>
+        </div>
+      </div>
+      <figcaption>게다가 이 해역은 <b>유럽 ↔ 미주를 잇는 대서양 횡단 인터넷 케이블</b>이 몰린 길목이다. 트래픽의 목줄을 쥔 위치다.</figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <p class="reveal">유럽연합엔 금쪽같은 자리지만, 이를 달가워하지 않는 나라가 있습니다. 바로 <span class="kc">미국</span>입니다. 여기서 새로운 갈등이 보이기 시작합니다.</p>
+
+    <h3 class="reveal">뉴질랜드 — 남태평양 해저의 거인</h3>
+    <p class="reveal d1">뉴질랜드는 남태평양 바다 밑에 어마어마한 대륙(질랜디아)을 갖고 있고, 이를 증명해 영토를 크게 넓히려는 중입니다. 성공하면 <strong>남태평양 진입 지역 해저의 대부분</strong>을 갖게 됩니다.</p>
+
+    <div class="note reveal">
+      <div class="nt">우리가 모르는 사이</div>
+      <p>지금 <strong>지구 전체의 해저 국경선이 완전히 새롭게 다시 그려지고</strong> 있습니다. 변화의 속도는 매우 빠르지만, <span class="mark">조용하고 깊은 물속</span>에서 일어나기에 다들 눈치조차 채지 못할 뿐입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 11 KOREA ===================== -->
+<section style="background:var(--paper-2)">
+  <div class="col">
+    <div class="label reveal"><span class="ln">11</span> 대한민국</div>
+    <h2 class="reveal d1">제7광구, 2028년 운명의 시간</h2>
+    <p class="reveal d1">한국도 이 거대한 해저 영토 게임에서 결코 자유롭지 않습니다. 한국과 일본 사이의 대륙붕 공동개발구역, 이른바 <span class="k">제7광구(JDZ)</span>가 있습니다. 1970년에 협정을 맺었고, 운명의 시간이 다가오고 있습니다.</p>
+  </div>
+
+  <div class="colw">
+    <figure class="reveal">
+      <div class="fig">
+        <div class="figttl">한·일 제7광구 협정 만료까지</div>
+        <div class="cd">
+          <div class="box"><b data-target="1970">0</b><small>협정 체결</small></div>
+          <span class="arr">→</span>
+          <div class="box clay"><b data-target="2028">0</b><small>만료 예정</small></div>
+        </div>
+        <svg viewBox="0 0 700 250" xmlns="http://www.w3.org/2000/svg" font-family="Pretendard, sans-serif" style="margin-top:8px">
+          <rect x="0" y="0" width="700" height="250" fill="#dfeceb" rx="6"/>
+          <path d="M120,55 q40,8 48,46 q5,38 -18,66 q-28,18 -52,4 q-24,-24 -10,-66 q14,-42 32,-50 Z" fill="#9ec0a4" opacity=".7"/>
+          <text x="100" y="108" font-size="14" font-weight="800" fill="#3a6b46">한국</text>
+          <path d="M500,38 q56,28 66,84 q5,52 -38,84 q-38,18 -56,-10 q-14,-38 10,-84 q14,-52 48,-66 Z" fill="#cbb486" opacity=".6"/>
+          <text x="520" y="112" font-size="14" font-weight="800" fill="#6e5a2c">일본</text>
+          <ellipse cx="332" cy="142" rx="92" ry="58" fill="rgba(11,102,117,.16)" stroke="#0b6675" stroke-width="2" stroke-dasharray="7 5"/>
+          <text x="332" y="138" font-size="15" font-weight="800" fill="#0a4d57" text-anchor="middle">제7광구</text>
+          <text x="332" y="159" font-size="11.5" font-weight="700" fill="#3f6669" text-anchor="middle">공동개발구역(JDZ)</text>
+          <text x="332" y="228" font-size="12.5" font-weight="700" fill="#a64f2c" text-anchor="middle">판가름 잣대 = UNCLOS 제76조 (연장 대륙붕)</text>
+        </svg>
+      </div>
+      <figcaption>2028년 만료 시, 군사화를 추진 중인 일본이 "과학적으로 우리 대륙의 연장"이라며 공동개발을 거부하면 — 상황이 완전히 뒤집힐 수 있다.</figcaption>
+    </figure>
+  </div>
+
+  <div class="col">
+    <p class="reveal">70년대와는 비교할 수 없는 기술과 입지 변화 속에서, 양국 관계의 판가름 잣대는 결국 <span class="k">UNCLOS 제76조</span>가 됩니다. 한국은 북극 영유권 국가는 아니지만 <strong>북극이사회 옵서버 국가</strong>이며, 당장 앞바다 대륙붕 문제의 <strong>당사자</strong>입니다.</p>
+
+    <div class="note clay reveal">
+      <div class="nt">왜 한국에 중요한가</div>
+      <p>저 멀리 얼음 덮인 그린란드에서 벌어지는 미국·러시아·유럽의 싸움은, 결코 <strong>남의 얘기가 아닙니다.</strong> UN과 국제사회가 이런 주장들을 어떻게 받아들이고 반응하느냐가, <span class="mark clay">한국이 앞으로 취할 수 있는 입장</span>에 직접 영향을 미칩니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== SUMMARY ===================== -->
+<section>
+  <div class="col">
+    <div class="label reveal"><span class="ln">∑</span> 한눈에 정리</div>
+    <h2 class="reveal d1">그래서, 무슨 일이 벌어지고 있나</h2>
+
+    <div class="tl reveal d1">
+      <div class="tl-item"><div class="yr">1982</div><div><div class="tt">UNCLOS 탄생 · 제76조</div><div class="ds">'바다의 헌법' 제정. 그러나 증명 기술이 없어 20년간 잠들다.</div></div></div>
+      <div class="tl-item"><div class="yr">2000s</div><div><div class="tt">우주 매핑 기술 ↔ 심해</div><div class="ds">위성·GPS·음파 발전. 화성 스캔 기술이 해저로. 판도라의 상자가 열리다.</div></div></div>
+      <div class="tl-item"><div class="yr">2001</div><div><div class="tt">러시아의 첫 신청</div><div class="ds">로모노소프 해령을 근거로 UN CLCS에 제출. 캐나다·덴마크와 3파전 시작.</div></div></div>
+      <div class="tl-item"><div class="yr">2007</div><div><div class="tt">해저 4,260m 티타늄 깃발</div><div class="ds">러시아의 전략적 퍼포먼스. 법적 근거 + 기술력 과시.</div></div></div>
+      <div class="tl-item clay"><div class="yr">2023</div><div><div class="tt">미국, 뒤늦은 선언</div><div class="ds">한반도 4배 면적 ECS 선언. 그러나 비준 안 한 탓에 국제법적 효력 없음.</div></div></div>
+      <div class="tl-item clay"><div class="yr">2028</div><div><div class="tt">한국 제7광구 만료</div><div class="ds">UNCLOS 제76조가 한·일 대륙붕 분쟁의 잣대가 될 운명의 해.</div></div></div>
+    </div>
+
+    <h3 class="reveal">핵심 요약</h3>
+    <ul class="ed reveal d1">
+      <li>그린란드 패권 다툼의 진짜 타깃은 <strong>해수면 위의 섬이 아니라 해저</strong>다.</li>
+      <li>1982년 해양법 + 2000년대 우주 매핑 기술이 만나 <strong>판도라의 상자</strong>가 열렸다.</li>
+      <li>러시아·덴마크·캐나다가 <strong>로모노소프 해령</strong>의 지질학적 알박기를 벌이는 중.</li>
+      <li class="clay">미국은 자국 정치 논리로 40년 넘게 비준을 미루다, 이제 <strong>테이블 자리조차 없는</strong> 취약한 입지에 놓였다.</li>
+      <li class="clay">트럼프는 그린란드를 <strong>'좌표'</strong>로 보고, 어떻게든 이 게임에 끼어들려 한다.</li>
+      <li>걸린 건 석유·히토류가 아니라, 디지털 경제의 혈관 <strong>해저 통신망의 통제권</strong>이다.</li>
+      <li>포르투갈·뉴질랜드·프랑스가 이미 움직이고, 한국의 <strong>제7광구</strong>도 같은 게임의 연장선이다.</li>
+    </ul>
+
+    <div class="tablewrap reveal">
+      <table>
+        <thead><tr><th>국가</th><th>핵심 무대</th><th>전략</th><th>테이블</th></tr></thead>
+        <tbody>
+          <tr><td>러시아</td><td>로모노소프 해령</td><td>2001 첫 신청 · 2007 깃발</td><td><span class="pill in">참여</span></td></tr>
+          <tr><td>덴마크</td><td>그린란드 해저</td><td>그린란드령 기반 권리 주장</td><td><span class="pill in">참여</span></td></tr>
+          <tr><td>캐나다</td><td>엘즈미어 연결</td><td>대륙 연장 논리</td><td><span class="pill in">참여</span></td></tr>
+          <tr><td>포르투갈</td><td>아소르스 / 대서양</td><td>200만 km² 신청 · 케이블 길목</td><td><span class="pill in">참여</span></td></tr>
+          <tr><td>뉴질랜드</td><td>남태평양 (질랜디아)</td><td>해저 대륙 증명·확장</td><td><span class="pill in">참여</span></td></tr>
+          <tr><td>한국</td><td>제7광구(JDZ)</td><td>2028 만료 · 북극이사회 옵서버</td><td><span class="pill in">당사자</span></td></tr>
+          <tr><td>미국</td><td>알래스카 (연결 없음)</td><td>비준 거부 · 하드파워 의존</td><td><span class="pill out">밖에서</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pull reveal">
+      <div class="pull-rule"></div>
+      우리 머릿속의 그 지도는<br>이미 <span class="c">거짓말</span>이 됐다.
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CLOSING ===================== -->
+<section style="background:var(--ink)">
+  <div class="col">
+    <div class="label reveal" style="color:#7fc9d4"><span class="ln" style="color:#7fc9d4">⌖</span> <span>닫는 질문</span></div>
+    <h2 class="reveal d1" style="color:#fff">우리는 여전히 구시대적 영토를<br>상상하고 있지 않은가</h2>
+    <p class="reveal d1" style="color:#cfe0df">아직도 '영토'라고 하면 세계지도, 땅따먹기, 국경선, 휘날리는 깃발을 떠올립니다. 하지만 진짜 무서운 영토 확장은 지금 — <strong style="color:#fff">위성 데이터로 증명되고, 과학자의 논문으로 판정받으며, 아무도 보지 못한 수천 미터 해저</strong>에서 벌어지고 있습니다.</p>
+    <p class="reveal" style="color:#cfe0df">그리고 이 거대한 흐름을 뒤늦게 눈치챈 미국이, 오히려 <span style="color:#fff;font-weight:700">거칠고 시끄러운 방식</span>으로 자기 존재감을 드러내려 발버둥치고 있습니다. 그 모습 자체가, 세상이 어떻게 바뀌고 있는지 알려주는 거대한 단서입니다.</p>
+
+    <div class="dark-note reveal" style="background:rgba(63,149,163,.12)">
+      <div class="nt">마지막 통찰</div>
+      <p>정말 거대한 변화는 <strong>내일 아침 뉴스 헤드라인에 절대 나오지 않습니다.</strong> 시끄러운 소리가 들릴 땐, 이미 판이 끝났거나 진짜 게임은 딴 데서 벌어지고 있습니다. 새 룰을 정할 때, 그 룰에 적용받을 사람들을 다 모아놓고 눈앞에서 정하지는 않으니까요.</p>
+    </div>
+
+    <p class="reveal" style="color:#86d3dd;text-align:center;font-family:var(--serif);font-size:clamp(17px,3vw,22px);margin-top:40px;line-height:1.6">헤드라인 뒤에 숨은 이야기를,<br>우리는 어떻게 알아차릴 수 있을까요?</p>
+  </div>
+</section>
+
+<footer>
+  <div class="col">
+    <div class="ft-rule"></div>
+    <p class="src">본 문서는 유튜브 영상 <b>《트럼프가 그린란드에 집착한 소름 돋는 진짜 이유》</b>의 내용을 시각화·정리한 자료입니다.</p>
+    <p class="tags">UNCLOS · 제76조 · 로모노소프 해령 · 해저 케이블 · 자유연합협정 · 제7광구<br>— 심해의 보이지 않는 국경선에 관하여 —</p>
+  </div>
+</footer>
+
+<button id="tocBtn" aria-label="목차 열기">목차</button>
+<nav id="toc"></nav>
+
+<script>
+(function(){
+  var prog=document.getElementById('progress');
+  function onScroll(){var h=document.documentElement;var sc=h.scrollTop||document.body.scrollTop;var max=h.scrollHeight-h.clientHeight;prog.style.width=(max>0?sc/max*100:0)+'%';}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  function runCount(el){
+    if(el.dataset.done)return;el.dataset.done=1;
+    var target=+el.getAttribute('data-target');
+    var unit=el.querySelector('.u');var uHTML=unit?unit.outerHTML:'';
+    var dur=1500,start=null;
+    function step(ts){if(!start)start=ts;var p=Math.min((ts-start)/dur,1);var e=1-Math.pow(1-p,3);
+      el.innerHTML=Math.floor(e*target).toLocaleString('ko-KR')+uHTML;
+      if(p<1)requestAnimationFrame(step);else el.innerHTML=target.toLocaleString('ko-KR')+uHTML;}
+    requestAnimationFrame(step);
+  }
+
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');e.target.querySelectorAll('[data-target]').forEach(runCount);io.unobserve(e.target);}});},{threshold:.15});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  var io2=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){runCount(e.target);io2.unobserve(e.target);}});},{threshold:.4});
+  document.querySelectorAll('[data-target]').forEach(function(el){if(!el.closest('.reveal'))io2.observe(el);});
+
+  var toc=document.getElementById('toc'),btn=document.getElementById('tocBtn');
+  var items=[['01','바다의 헌법'],['02','제76조 · 연장 대륙붕'],['03','잠든 조약'],['04','우주에서 심해로'],['05','러시아 · 로모노소프'],['06','2007년의 깃발'],['07','미국의 빈자리'],['08','땅이 아니라 좌표'],['09','해저 케이블'],['10','전 세계 무대'],['11','대한민국 · 제7광구'],['∑','한눈에 정리'],['⌖','닫는 질문']];
+  var secs=document.querySelectorAll('section');var idx=0;
+  secs.forEach(function(s,i){s.id='s'+i;if(items[idx]){var a=document.createElement('a');a.href='#s'+i;a.innerHTML='<span class="n">'+items[idx][0]+'</span>'+items[idx][1];a.addEventListener('click',function(){toc.classList.remove('open');});toc.appendChild(a);idx++;}});
+  btn.addEventListener('click',function(e){e.stopPropagation();toc.classList.toggle('open');});
+  document.addEventListener('click',function(e){if(!toc.contains(e.target)&&e.target!==btn)toc.classList.remove('open');});
+})();
+</script>
+</body>
+</html>
